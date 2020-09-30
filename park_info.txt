@@ -1,1 +1,11 @@
-<selenium.webdriver.firefox.webelement.FirefoxWebElement (session="74cb573d-0b24-4b6e-bc73-a7e90e8fcfac", element="753df8db-3a7f-4c82-a224-cf3c98177680")>
+Kettle Moraine - Northern Unit: icon-available
+Kettle Moraine - Southern Unit: icon-available
+Kohler-Andrae: icon-available
+Richard Bong: icon-available
+Harrington Beach: icon-available
+Big Foot Beach: icon-available
+Glacial Drumlin: icon-available
+Lakeshore: icon-invalid
+Aztalan: icon-invalid
+Kettle Moraine - Lapham Peak Unit: icon-invalid
+Kettle Moraine - Pike Lake Unit: icon-available

@@ -7,9 +7,10 @@ from selenium.webdriver.support import expected_conditions as EC
 class ParkSpider(scrapy.Spider):
     name = 'parkspider'   
     # Initalize the webdriver    
-    def __init__(self,start_urls):
+    def __init__(self, start_urls):
         self.driver = webdriver.Firefox()
         self.start_urls=start_urls
+
 
 
     # Parse through each Start URLs
@@ -27,7 +28,7 @@ class ParkSpider(scrapy.Spider):
         self.find_and_click_element("consentButton")
         self.find_and_click_element("filterButton")
         self.find_and_click_element("mat-select-7")
-        self.find_and_click_element("mat-option-33")
+        self.find_and_click_element("mat-option-83")
         self.find_and_click_element("actionSearch")
 
         circles=[]
@@ -38,7 +39,7 @@ class ParkSpider(scrapy.Spider):
         with open(filename, 'w') as f:
             for circle in circles:
                 string=str(circle.get_attribute('id'))+': '+str(circle.get_attribute('fill'))
-                f.write(str(string))
+                f.write(str(string)+"\n")
 
             # yield {
             #     circle.get_attribute('id'): circle.get_attribute('fill'),

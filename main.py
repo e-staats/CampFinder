@@ -10,7 +10,7 @@ import datetime
 URL_BASE = "https://wisconsin.goingtocamp.com/create-booking/results?"
 DATE_SUFFIX = "T00:00:00.000Z"
 
-quandrant_defs = {
+quadrant_defs = {
   -2147483604: "Northwest WI",
   -2147483603: "Southwest WI",
   -2147483602: "Northeast WI",
@@ -39,23 +39,24 @@ def format_url(url_base, url_dict):
   return url
 
 def calculate_nights(date_range):
-  nights=date_range[0]-date_range[1]
+  nights=date_range[1]-date_range[0]
   return nights.days
 
-def create_urls(url_base, url_dict, date_range, quadrant_defs):
+def create_urls(url_base, url_dict, date_range, search_time, quadrant_defs):
   url_list = []
-  url_dict['start_date']=format_date(date_range[0])
-  url_dict['end_date']=format_date(date_range[1])
+  url_dict['startDate']=format_date(date_range[0])
+  url_dict['endDate']=format_date(date_range[1])
   url_dict['nights']=calculate_nights(date_range)
   for map_id in quadrant_defs.keys():
     url_dict['mapId']=map_id
-    url_list.append(format_url(url_base,url_dict))
+    url_list.append(format_url(url_base,url_dict).replace("%3A",":")+"&"+search_time)
   return url_list
 
 today=datetime.date.today()
 tomorrow=today + datetime.timedelta(days=1)
 date_range = (today,tomorrow)
-url_list=create_urls(URL_BASE, url_dict, date_range, quandrant_defs)
+search_time=datetime.datetime.now().astimezone().strftime('%a %b %d %Y %H%M:%S GMT%z (%Z)').replace(" ", "%20")
+url_list=create_urls(URL_BASE, url_dict, date_range, search_time, quadrant_defs)
 
 if __name__ == "__main__":
   process = CrawlerProcess()
