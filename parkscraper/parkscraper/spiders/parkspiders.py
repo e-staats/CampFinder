@@ -38,7 +38,7 @@ class ParkSpider(scrapy.Spider):
         with open(filename, 'w') as f:
             for circle in circles:
                 string=str(circle.get_attribute('id'))+': '+str(circle.get_attribute('fill'))
-                f.write(str(circle))
+                f.write(str(string))
 
             # yield {
             #     circle.get_attribute('id'): circle.get_attribute('fill'),

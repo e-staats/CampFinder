@@ -55,9 +55,7 @@ def create_urls(url_base, url_dict, date_range, quadrant_defs):
 today=datetime.date.today()
 tomorrow=today + datetime.timedelta(days=1)
 date_range = (today,tomorrow)
-#url_list=create_urls(URL_BASE, url_dict, date_range, quandrant_defs)
-url_list=['https://wisconsin.goingtocamp.com/create-booking/results?mapId=-2147483601&searchTabGroupId=0&bookingCategoryId=0&startDate=None&endDate=None&nights=-1&isReserving=true&equipmentId=-32768&subEquipmentId=-32768&partySize=1&start_date=2020-09-27T00%3A00%3A00.000Z&end_date=2020-09-28T00%3A00%3A00.000Z']
-
+url_list=create_urls(URL_BASE, url_dict, date_range, quandrant_defs)
 
 if __name__ == "__main__":
   process = CrawlerProcess()
