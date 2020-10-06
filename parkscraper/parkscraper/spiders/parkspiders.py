@@ -8,24 +8,27 @@ class ParkSpider(scrapy.Spider):
     name = 'parkspider'   
     # Initalize the webdriver    
     def __init__(self, start_urls):
-        self.driver = webdriver.Firefox()
+        self.write_to_file("")
         self.start_urls=start_urls
 
-
-
-    # Parse through each Start URLs
+        # Parse through each Start URLs
     def start_requests(self):
-        for url in self.start_urls:
-            yield scrapy.Request(url=url, callback=self.parse)    
-    
+        yield scrapy.Request(url="https://google.com", callback=self.parse)  
 
-   # Parse function: Scrape the webpage and store it
+    # Parse function: Scrape the webpage and store it
     def parse(self, response):
-        self.driver.get(response.url)
+        for url in self.start_urls:
+            self.driver = webdriver.Firefox()
+            self.parseURL(url)
+            self.driver.quit()       
+    
+    def parseURL(self, url):
+        self.driver.get(url)
 
         #Automate some clicks:
         #IF THE CRAWLER ISN'T WORKING: CHECK THE NUMBERS OF THE IDs. THEY MAY HAVE CHANGED
-        self.find_and_click_element("consentButton")
+        if self.element_exists("consentButton"):  #only exists if we haven't already consented
+            self.find_and_click_element("consentButton")
         self.find_and_click_element("filterButton")
         self.find_and_click_element("mat-select-7")
         self.find_and_click_element("mat-option-83")
@@ -33,19 +36,31 @@ class ParkSpider(scrapy.Spider):
 
         circles=[]
         circles = self.driver.find_elements_by_tag_name("circle")
+        
         if circles == []:
             print("~~~~NO CIRCLES~~~~")
+        
+        for circle in circles:
+            string=str(circle.get_attribute('id'))+': '+str(circle.get_attribute('fill'))+"\n"
+            self.append_to_file(string)
+        
+
+    def write_to_file(self,stringToWrite):
         filename = 'park_info.txt'
         with open(filename, 'w') as f:
-            for circle in circles:
-                string=str(circle.get_attribute('id'))+': '+str(circle.get_attribute('fill'))
-                f.write(str(string)+"\n")
+            f.write(stringToWrite)
 
-            # yield {
-            #     circle.get_attribute('id'): circle.get_attribute('fill'),
-            # }
+    def append_to_file(self,stringToAppend):
+        filename = 'park_info.txt'
+        with open(filename, 'a') as f:
+            f.write(stringToAppend)
 
-        self.driver.quit()
+    def element_exists(self,element_id):
+        try:
+            WebDriverWait(self.driver, 1).until(EC.presence_of_element_located((By.ID, element_id)))
+            return True #would throw an exception if not found
+        except: 
+            return False
 
     def find_and_click_element(self,element_id):
         try:
