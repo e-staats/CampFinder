@@ -1,3 +1,6 @@
 scrapy
 requests
 selenium
+flask
+bson
+black

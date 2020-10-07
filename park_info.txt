@@ -1,3 +1,55 @@
+Willow River: icon-available
+Big Bay: icon-available
+Lake Wissota: icon-available
+Pattison: icon-available
+Copper Falls: icon-available
+Interstate: icon-available
+Flambeau River: icon-available
+Brunet Island: icon-available
+Amnicon Falls: icon-available
+Turtle Flambeau: icon-invalid
+Brule River: icon-available
+Chippewa Flowage: icon-invalid
+Chippewa Moraine: icon-invalid
+Governor Knowles: icon-available
+Straight Lake: icon-available
+Devil: icon-available
+Governor Dodge: icon-available
+Wyalusing: icon-available
+Mirror Lake: icon-available
+Wildcat Mountain: icon-available
+Black River: icon-available
+Yellowstone Lake: icon-available
+Perrot: icon-available
+Lake Kegonsa: icon-available
+Blue Mound: icon-available
+Roche-A-Cri: icon-not-operating
+Nelson Dewey: icon-available
+Buckhorn: icon-available
+Merrick: icon-available
+Mill Bluff: icon-not-operating
+New Glarus Woods: icon-available
+Rocky Arbor: icon-not-operating
+Cadiz Springs: icon-not-operating
+Mackenzie Center: icon-invalid
+Elroy-Sparta: icon-available
+Governor Nelson: icon-not-operating
+Tower Hill: icon-available
+Peninsula: icon-available
+High Cliff: icon-available
+Point Beach: icon-available
+Potawatomi: icon-available
+Hartman Creek: icon-available
+Rock Island: icon-unavailable
+Governor Thompson: icon-available
+Governor Earl Peshtigo River: icon-available
+Newport: icon-invalid
+Council Grounds: icon-available
+Northern Highland - American Legion: icon-available
+Menominee River: icon-invalid
+Rib Mountain: icon-not-operating
+Whitefish Dunes: icon-unavailable
+Willow Flowage: icon-invalid
 Kettle Moraine - Northern Unit: icon-available
 Kettle Moraine - Southern Unit: icon-available
 Kohler-Andrae: icon-available
