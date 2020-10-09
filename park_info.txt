@@ -1,63 +1,53 @@
-Willow River: icon-available
-Big Bay: icon-available
-Lake Wissota: icon-available
-Pattison: icon-available
-Copper Falls: icon-available
-Interstate: icon-available
-Flambeau River: icon-available
-Brunet Island: icon-available
-Amnicon Falls: icon-available
-Turtle Flambeau: icon-invalid
-Brule River: icon-available
-Chippewa Flowage: icon-invalid
-Chippewa Moraine: icon-invalid
-Governor Knowles: icon-available
-Straight Lake: icon-available
-Devil: icon-available
-Governor Dodge: icon-available
-Wyalusing: icon-available
-Mirror Lake: icon-available
-Wildcat Mountain: icon-available
-Black River: icon-available
-Yellowstone Lake: icon-available
-Perrot: icon-available
-Lake Kegonsa: icon-available
-Blue Mound: icon-available
-Roche-A-Cri: icon-not-operating
-Nelson Dewey: icon-available
-Buckhorn: icon-available
-Merrick: icon-available
-Mill Bluff: icon-not-operating
-New Glarus Woods: icon-available
-Rocky Arbor: icon-not-operating
-Cadiz Springs: icon-not-operating
-Mackenzie Center: icon-invalid
-Elroy-Sparta: icon-available
-Governor Nelson: icon-not-operating
-Tower Hill: icon-available
-Peninsula: icon-available
-High Cliff: icon-available
-Point Beach: icon-available
-Potawatomi: icon-available
-Hartman Creek: icon-available
-Rock Island: icon-unavailable
-Governor Thompson: icon-available
-Governor Earl Peshtigo River: icon-available
-Newport: icon-invalid
-Council Grounds: icon-available
-Northern Highland - American Legion: icon-available
-Menominee River: icon-invalid
-Rib Mountain: icon-not-operating
-Whitefish Dunes: icon-unavailable
-Willow Flowage: icon-invalid
-Kettle Moraine - Northern Unit: icon-available
-Kettle Moraine - Southern Unit: icon-available
-Kohler-Andrae: icon-available
-Richard Bong: icon-available
-Harrington Beach: icon-available
-Big Foot Beach: icon-available
-Glacial Drumlin: icon-available
-Lakeshore: icon-invalid
-Aztalan: icon-invalid
-Kettle Moraine - Lapham Peak Unit: icon-invalid
-Kettle Moraine - Pike Lake Unit: icon-available
+Willow River - Northwest WI: unavailable
+Big Bay - Northwest WI: AVAILABLE
+Lake Wissota - Northwest WI: unavailable
+Pattison - Northwest WI: AVAILABLE
+Copper Falls - Northwest WI: unavailable
+Interstate - Northwest WI: unavailable
+Flambeau River - Northwest WI: unavailable
+Brunet Island - Northwest WI: unavailable
+Amnicon Falls - Northwest WI: unavailable
+Turtle Flambeau - Northwest WI: unavailable
+Brule River - Northwest WI: unavailable
+Chippewa Flowage - Northwest WI: unavailable
+Chippewa Moraine - Northwest WI: unavailable
+Governor Knowles - Northwest WI: unavailable
+Straight Lake - Northwest WI: AVAILABLE
+Devil - Southwest WI: unavailable
+Governor Dodge - Southwest WI: unavailable
+Wyalusing - Southwest WI: unavailable
+Mirror Lake - Southwest WI: unavailable
+Wildcat Mountain - Southwest WI: unavailable
+Black River - Southwest WI: unavailable
+Yellowstone Lake - Southwest WI: unavailable
+Perrot - Southwest WI: unavailable
+Lake Kegonsa - Southwest WI: unavailable
+Blue Mound - Southwest WI: unavailable
+Roche-A-Cri - Southwest WI: UNMAPPED VALUE - icon-not-operating
+Nelson Dewey - Southwest WI: unavailable
+Buckhorn - Southwest WI: unavailable
+Merrick - Southwest WI: unavailable
+Mill Bluff - Southwest WI: UNMAPPED VALUE - icon-not-operating
+New Glarus Woods - Southwest WI: unavailable
+Rocky Arbor - Southwest WI: UNMAPPED VALUE - icon-not-operating
+Cadiz Springs - Southwest WI: UNMAPPED VALUE - icon-not-operating
+Mackenzie Center - Southwest WI: unavailable
+Elroy-Sparta - Southwest WI: unavailable
+Governor Nelson - Southwest WI: UNMAPPED VALUE - icon-not-operating
+Tower Hill - Southwest WI: unavailable
+ - Northeast WI: UNMAPPED VALUE - None
+Peninsula - Northeast WI: AVAILABLE
+High Cliff - Northeast WI: unavailable
+Point Beach - Northeast WI: unavailable
+Potawatomi - Northeast WI: unavailable
+Hartman Creek - Northeast WI: unavailable
+Rock Island - Northeast WI: unavailable
+Governor Thompson - Northeast WI: unavailable
+Governor Earl Peshtigo River - Northeast WI: unavailable
+Newport - Northeast WI: unavailable
+Council Grounds - Northeast WI: unavailable
+Northern Highland - American Legion - Northeast WI: AVAILABLE
+Menominee River - Northeast WI: unavailable
+Rib Mountain - Northeast WI: UNMAPPED VALUE - icon-not-operating
+Whitefish Dunes - Northeast WI: unavailable
+Willow Flowage - Northeast WI: unavailable

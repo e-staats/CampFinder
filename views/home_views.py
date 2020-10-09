@@ -6,7 +6,7 @@ sys.path.insert(0, folder)
 from viewmodels.home.index_viewmodel import IndexViewModel
 from infrastructure.view_modifiers import response
 from flask import jsonify
-from scraper_shell import setup_url_list,start_scraper,doodle
+from scraper_shell import setup_url_list,start_scraper
 
 blueprint = flask.Blueprint('home', __name__, template_folder='templates')
 
