@@ -4,7 +4,7 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 
 
-class ParkScraper():
+class ParkScraper:
     # Initalize the webdriver
     def __init__(self, start_urls: dict):
         self.write_to_file("")
@@ -12,7 +12,7 @@ class ParkScraper():
 
     def set_firefox_options(self):
         firefox_options = webdriver.FirefoxOptions()
-        firefox_options.add_argument('--headless')
+        firefox_options.add_argument("--headless")
         return firefox_options
 
     # Parse function: Scrape the webpage and store it
