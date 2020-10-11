@@ -47,13 +47,15 @@ def create_urls(url_base, url_setup, date_range, search_time, quadrant_defs):
     urls = {}
     for map_id in quadrant_defs.keys():
         url_setup["mapId"] = map_id
-        region_name=quadrant_defs[map_id]
-        urls[region_name]=format_url(url_base, url_setup).replace("%3A", ":") + "&" + search_time
+        region_name = quadrant_defs[map_id]
+        urls[region_name] = (
+            format_url(url_base, url_setup).replace("%3A", ":") + "&" + search_time
+        )
     return urls
 
 
 def get_start_date():
-    #return datetime.date(2020, 10, 10)
+    # return datetime.date(2020, 10, 10)
     return datetime.date.today()
 
 
@@ -92,7 +94,7 @@ def setup_url_list():
 
 
 def start_scraper(start_urls=None):
-    if start_urls==None:
+    if start_urls == None:
         return "no start_urls provided - stopping"
     scraper = ParkScraper(start_urls=start_urls)
     scraper.parse()
