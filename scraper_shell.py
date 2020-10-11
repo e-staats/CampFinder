@@ -1,9 +1,7 @@
-import scrapy
 import os
 import sys
 import requests
-from scrapy.crawler import CrawlerProcess
-from parkscraper.parkscraper.spiders.parkspiders import ParkSpider
+from selenium_scraper import ParkScraper
 from urllib.parse import urlencode
 import datetime
 
@@ -55,8 +53,8 @@ def create_urls(url_base, url_setup, date_range, search_time, quadrant_defs):
 
 
 def get_start_date():
-    return datetime.date(2020, 10, 10)
-    # return datetime.date.today()
+    #return datetime.date(2020, 10, 10)
+    return datetime.date.today()
 
 
 def get_end_date(start_date):
@@ -93,12 +91,13 @@ def setup_url_list():
     return url_list
 
 
-def start_scraper(start_urls):
-    process = CrawlerProcess()
-    process.crawl(ParkSpider, start_urls=start_urls)
-    process.start()
+def start_scraper(start_urls=None):
+    if start_urls==None:
+        return "no start_urls provided - stopping"
+    scraper = ParkScraper(start_urls=start_urls)
+    scraper.parse()
 
 
 if __name__ == "__main__":
     start_urls = setup_url_list()
-    start_scraper(start_urls)
+    start_scraper(start_urls=start_urls)
