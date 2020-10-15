@@ -3,7 +3,6 @@ import sqlalchemy.orm as orm
 from data.modelbase import SqlAlchemyBase # pylint: disable = import-error
 factory = None
 
-
 def global_init(db_file: str):
     global factory
 

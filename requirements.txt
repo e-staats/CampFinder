@@ -6,3 +6,5 @@ black
 apscheduler
 Flask-APScheduler
 sqlalchemy
+smtplib
+ssl
