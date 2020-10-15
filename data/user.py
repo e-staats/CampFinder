@@ -1,11 +1,13 @@
 import sqlalchemy as sa
 from data.modelbase import SqlAlchemyBase # pylint: disable = import-error
 
+activeStatus = 1
+inactiveStatus = 2
 
 class User(SqlAlchemyBase):
     __tablename__ = "users"
 
-    id = sa.Column(sa.Integer, primary_key=True)
+    id = sa.Column(sa.Integer, primary_key=True, autoincrement=True)
     name = sa.Column(sa.String)
     email = sa.Column(sa.String)
     hashed_pw = sa.Column(sa.String)
