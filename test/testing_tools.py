@@ -4,7 +4,7 @@ folder = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
 sys.path.insert(0, folder)
 import data # pylint: disable = import-error
 from data.result import Result # pylint: disable = import-error
-from data.query import Query # pylint: disable = import-error
+from data.search import Search # pylint: disable = import-error
 from data.availability import Availability # pylint: disable = import-error
 from data.region import Region # pylint: disable = import-error
 from data.user import User # pylint: disable = import-error
@@ -18,6 +18,8 @@ def setup_all_test_data():
     data.db_session.global_init(db_file)
     session = data.db_session.factory()
     session.query(User).delete()
+    session.query(Availability).delete()
+    session.query(Search).delete()
     session.commit()
 
     setup_test_users()

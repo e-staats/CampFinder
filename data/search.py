@@ -2,8 +2,8 @@ import sqlalchemy as sa
 from data.modelbase import SqlAlchemyBase # pylint: disable = import-error
 
 
-class Query(SqlAlchemyBase):
-    __tablename__ = "queries"
+class Search(SqlAlchemyBase):
+    __tablename__ = "searches"
 
     id = sa.Column(sa.Integer, primary_key=True)
     start_date = sa.Column(sa.Date)
