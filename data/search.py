@@ -5,13 +5,13 @@ from data.modelbase import SqlAlchemyBase # pylint: disable = import-error
 class Search(SqlAlchemyBase):
     __tablename__ = "searches"
 
-    id = sa.Column(sa.Integer, primary_key=True)
+    id = sa.Column(sa.Integer, primary_key=True, autoincrement=True)
     start_date = sa.Column(sa.Date)
     end_date = sa.Column(sa.Date)
     preferred_region = sa.Column(sa.Date)
     end_date = sa.Column(sa.Date)
     retrieval_time = sa.Column(sa.DateTime)
-    park = sa.Column(sa.Boolean)
+    parks = sa.Column(sa.String)
 
     def __repr__(self):
         return f"Result {self.start_date} - {self.end_date}"
