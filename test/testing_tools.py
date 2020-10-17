@@ -79,18 +79,20 @@ def make_test_availability(start_date, end_date, park, availability):
 def test_searches():
      searches_array = []
      test_array = [
-         make_test_search(tomorrow, overmorrow, None, "1,2"),
-         make_test_search(tomorrow, overmorrow, None, "2")
+         make_test_search(1, tomorrow, overmorrow, None, "1,2"),
+         make_test_search(2, tomorrow, overmorrow, None, "2")
      ]
      for test_search in test_array:
          search = Search()
+         search.owner_id = test_search["owner_id"]
          search.start_date = test_search["start_date"]
          search.end_date = test_search["end_date"]
          search.preferred_region = test_search["preferred_region"]
          search.parks = test_search["parks"]
+         search.is_active = True
          searches_array.append(search)
 
      return searches_array
 
-def make_test_search(start_date, end_date, preferred_region, parks):
-    return {"start_date": start_date, "end_date": end_date, "preferred_region": preferred_region, "parks": parks}  
+def make_test_search(owner_id, start_date, end_date, preferred_region, parks):
+    return {"owner_id": owner_id, "start_date": start_date, "end_date": end_date, "preferred_region": preferred_region, "parks": parks}  
