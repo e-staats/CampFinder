@@ -113,5 +113,5 @@ def start_scraper(info=None):
 if __name__ == "__main__":
     db_file = os.path.join(os.path.dirname(__file__),'db','testdb.sqlite')
     global_init(db_file)
-    info_dict = setup_info_dict()
-    start_scraper(info=info_dict)
+    info = setup_info_dict()
+    start_scraper(info=info)
