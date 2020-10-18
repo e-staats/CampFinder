@@ -1,10 +1,10 @@
 import os
 import sys
+from datetime import datetime, timedelta
 
 folder = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
 sys.path.insert(0, folder)
 import data.db_session as db_session  # pylint: disable = import-error
-from datetime import datetime, timedelta
 import data.constants as constants  # pylint: disable = import-error
 import services.availability_services as avail_services  # pylint: disable = import-error
 import services.search_services as search_services  # pylint: disable = import-error

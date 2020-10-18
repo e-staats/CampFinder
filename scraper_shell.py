@@ -106,7 +106,7 @@ def setup_info_dict():
 def start_scraper(info=None):
     if info == None:
         return "no start_urls provided - stopping"
-    scraper = ParkScraper(info=info_dict)
+    scraper = ParkScraper(info=info)
     scraper.parse()
 
 

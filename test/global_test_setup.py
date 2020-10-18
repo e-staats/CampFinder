@@ -19,8 +19,12 @@ import services.park_services as park_services  # pylint: disable = import-error
 def prep_db():
     # delete and re-initialize the db from scratch:
     db_file = os.path.join(os.path.dirname(__file__), "..", "db", "testdb.sqlite")
-    if os.path.exists(db_file):
+    try:
         os.remove(db_file)
+    except PermissionError:
+        sys.exit("Close the database in DB Viewer first!")
+    except:
+        pass
     db_session.global_init(db_file)
 
     # add the constant data
