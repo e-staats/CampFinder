@@ -27,7 +27,7 @@ def define_regions():
     }
 
 
-def format_date(date, suffix):
+def format_date(date, suffix="") -> str:
     return str(date.isoformat()) + suffix
 
 
@@ -50,12 +50,16 @@ def calculate_nights(date_range):
     return nights.days
 
 
+def date_range_to_string(start_date, end_date) -> str:
+    return format_date(start_date) + "-" + format_date(end_date)
+
+
 def create_info_dict(
     url_base, url_setup, start_date, end_date, search_time, quadrant_defs
 ):
     suffix = define_date_suffix()
-    url_setup["startDate"] = format_date(start_date, suffix)
-    url_setup["endDate"] = format_date(end_date, suffix)
+    url_setup["startDate"] = format_date(start_date, suffix=suffix)
+    url_setup["endDate"] = format_date(end_date, suffix=suffix)
     url_setup["nights"] = calculate_nights((start_date, end_date))
 
     info = {}
@@ -100,34 +104,38 @@ def setup_info_dict(search: Search) -> dict:
     )
 
 
-def start_scraper(info=None):
-    if info == None:
+def start_scraper(search_definitions=None):
+    if search_definitions == None:
         return "no start_urls provided - stopping"
-    scraper = ParkScraper(info=info)
+    scraper = ParkScraper(search_definitions=search_definitions)
     scraper.parse()
 
 
 def scrape_searches(all_searches=False):
     session = db_session.create_session()
+    search_definition = {}
+
     if all_searches == False:
         search = session.query(Search).filter(Search.is_active == 1).first()
         if search == None:
             return "No searches in database"
-        scrape_for_search(search)
+        search_definition = add_search_definition(search_definition, search)
 
     if all_searches == True:
         search_list = session.query(Search).filter(Search.is_active == 1).all()
         if search_list == []:
             return "No searches in database"
         for search in search_list:
-            scrape_for_search(search)
+            search_definition = add_search_definition(search_definition, search)
 
     session.close()
 
+    start_scraper(search_definition)
 
-def scrape_for_search(search):
-    info = setup_info_dict(search)
-    start_scraper(info=info)
+def add_search_definition(search_definitions, search):
+    date_range = date_range_to_string(search.start_date, search.end_date)
+    search_definitions[date_range] = setup_info_dict(search)
+    return search_definitions
 
 
 if __name__ == "__main__":
