@@ -1,4 +1,5 @@
 import sqlalchemy as sa
+import datetime
 from data.modelbase import SqlAlchemyBase # pylint: disable = import-error
 
 activeStatus = 1
@@ -9,10 +10,10 @@ class User(SqlAlchemyBase):
 
     id = sa.Column(sa.Integer, primary_key=True, autoincrement=True)
     name = sa.Column(sa.String)
-    email = sa.Column(sa.String)
+    email = sa.Column(sa.String, index=True)
     hashed_pw = sa.Column(sa.String)
     status = sa.Column(sa.Integer)
-    creation_date = sa.Column(sa.DateTime)
+    creation_date = sa.Column(sa.DateTime, default=datetime.datetime.now)
 
     def __repr__(self):
         return f"User {self.name}"

@@ -4,6 +4,7 @@ import requests
 from selenium_scraper import ParkScraper
 from urllib.parse import urlencode
 import datetime
+from data.db_session import global_init
 
 
 def define_date_suffix():
@@ -33,6 +34,14 @@ def format_url(url_base, url_setup):
     return url
 
 
+def format_searchtime(search_time):
+    return (
+        search_time.astimezone()
+        .strftime("%a %b %d %Y %H%M:%S GMT%z (%Z)")
+        .replace(" ", "%20")
+    )
+
+
 def calculate_nights(date_range):
     nights = date_range[1] - date_range[0]
     return nights.days
@@ -45,12 +54,18 @@ def create_urls(url_base, url_setup, date_range, search_time, quadrant_defs):
     url_setup["nights"] = calculate_nights(date_range)
 
     urls = {}
+    urls["start_urls"]={}
     for map_id in quadrant_defs.keys():
         url_setup["mapId"] = map_id
         region_name = quadrant_defs[map_id]
-        urls[region_name] = (
-            format_url(url_base, url_setup).replace("%3A", ":") + "&" + search_time
+        urls["start_urls"][region_name] = (
+            format_url(url_base, url_setup).replace("%3A", ":")
+            + "&"
+            + format_searchtime(search_time)
         )
+    urls["start_date"] = get_start_date()
+    urls["end_date"] = get_end_date(urls["start_date"])
+    urls["search_time"] = search_time
     return urls
 
 
@@ -63,7 +78,7 @@ def get_end_date(start_date):
     return start_date + datetime.timedelta(days=1)
 
 
-def setup_url_list():
+def setup_info_dict():
     url_setup = {
         "mapId": None,
         "searchTabGroupId": 0,
@@ -83,23 +98,20 @@ def setup_url_list():
     start = get_start_date()
     end = get_end_date(start)
     date_range = (start, end)
-    search_time = (
-        datetime.datetime.now()
-        .astimezone()
-        .strftime("%a %b %d %Y %H%M:%S GMT%z (%Z)")
-        .replace(" ", "%20")
-    )
-    url_list = create_urls(url_base, url_setup, date_range, search_time, quadrant_defs)
-    return url_list
+    search_time = datetime.datetime.now()
+    info_dict = create_urls(url_base, url_setup, date_range, search_time, quadrant_defs)
+    return info_dict
 
 
-def start_scraper(start_urls=None):
-    if start_urls == None:
+def start_scraper(info=None):
+    if info == None:
         return "no start_urls provided - stopping"
-    scraper = ParkScraper(start_urls=start_urls)
+    scraper = ParkScraper(info=info_dict)
     scraper.parse()
 
 
 if __name__ == "__main__":
-    start_urls = setup_url_list()
-    start_scraper(start_urls=start_urls)
+    db_file = os.path.join(os.path.dirname(__file__),'db','testdb.sqlite')
+    global_init(db_file)
+    info_dict = setup_info_dict()
+    start_scraper(info=info_dict)

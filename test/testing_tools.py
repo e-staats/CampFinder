@@ -3,6 +3,7 @@ import sys
 folder = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
 sys.path.insert(0, folder)
 import data # pylint: disable = import-error
+from data.db_session import global_init # pylint: disable = import-error
 from data.result import Result # pylint: disable = import-error
 from data.search import Search # pylint: disable = import-error
 from data.availability import Availability # pylint: disable = import-error
@@ -14,8 +15,7 @@ ericsEmail = "eric.k.staats@gmail.com"
 mikesEmail = "michael.v.cambria@gmail.com"
 
 def setup_all_test_data():
-    db_file = os.path.join(os.path.dirname(__file__),'..','db','testdb.sqlite')
-    data.db_session.global_init(db_file)
+    global_init(os.path.join(os.path.dirname(__file__),'..','db','testdb.sqlite'))
     session = data.db_session.factory()
     session.query(User).delete()
     session.query(Availability).delete()
@@ -41,6 +41,5 @@ def test_users():
         user.name = test_dictionary["names"][i]
         user.email = test_dictionary["emails"][i]
         user.status = 1
-        user.creation_date = datetime.datetime.now()
         test_array.append(user)
     return test_array

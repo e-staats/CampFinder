@@ -2,13 +2,23 @@ from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+import services.result_services as result_services
+import services.region_services as region_services
+import services.park_services as park_services
+import services.availability_services as availability_services
+import data.db_session as db_session  # pylint: disable = import-error
+import os
+import datetime
+
+# pylint: disable = no-member
 
 
 class ParkScraper:
     # Initalize the webdriver
-    def __init__(self, start_urls: dict):
+    def __init__(self, info: dict):
         self.write_to_file("")
-        self.start_urls = start_urls
+        self.info = info
+        self.start_urls = info["start_urls"]
 
     def set_firefox_options(self):
         firefox_options = webdriver.FirefoxOptions()
@@ -18,12 +28,26 @@ class ParkScraper:
     # Parse function: Scrape the webpage and store it
     def parse(self):
         self.firefox_options = self.set_firefox_options()
+        session = db_session.create_session()
         for region in self.start_urls.keys():
             self.driver = webdriver.Firefox(firefox_options=self.firefox_options)
-            self.parseURL(self.start_urls[region], region)
+            session = self.parseURL(self.start_urls[region], region, session)
             self.driver.quit()
 
-    def parseURL(self, url, region: str):
+        result = result_services.find_result(
+            self.info["start_date"], self.info["end_date"], session=session
+        )
+        if result == None:
+            result = result_services.create_result(
+                self.info["start_date"], self.info["end_date"], datetime.datetime.now()
+            )
+            session.add(result)
+        else:
+            result.retrieval_time = datetime.datetime.now()
+
+        session.commit()
+
+    def parseURL(self, url, region: str, session):
         self.driver.get(url)
 
         print("scraping " + region)
@@ -42,16 +66,32 @@ class ParkScraper:
         circles = []
         circles = self.driver.find_elements_by_tag_name("circle")
 
+        # region_dict = region_services.get_region_dict()
         for circle in circles:
-            string = (
-                str(circle.get_attribute("id"))
-                + " - "
-                + region
-                + ": "
-                + self.map_fill_value(str(circle.get_attribute("fill")))
-                + "\n"
-            )
-            self.append_to_file(string)
+            if circle.get_attribute("id") != None:
+                park_id = park_services.get_park_id_from_name(
+                    str(circle.get_attribute("id"))
+                )
+                if park_id == False:
+                    continue
+                value = self.temp_map_fill_value(str(circle.get_attribute("fill")))
+                availability = availability_services.find_availability(
+                    self.info["start_date"],
+                    self.info["end_date"],
+                    park_id,
+                    session=session,
+                )
+                if availability == None:
+                    availability = availability_services.create_availability(
+                        self.info["start_date"], self.info["end_date"], park_id, value
+                    )
+                    session.add(availability)
+                else:
+                    availability.availability = value
+            # string = self.convert_to_string(circle,region_dict[region])
+            # self.append_to_file(string)
+
+        return session
 
     def write_to_file(self, stringToWrite):
         filename = "park_info.txt"
@@ -62,6 +102,16 @@ class ParkScraper:
         filename = "park_info.txt"
         with open(filename, "a") as f:
             f.write(stringToAppend)
+
+    def convert_to_string(self, circle, region):
+        return (
+            str(circle.get_attribute("id"))
+            + "|"
+            + str(region)
+            + ": "
+            + self.map_fill_value(str(circle.get_attribute("fill")))
+            + "\n"
+        )
 
     def element_exists(self, element_id):
         try:
@@ -96,3 +146,16 @@ class ParkScraper:
             return value_map[fill_value]
         else:
             return "UNMAPPED VALUE - " + fill_value
+
+    def temp_map_fill_value(self, fill_value: str) -> int:
+        value_map = {
+            "icon-available": 1,
+            "icon-unavailable": 0,
+            "icon-invalid": 0,
+            "icon-not-operating": 0,
+        }
+
+        if fill_value in value_map.keys():
+            return value_map[fill_value]
+        else:
+            return 0

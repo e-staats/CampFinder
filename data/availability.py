@@ -7,7 +7,7 @@ class Availability(SqlAlchemyBase):
 
     start_date = sa.Column(sa.Date, primary_key=True)
     end_date = sa.Column(sa.Date, primary_key=True)
-    park = sa.Column(sa.Integer)
+    park = sa.Column(sa.Integer, primary_key=True)
     availability = sa.Column(sa.Boolean)
 
     def __repr__(self):
