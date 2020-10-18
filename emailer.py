@@ -1,7 +1,6 @@
 import smtplib, ssl
 import data.db_session
 from data.user import User
-import yagmail
 import data.db_session
 
 port = 465  # For SSL

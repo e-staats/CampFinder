@@ -9,8 +9,8 @@ class User(SqlAlchemyBase):
     name = sa.Column(sa.String)
     email = sa.Column(sa.String, index=True)
     hashed_pw = sa.Column(sa.String)
-    status = sa.Column(sa.Integer)
     creation_date = sa.Column(sa.DateTime, default=datetime.datetime.now)
+    is_active = sa.Column(sa.Integer, default=True)
 
     def __repr__(self):
         return f"User {self.name}"

@@ -106,12 +106,12 @@ def setup_info_dict():
 def start_scraper(info=None):
     if info == None:
         return "no start_urls provided - stopping"
-    scraper = ParkScraper(info=info_dict)
+    scraper = ParkScraper(info=info)
     scraper.parse()
 
 
 if __name__ == "__main__":
     db_file = os.path.join(os.path.dirname(__file__),'db','testdb.sqlite')
     global_init(db_file)
-    info_dict = setup_info_dict()
-    start_scraper(info=info_dict)
+    info = setup_info_dict()
+    start_scraper(info=info)
