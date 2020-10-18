@@ -16,7 +16,6 @@ import datetime
 class ParkScraper:
     # Initalize the webdriver
     def __init__(self, info: dict):
-        self.write_to_file("")
         self.info = info
         self.start_urls = info["start_urls"]
 

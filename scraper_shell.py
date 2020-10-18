@@ -4,7 +4,10 @@ import requests
 from selenium_scraper import ParkScraper
 from urllib.parse import urlencode
 import datetime
-from data.db_session import global_init
+import data.db_session as db_session
+from data.search import Search
+
+# pylint: disable = no-member
 
 
 def define_date_suffix():
@@ -28,10 +31,10 @@ def format_date(date, suffix):
     return str(date.isoformat()) + suffix
 
 
-def format_url(url_base, url_setup):
+def format_url(url_base, url_setup, search_time):
     url = urlencode(url_setup)
-    url = url_base + url
-    return url
+    url = url_base + url + "&" + format_searchtime(search_time)
+    return url.replace("%3A", ":")
 
 
 def format_searchtime(search_time):
@@ -47,38 +50,30 @@ def calculate_nights(date_range):
     return nights.days
 
 
-def create_urls(url_base, url_setup, date_range, search_time, quadrant_defs):
+def create_info_dict(
+    url_base, url_setup, start_date, end_date, search_time, quadrant_defs
+):
     suffix = define_date_suffix()
-    url_setup["startDate"] = format_date(date_range[0], suffix)
-    url_setup["endDate"] = format_date(date_range[1], suffix)
-    url_setup["nights"] = calculate_nights(date_range)
+    url_setup["startDate"] = format_date(start_date, suffix)
+    url_setup["endDate"] = format_date(end_date, suffix)
+    url_setup["nights"] = calculate_nights((start_date, end_date))
 
-    urls = {}
-    urls["start_urls"]={}
+    info = {}
+    info["start_urls"] = {}
     for map_id in quadrant_defs.keys():
         url_setup["mapId"] = map_id
         region_name = quadrant_defs[map_id]
-        urls["start_urls"][region_name] = (
-            format_url(url_base, url_setup).replace("%3A", ":")
-            + "&"
-            + format_searchtime(search_time)
-        )
-    urls["start_date"] = get_start_date()
-    urls["end_date"] = get_end_date(urls["start_date"])
-    urls["search_time"] = search_time
-    return urls
+        info["start_urls"][region_name] = format_url(url_base, url_setup, search_time)
+    info["start_date"] = start_date
+    info["end_date"] = end_date
+    info["search_time"] = search_time
+    return info
 
 
-def get_start_date():
-    # return datetime.date(2020, 10, 10)
-    return datetime.date.today()
+def setup_info_dict(search: Search) -> dict:
+    if search.id == None:
+        return "Invalid Search object"
 
-
-def get_end_date(start_date):
-    return start_date + datetime.timedelta(days=1)
-
-
-def setup_info_dict():
     url_setup = {
         "mapId": None,
         "searchTabGroupId": 0,
@@ -93,14 +88,16 @@ def setup_info_dict():
     }
 
     quadrant_defs = define_regions()
-
     url_base = define_url_base()
-    start = get_start_date()
-    end = get_end_date(start)
-    date_range = (start, end)
     search_time = datetime.datetime.now()
-    info_dict = create_urls(url_base, url_setup, date_range, search_time, quadrant_defs)
-    return info_dict
+    return create_info_dict(
+        url_base,
+        url_setup,
+        search.start_date,
+        search.end_date,
+        search_time,
+        quadrant_defs,
+    )
 
 
 def start_scraper(info=None):
@@ -110,8 +107,30 @@ def start_scraper(info=None):
     scraper.parse()
 
 
-if __name__ == "__main__":
-    db_file = os.path.join(os.path.dirname(__file__),'db','testdb.sqlite')
-    global_init(db_file)
-    info = setup_info_dict()
+def scrape_searches(all_searches=False):
+    session = db_session.create_session()
+    if all_searches == False:
+        search = session.query(Search).filter(Search.is_active == 1).first()
+        if search == None:
+            return "No searches in database"
+        scrape_for_search(search)
+
+    if all_searches == True:
+        search_list = session.query(Search).filter(Search.is_active == 1).all()
+        if search_list == []:
+            return "No searches in database"
+        for search in search_list:
+            scrape_for_search(search)
+
+    session.close()
+
+
+def scrape_for_search(search):
+    info = setup_info_dict(search)
     start_scraper(info=info)
+
+
+if __name__ == "__main__":
+    print(
+        "Don't run directly; run test/scraper_tests.py if you want to test the scraper"
+    )
