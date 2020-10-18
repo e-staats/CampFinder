@@ -1,9 +1,8 @@
 import smtplib, ssl
-from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy.orm import scoped_session,sessionmaker
 import data.db_session
 from data.user import User
 import yagmail
+import data.db_session
 
 port = 465  # For SSL
 password = "sickpassword" #This is a terrible thing
@@ -14,7 +13,7 @@ class ParkEmailer:
         # Create a secure SSL context
         self.context = ssl.create_default_context()
 
-    def load_data_and_email(self):
+    def load_data_and_email(self):   
         return
 
     def send_email(self,to_address,message):        

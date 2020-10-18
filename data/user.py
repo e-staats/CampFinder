@@ -2,9 +2,6 @@ import sqlalchemy as sa
 import datetime
 from data.modelbase import SqlAlchemyBase # pylint: disable = import-error
 
-activeStatus = 1
-inactiveStatus = 2
-
 class User(SqlAlchemyBase):
     __tablename__ = "users"
 
