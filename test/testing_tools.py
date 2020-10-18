@@ -18,6 +18,7 @@ test_park_two = 2
 today = datetime.today()
 tomorrow = today + timedelta(days=1)
 overmorrow = tomorrow + timedelta(days=1)
+overovermorrow = overmorrow + timedelta(days=1)
 
 
 def setup_all_test_data():
@@ -55,5 +56,5 @@ def test_availabilities():
 def test_searches():
     return [
         search_services.create_search(1, tomorrow, overmorrow, None, "1,2", True),
-        search_services.create_search(2, tomorrow, overmorrow, None, "2", True),
+        search_services.create_search(2, overmorrow, overovermorrow, None, "2", True),
     ]

@@ -15,10 +15,8 @@ import datetime
 
 class ParkScraper:
     # Initalize the webdriver
-    def __init__(self, info: dict):
-        self.write_to_file("")
-        self.info = info
-        self.start_urls = info["start_urls"]
+    def __init__(self, search_definitions: dict):
+        self.search_definitions = search_definitions
 
     def set_firefox_options(self):
         firefox_options = webdriver.FirefoxOptions()
@@ -29,17 +27,26 @@ class ParkScraper:
     def parse(self):
         self.firefox_options = self.set_firefox_options()
         session = db_session.create_session()
-        for region in self.start_urls.keys():
+        for date_range in self.search_definitions.keys():
+            search_def = self.search_definitions[date_range]
+            print(f"Scraping for {date_range}")
+            self.parse_search(search_def, session)
+    
+    def parse_search(self, search_def, session):
+        for region in search_def["start_urls"].keys():
             self.driver = webdriver.Firefox(firefox_options=self.firefox_options)
-            session = self.parseURL(self.start_urls[region], region, session)
+            url = search_def["start_urls"][region]
+            start_date = search_def["start_date"]
+            end_date = search_def["end_date"]
+            session = self.parseURL(url, region, start_date, end_date, session)
             self.driver.quit()
 
         result = result_services.find_result(
-            self.info["start_date"], self.info["end_date"], session=session
+            search_def["start_date"], search_def["end_date"], session=session
         )
         if result == None:
             result = result_services.create_result(
-                self.info["start_date"], self.info["end_date"], datetime.datetime.now()
+                search_def["start_date"], search_def["end_date"], datetime.datetime.now()
             )
             session.add(result)
         else:
@@ -47,7 +54,7 @@ class ParkScraper:
 
         session.commit()
 
-    def parseURL(self, url, region: str, session):
+    def parseURL(self, url, region: str, start_date, end_date, session):
         self.driver.get(url)
 
         print("scraping " + region)
@@ -75,14 +82,14 @@ class ParkScraper:
                     continue
                 value = self.temp_map_fill_value(str(circle.get_attribute("fill")))
                 availability = availability_services.find_availability(
-                    self.info["start_date"],
-                    self.info["end_date"],
+                    start_date,
+                    end_date,
                     park_id,
                     session=session,
                 )
                 if availability == None:
                     availability = availability_services.create_availability(
-                        self.info["start_date"], self.info["end_date"], park_id, value
+                        start_date, end_date, park_id, value
                     )
                     session.add(availability)
                 else:
