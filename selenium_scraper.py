@@ -66,7 +66,6 @@ class ParkScraper:
         circles = []
         circles = self.driver.find_elements_by_tag_name("circle")
 
-        # region_dict = region_services.get_region_dict()
         for circle in circles:
             if circle.get_attribute("id") != None:
                 park_id = park_services.get_park_id_from_name(
@@ -88,30 +87,8 @@ class ParkScraper:
                     session.add(availability)
                 else:
                     availability.availability = value
-            # string = self.convert_to_string(circle,region_dict[region])
-            # self.append_to_file(string)
 
         return session
-
-    def write_to_file(self, stringToWrite):
-        filename = "park_info.txt"
-        with open(filename, "w") as f:
-            f.write(stringToWrite)
-
-    def append_to_file(self, stringToAppend):
-        filename = "park_info.txt"
-        with open(filename, "a") as f:
-            f.write(stringToAppend)
-
-    def convert_to_string(self, circle, region):
-        return (
-            str(circle.get_attribute("id"))
-            + "|"
-            + str(region)
-            + ": "
-            + self.map_fill_value(str(circle.get_attribute("fill")))
-            + "\n"
-        )
 
     def element_exists(self, element_id):
         try:
@@ -134,6 +111,28 @@ class ParkScraper:
         element.click()
         return True
 
+    def temp_map_fill_value(self, fill_value: str) -> int:
+        value_map = {
+            "icon-available": 1,
+            "icon-unavailable": 0,
+            "icon-invalid": 0,
+            "icon-not-operating": 0,
+        }
+
+        if fill_value in value_map.keys():
+            return value_map[fill_value]
+        else:
+            return 0
+
+    ##############################################################################
+    # here's the old code to write to a file:
+    def legacy_output(self, circles, region):
+        region_dict = region_services.get_region_dict()
+        for circle in circles:
+            if circle.get_attribute("id") != None:
+                string = self.convert_to_string(circle, region_dict[region])
+                self.append_to_file(string)
+
     def map_fill_value(self, fill_value: str) -> str:
         value_map = {
             "icon-available": "~~AVAILABLE~~~~~~~~~~~~~~~~~~~~",
@@ -147,15 +146,22 @@ class ParkScraper:
         else:
             return "UNMAPPED VALUE - " + fill_value
 
-    def temp_map_fill_value(self, fill_value: str) -> int:
-        value_map = {
-            "icon-available": 1,
-            "icon-unavailable": 0,
-            "icon-invalid": 0,
-            "icon-not-operating": 0,
-        }
+    def write_to_file(self, stringToWrite):
+        filename = "park_info.txt"
+        with open(filename, "w") as f:
+            f.write(stringToWrite)
 
-        if fill_value in value_map.keys():
-            return value_map[fill_value]
-        else:
-            return 0
+    def append_to_file(self, stringToAppend):
+        filename = "park_info.txt"
+        with open(filename, "a") as f:
+            f.write(stringToAppend)
+
+    def convert_to_string(self, circle, region):
+        return (
+            str(circle.get_attribute("id"))
+            + "|"
+            + str(region)
+            + ": "
+            + self.map_fill_value(str(circle.get_attribute("fill")))
+            + "\n"
+        )

@@ -9,11 +9,9 @@ class Search(SqlAlchemyBase):
     owner_id = sa.Column(sa.Integer)
     start_date = sa.Column(sa.Date)
     end_date = sa.Column(sa.Date)
-    preferred_region = sa.Column(sa.Date)
-    end_date = sa.Column(sa.Date)
-    retrieval_time = sa.Column(sa.DateTime)
+    preferred_region = sa.Column(sa.String)
     parks = sa.Column(sa.String)
-    is_active = sa.Column(sa.Boolean)
+    is_active = sa.Column(sa.Boolean, default=True)
     
 
     def __repr__(self):
