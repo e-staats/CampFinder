@@ -26,3 +26,8 @@ class ParkEmailer:
 
     def load_data(self):
         return None
+
+    def email_users(self, email_list, message):
+        for address in email_list:
+            self.send_email(address, message)
+        return True

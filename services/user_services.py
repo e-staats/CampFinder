@@ -23,3 +23,17 @@ def find_user_by_id(user_id, session=None):
     )
 
     return user
+
+def get_user_email(user_id, session=None):
+    if session == None:
+        session = db_session.create_session()
+
+    user = (
+        session.query(User)
+        .filter(User.id == user_id)
+        .first()
+    )
+    if user == None:
+        return None
+    
+    return user.email
