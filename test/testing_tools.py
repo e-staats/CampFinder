@@ -9,6 +9,7 @@ import data.constants as constants  # pylint: disable = import-error
 import services.availability_services as avail_services  # pylint: disable = import-error
 import services.search_services as search_services  # pylint: disable = import-error
 import services.user_services as user_services  # pylint: disable = import-error
+import services.result_services as result_services  # pylint: disable = import-error
 
 ericsEmail = "eric.k.staats@gmail.com"
 mikesEmail = "michael.v.cambria@gmail.com"
@@ -25,6 +26,7 @@ def setup_all_test_data():
     session = db_session.create_session()
     add_data_to_session(test_users(), session)
     add_data_to_session(test_availabilities(), session)
+    add_data_to_session(test_results(), session)
     add_data_to_session(test_searches(), session)
     session.commit()
     session.close()
@@ -48,13 +50,29 @@ def test_users():
 
 def test_availabilities():
     return [
-        avail_services.create_availability(tomorrow, overmorrow, test_park_one, True),
+        avail_services.create_availability(tomorrow, overmorrow, test_park_one, False),
         avail_services.create_availability(tomorrow, overmorrow, test_park_two, False),
+        avail_services.create_availability(
+            overmorrow, overovermorrow, test_park_one, True
+        ),
+        avail_services.create_availability(
+            overmorrow, overovermorrow, test_park_two, True
+        ),
+    ]
+
+
+def test_results():
+    return [
+        result_services.create_result(tomorrow, overmorrow, datetime.now()),
+        result_services.create_result(
+            overmorrow, overovermorrow, datetime.now()
+        ),
     ]
 
 
 def test_searches():
     return [
         search_services.create_search(1, tomorrow, overmorrow, None, "1,2", True),
+        search_services.create_search(2, tomorrow, overmorrow, None, "1,2", True),
         search_services.create_search(2, overmorrow, overovermorrow, None, "2", True),
     ]

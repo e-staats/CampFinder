@@ -8,6 +8,7 @@ def create_plaintext_body(park_list):
     text = f"""\
             {greeting_text()} \n
             {park_list}
+            {cancel_text} \n
             """
     return text
 
@@ -17,6 +18,7 @@ def create_html_body(park_list):
             <body>
                 <p>{greeting_text()}<br>
                 {park_list}
+                <b><p>{cancel_text()}</p></b>
                 </p>
             </body>
             </html>
@@ -39,14 +41,13 @@ def create_park_list(avail_dict, string="", html=False):
 def greeting_text():
     return "The following parks are available for your requested dates:"
 
+def cancel_text():
+    return "To stop receiving emails for this search, click here (todo)"
 
 def create_message(avail_dict):
-    sender_email = "wiparkscraper@gmail.com"
-    receiver_email = "eric.k.staats@gmail.com"
     message = MIMEMultipart("alternative")
     message["Subject"] = "New Park Availability!"
-    message["From"] = sender_email
-    message["To"] = receiver_email
+    message["From"] = "wiparkscraper@gmail.com"
 
     # Turn these into plain/html MIMEText objects
     part1 = MIMEText(

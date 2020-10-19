@@ -11,5 +11,5 @@ if __name__=='__main__':
     global_test_setup.prep_db()
     testing_tools.setup_all_test_data()
     emailer = ParkEmailer()
-    emailer.load_data_and_email()
+    #emailer.send_email("eric.k.staats@gmail.com","hello from python")
 

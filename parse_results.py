@@ -1,14 +1,3 @@
-"""
-for each user who has an active search:
-    for each active search
-    check the results to see what parks are available
-    create a dictionary of available parks and their region
-    smush that into an email message
-    find all users interested in a search
-    email those users with the message
-"""
-
-from logging import info
 from data.db_session import create_session
 import services.search_services as search_services
 import services.user_services as user_services
@@ -26,25 +15,28 @@ def process_results():
     session = create_session()
     searches = search_services.find_active_searches(session=session)
     for search in searches:
+        # check for results for the search and move on if there are no availabilities
         availability_info = avail_services.find_availability_info_for_date_range(
             search.start_date, search.end_date, session=session
         )
-        if availability_info == None:
+        if availability_info == []:
             continue
+
+        # turn the results into an email
         message = convert_availability_to_message(availability_info)
         if message == False:
-            return
-        # users = search_services.find_users_interested_in_search(
-        #     search.id, session=session
-        # )
-        # email_list = []
-        # for user in users:
-        #     email_list.append(user_services.get_user_email(user.id, session=session))
-        # emailer = ParkEmailer()
-        # success = emailer.email_users(email_list, message)
-        # if success != True:
-        #     pass  # todo
-        print(message)
+            continue
+
+        # grab the person to email:
+        to_address = user_services.get_user_email(search.owner_id, session=session)
+        if to_address == None:
+            continue
+
+        # then send that email!
+        emailer = (
+            ParkEmailer()
+        )  # todo: get the emailer class working. Right now if just hangs for 10 minutes and does nothing unless you ctrl+C out
+        message["To"] = to_address
         email_message.send_that_email(message)
 
 
