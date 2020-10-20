@@ -14,6 +14,7 @@ from data.region import Region
 def process_results():
     session = create_session()
     searches = search_services.find_active_searches(session=session)
+    emailer = ParkEmailer()
     for search in searches:
         # check for results for the search and move on if there are no availabilities
         availability_info = avail_services.find_availability_info_for_date_range(
@@ -23,7 +24,8 @@ def process_results():
             continue
 
         # turn the results into an email
-        message = convert_availability_to_message(availability_info)
+        park_id_list = search_services.deserialize_park_list(search)
+        message = convert_availability_to_message(availability_info, park_id_list)
         if message == False:
             continue
 
@@ -32,24 +34,22 @@ def process_results():
         if to_address == None:
             continue
 
-        # then send that email!
-        emailer = (
-            ParkEmailer()
-        )  # todo: get the emailer class working. Right now if just hangs for 10 minutes and does nothing unless you ctrl+C out
+        # then send that email
         message["To"] = to_address
-        email_message.send_that_email(message)
+        emailer.send_email(to_address, message)
 
 
-def convert_availability_to_message(availability_info):
+def convert_availability_to_message(availability_info, park_id_list):
     avail_dict = {}
     for a, p, r in availability_info:
+        availability = str(a)
         try:
-            avail_dict[a] = avail_dict[a].append((p, r))
+            avail_dict[availability].append((p, r))
         except:
-            avail_dict[a] = [(p, r)]
+            avail_dict[availability] = [(p, r)]
 
     if avail_dict == {}:
         return False
-    message = email_message.create_message(avail_dict)
+    message = email_message.create_message(avail_dict, park_id_list)
 
     return message

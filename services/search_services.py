@@ -11,7 +11,7 @@ def create_search(owner_id, start_date, end_date, preferred_region, parks, is_ac
     s.end_date = end_date
     s.preferred_region = preferred_region
     s.parks = parks
-    s.is_active = True
+    s.is_active = is_active
 
     return s
 
@@ -49,3 +49,6 @@ def find_users_interested_in_search(search_id, session=None):
     user_ids = [user_id for user_id, in user_ids]
     users = [user_services.find_user_by_id(user_id) for user_id in user_ids]
     return users
+
+def deserialize_park_list(search):
+    return [ int(p_id) for p_id in search.parks.split(',')]

@@ -132,8 +132,14 @@ def scrape_searches(all_searches=False):
 
     start_scraper(search_definition)
 
+
 def add_search_definition(search_definitions, search):
     date_range = date_range_to_string(search.start_date, search.end_date)
+
+    # short circuit if we already have defs for this date range:
+    if date_range in search_definitions.keys():
+        return search_definitions
+
     search_definitions[date_range] = setup_info_dict(search)
     return search_definitions
 

@@ -5,10 +5,12 @@ sys.path.insert(0, folder)
 import global_test_setup
 import testing_tools
 import parse_results # pylint: disable = import-error
+import scraper_shell # pylint: disable = import-error
 
 if __name__=='__main__':
     global_test_setup.prep_db()
     testing_tools.setup_all_test_data()
+    scraper_shell.scrape_searches(all_searches=True)
     parse_results.process_results()
 
     
