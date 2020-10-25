@@ -14,9 +14,8 @@ def create_availability(start_date, end_date, park, availability):
     return a
 
 
-def find_availability(start_date, end_date, park, session=None):
-    if session == None:
-        session = db_session.create_session()
+def find_availability(start_date, end_date, park):
+    session = db_session.create_session()
 
     availability = (
         session.query(Availability)
@@ -26,12 +25,13 @@ def find_availability(start_date, end_date, park, session=None):
         .first()
     )
 
+    session.close()
+
     return availability
 
 
-def find_availability_info_for_date_range(start_date, end_date, session=None):
-    if session == None:
-        session = db_session.create_session()
+def find_availability_info_for_date_range(start_date, end_date):
+    session = db_session.create_session()
 
     available_parks = (
         session.query(Availability, Park, Region)
@@ -43,4 +43,6 @@ def find_availability_info_for_date_range(start_date, end_date, session=None):
         .all()
     )
 
+    session.close()
+    
     return available_parks

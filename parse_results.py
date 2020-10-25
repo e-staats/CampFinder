@@ -13,12 +13,13 @@ from data.region import Region
 
 def process_results():
     session = create_session()
-    searches = search_services.find_active_searches(session=session)
+    searches = search_services.find_active_searches()
     emailer = ParkEmailer()
     for search in searches:
         # check for results for the search and move on if there are no availabilities
         availability_info = avail_services.find_availability_info_for_date_range(
-            search.start_date, search.end_date, session=session
+            search.start_date,
+            search.end_date,
         )
         if availability_info == []:
             continue
@@ -30,7 +31,9 @@ def process_results():
             continue
 
         # grab the person to email:
-        to_address = user_services.get_user_email(search.owner_id, session=session)
+        to_address = user_services.get_user_email(
+            search.owner_id,
+        )
         if to_address == None:
             continue
 

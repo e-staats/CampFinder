@@ -1,6 +1,4 @@
-import os
-import sys
-import requests
+import datetime
 from selenium_scraper import ParkScraper
 from urllib.parse import urlencode
 import datetime
@@ -111,15 +109,11 @@ def start_scraper(search_definitions=None):
     scraper.parse()
 
 
-def scrape_searches(all_searches=False):
+def scrape_searches(*args):
+    all_searches = args[0]
     session = db_session.create_session()
     search_definition = {}
-
-    if all_searches == False:
-        search = session.query(Search).filter(Search.is_active == 1).first()
-        if search == None:
-            return "No searches in database"
-        search_definition = add_search_definition(search_definition, search)
+    print(f"scraping for searches at {datetime.datetime.now()}")
 
     if all_searches == True:
         search_list = session.query(Search).filter(Search.is_active == 1).all()
@@ -127,6 +121,12 @@ def scrape_searches(all_searches=False):
             return "No searches in database"
         for search in search_list:
             search_definition = add_search_definition(search_definition, search)
+    
+    else:
+        search = session.query(Search).filter(Search.is_active == 1).first()
+        if search == None:
+            return "No searches in database"
+        search_definition = add_search_definition(search_definition, search)
 
     session.close()
 

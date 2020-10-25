@@ -9,9 +9,8 @@ def create_result(start_date, end_date, retrieval_time):
     r.retrieval_time=retrieval_time
     return r
 
-def find_result(start_date, end_date, session=None):
-    if session == None:
-        session = db_session.create_session()
+def find_result(start_date, end_date):
+    session = db_session.create_session()
 
     result = (
         session.query(Result)
@@ -20,6 +19,7 @@ def find_result(start_date, end_date, session=None):
         .first()
     )
 
+    session.close()
     return result
 
 def validate_datetime():

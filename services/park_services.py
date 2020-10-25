@@ -5,10 +5,14 @@ import os
 def get_park_id_from_name(name):
     session = db_session.create_session()
     park = session.query(Park).filter(Park.name == name).first()
+    session.close()
+    if park == None:
+        return False
     if isinstance(park.id,int):
         return park.id
     else:
         return False
+
 
 
 def populate_parks():
@@ -21,6 +25,7 @@ def populate_parks():
         p.region = park_dict[name]
         session.add(p)
     session.commit()
+    session.close()
     return True
 
 

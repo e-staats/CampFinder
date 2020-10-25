@@ -15,9 +15,8 @@ def create_search(owner_id, start_date, end_date, preferred_region, parks, is_ac
 
     return s
 
-def find_search_by_id(search_id, session=None):
-    if session == None:
-        session = db_session.create_session()
+def find_search_by_id(search_id):
+    session = db_session.create_session()
 
     search = (
         session.query(Search)
@@ -26,12 +25,13 @@ def find_search_by_id(search_id, session=None):
         .first()
     )
 
+    session.close()
+
     return search
 
 
-def find_active_searches(session=None):
-    if session == None:
-        session = db_session.create_session()
+def find_active_searches():
+    session = db_session.create_session()
 
     searches = (
         session.query(Search)
@@ -39,15 +39,18 @@ def find_active_searches(session=None):
         .all()
     )
 
+    session.close()
+
     return searches
 
-def find_users_interested_in_search(search_id, session=None):
-    if session == None:
-        session = db_session.create_session()
+def find_users_interested_in_search(search_id):
+    session = db_session.create_session()
     
     user_ids = session.query(Search.owner_id).filter(Search.id==search_id).all()
     user_ids = [user_id for user_id, in user_ids]
     users = [user_services.find_user_by_id(user_id) for user_id in user_ids]
+
+    session.close()
     return users
 
 def deserialize_park_list(search):

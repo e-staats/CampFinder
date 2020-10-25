@@ -31,7 +31,8 @@ class ParkScraper:
             search_def = self.search_definitions[date_range]
             print(f"Scraping for {date_range}")
             self.parse_search(search_def, session)
-    
+        session.close()
+
     def parse_search(self, search_def, session):
         for region in search_def["start_urls"].keys():
             self.driver = webdriver.Firefox(firefox_options=self.firefox_options)
@@ -42,11 +43,14 @@ class ParkScraper:
             self.driver.quit()
 
         result = result_services.find_result(
-            search_def["start_date"], search_def["end_date"], session=session
+            search_def["start_date"],
+            search_def["end_date"],
         )
         if result == None:
             result = result_services.create_result(
-                search_def["start_date"], search_def["end_date"], datetime.datetime.now()
+                search_def["start_date"],
+                search_def["end_date"],
+                datetime.datetime.now(),
             )
             session.add(result)
         else:
@@ -82,10 +86,7 @@ class ParkScraper:
                     continue
                 value = self.temp_map_fill_value(str(circle.get_attribute("fill")))
                 availability = availability_services.find_availability(
-                    start_date,
-                    end_date,
-                    park_id,
-                    session=session,
+                    start_date, end_date, park_id
                 )
                 if availability == None:
                     availability = availability_services.create_availability(

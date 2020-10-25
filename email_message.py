@@ -30,7 +30,7 @@ def create_html_body(park_list):
 def create_park_list(avail_dict, park_emphasis_list, string="", html=False):
     if html == True:
         linebreak = "<br>"
-        emphasis_start = "<span style='color: red'>"
+        emphasis_start = "<span style='color: green'>"
         emphasis_end = "</span>"
         header_start = "<b><u>"
         header_end = "</b></u>"

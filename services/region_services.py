@@ -13,6 +13,7 @@ def populate_regions():
         r.name = name
         session.add(r)
     session.commit()
+    session.close()
     return True
 
 
