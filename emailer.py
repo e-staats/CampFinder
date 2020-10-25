@@ -14,5 +14,5 @@ class ParkEmailer:
     def send_email(self,to_address,message):        
         with smtplib.SMTP_SSL("smtp.gmail.com", self.port, context=self.context) as server:
             server.login(self.sender_email, self.password)
-            server.sendmail(self.sender_email, to_address, message)
+            server.sendmail(self.sender_email, to_address, message.as_string())
         return True

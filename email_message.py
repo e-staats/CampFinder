@@ -16,44 +16,74 @@ def create_plaintext_body(park_list):
 def create_html_body(park_list):
     html = f"""<html>
             <body>
-                <p>{greeting_text()}<br>
+                <p>
+                {greeting_text()}<br>
                 {park_list}
-                <b><p>{cancel_text()}</p></b>
                 </p>
+                <b><p>{cancel_text()}</p></b>
             </body>
             </html>
             """
     return html
 
 
-def create_park_list(avail_dict, string="", html=False):
+def create_park_list(avail_dict, park_emphasis_list, string="", html=False):
     if html == True:
         linebreak = "<br>"
+        emphasis_start = "<span style='color: green'>"
+        emphasis_end = "</span>"
+        header_start = "<b><u>"
+        header_end = "</b></u>"
     else:
         linebreak = "\n"
-    for a in avail_dict.keys():
-        string = string + str(a) + linebreak
-        for p, r in avail_dict[a]:
-            string = string + p.name + " - " + r.name + linebreak
+        emphasis_start = "!! "
+        emphasis_end = ""
+        header_start = "~"
+        header_end = "~"
+
+    for availability_range in avail_dict.keys():
+        string = string + header_start + availability_range + header_end + linebreak
+        for park, region in avail_dict[availability_range]:
+            if park.id in park_emphasis_list:
+                park_string = (
+                    emphasis_start
+                    + basic_park_string(park.name, region.name)
+                    + emphasis_end
+                )
+            else:
+                park_string = basic_park_string(park.name, region.name)
+            string = string + park_string + linebreak
     return string
 
 
 def greeting_text():
     return "The following parks are available for your requested dates:"
 
+
+def basic_park_string(name, region):
+    return name + " - " + region
+
+
 def cancel_text():
     return "To stop receiving emails for this search, click here (todo)"
 
-def create_message(avail_dict):
+
+def create_message(avail_dict, park_emphasis_list):
     message = MIMEMultipart("alternative")
     message["Subject"] = "New Park Availability!"
     message["From"] = "wiparkscraper@gmail.com"
 
     # Turn these into plain/html MIMEText objects
     part1 = MIMEText(
-        create_plaintext_body(create_park_list(avail_dict, html=False)), "plain"
+        create_plaintext_body(
+            create_park_list(avail_dict, park_emphasis_list, html=False)
+        ),
+        "plain",
     )
-    part2 = MIMEText(create_html_body(create_park_list(avail_dict, html=True)), "html")
+    part2 = MIMEText(
+        create_html_body(create_park_list(avail_dict, park_emphasis_list, html=True)),
+        "html",
+    )
 
     # Add HTML/plain-text parts to MIMEMultipart message
     # The email client will try to render the last part first
