@@ -14,9 +14,46 @@
 </head>
 
 <body>
-    <div class="main_content">
-        {% block main_content %}
-        {% endblock %}
+    <div class="row">
+        <div class="col-md-2"></div>
+        <nav class="col-md-8">
+            <div class="row">
+                <div class="col-md-3">
+                    <a href="/">Home</a> </div>
+                <div class="col-md-3">
+                    <a href="/about">About</a>
+                </div>
+
+                {% if user_id %}
+                <div class="col-md-3 text-right">
+                    <a href="/account">{{ user_name }}'s Account</a>
+                </div>
+                <div class="col-md-3 text-right">
+                    <a href="/account/logout" class="account-controls">Log Out</a>
+                </div>
+
+                {% else %}
+                <div class="col-md-3 text-right">
+                    <a href="/account/login" class="btn btn-primary account-controls">Log In</a>
+                </div>
+                <div class="col-md-3 text-right">
+                    <a href="/account/register" class="btn btn-secondary account-controls">Register</a>
+                </div>
+                {% endif %}
+
+            </div>
+        </nav>
+        <div class="col-md-2"></div>
+    </div>
+    <div class="row">
+        <div class="col-md-2"></div>
+        <div class="col-md-8">
+            <div class="main_content">
+                {% block main_content %}
+                {% endblock %}
+            </div>
+        </div>
+        <div class="col-md-2"></div>
     </div>
 </body>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>

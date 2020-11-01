@@ -136,3 +136,6 @@ db/*
 
 # but do sync the folder
 !db/db_readme.txt 
+
+#JS frontend dev:
+node_modules/*
