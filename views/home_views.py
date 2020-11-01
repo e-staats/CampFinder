@@ -12,7 +12,6 @@ from viewmodels.home.index_viewmodel import IndexViewModel
 from infrastructure.view_modifiers import response
 from flask import jsonify
 from scraper_shell import setup_info_dict, scrape_searches
-from scheduler import scheduler
 
 blueprint = flask.Blueprint("home", __name__, template_folder="templates")
 
@@ -28,7 +27,4 @@ def index():
 @response(template_file="home/index.html")
 def scraper_post():
     vm = IndexViewModel()
-    #POC the scheduler:
-    url_list = setup_info_dict()
-    scheduler.add_job(id='manual-start-scraper', func=scrape_searches, kwargs={"start_urls": url_list})
     return vm.to_dict()

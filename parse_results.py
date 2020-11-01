@@ -12,7 +12,6 @@ from data.region import Region
 
 
 def process_results():
-    session = create_session()
     searches = search_services.find_active_searches()
     emailer = ParkEmailer()
     for search in searches:
