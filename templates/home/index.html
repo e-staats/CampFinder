@@ -1,4 +1,9 @@
 {% extends "/shared/_layout.html" %}
+{% block additional_css %}
+<link rel="stylesheet" href="/static/css/daypicker_styles.css">
+<link rel="stylesheet" href="/static/css/index.css">
+{% endblock %}
+
 {% block main_content %}
 <div>
     <div class="row">
@@ -14,7 +19,8 @@
     </div>
 
     <div class="row">
-        <h4>The app goes here</h4>
+        <!-- The app goes here: -->
+        <div id="root"></div>
     </div>
 
 
@@ -32,5 +38,5 @@
 {% endblock %}
 
 {% block additional_js %}
-
+<script src="static/js/compiled_js/app.js"></script>
 {% endblock %}
