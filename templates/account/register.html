@@ -1,0 +1,27 @@
+{% extends "shared/_layout.html" %}
+
+{% block nav %}{% endblock %}
+{% block main_content %}
+
+<div class="form-container">
+
+    <form action="" method="POST" class="account-form">
+        <h1>Register to use the Wisconsin Park Scraper</h1>
+        <a href="/account/login">Already have an account?</a>
+        {% if error %}
+        <div class="error-msg">{{error}}</div>
+        {% endif %}
+        <input name="name" type="text" placeholder=" Your name" class="form-control" value="{{name}}" required>
+        <input name="email" type="text" placeholder=" Your email" class="form-control" value="{{email}}" required>
+        <input name="password" type="text" placeholder=" Your password" class="form-control" value="{{password}}" required>
+        <button type="submit" class="btn btn-success">Register</button>
+    </form>
+
+</div>
+
+
+{% endblock %}
+
+{% block additional_css %}
+<link rel="stylesheet" href="/static/css/account.css">
+{% endblock %}

@@ -4,13 +4,14 @@ from typing import Optional
 
 from flask import Request
 from flask import Response
-import bson
 
-auth_cookie_name = 'cent_demo_user'
+from infrastructure.num_convert import try_int # pylint: disable = import-error
+
+auth_cookie_name = 'wi_park_scraper'
 
 
-def set_auth(response: Response, user_id):
-    hash_val = __hash_text(user_id)
+def set_auth(response: Response, user_id: int):
+    hash_val = __hash_text(str(user_id))
     val = "{}:{}".format(user_id, hash_val)
     response.set_cookie(auth_cookie_name, val)
 
@@ -24,7 +25,7 @@ def __add_cookie_callback(_, response: Response, name: str, value: str):
     response.set_cookie(name, value, max_age=timedelta(days=30))
 
 
-def get_user_id_via_auth_cookie(request: Request) -> Optional[bson.ObjectId]:
+def get_user_id_via_auth_cookie(request: Request) -> Optional[int]:
     if auth_cookie_name not in request.cookies:
         return None
 
@@ -39,10 +40,8 @@ def get_user_id_via_auth_cookie(request: Request) -> Optional[bson.ObjectId]:
     if hash_val != hash_val_check:
         print("Warning: Hash mismatch, invalid cookie value")
         return None
-    try:
-        return user_id
-    except:
-        return None
+
+    return try_int(user_id)
 
 
 def logout(response: Response):

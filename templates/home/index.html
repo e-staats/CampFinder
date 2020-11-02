@@ -19,8 +19,14 @@
     </div>
 
     <div class="row">
+        {% if user_id %}
         <!-- The app goes here: -->
         <div id="root"></div>
+        {% else %}
+        <div>
+            <h4>This site is in closed beta. Please contact wiparkscraper@gmail.com if you have any questions.</h4>
+        </div>
+        {% endif %}
     </div>
 
 
