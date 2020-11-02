@@ -1,3 +1,4 @@
+from enum import unique
 import sqlalchemy as sa
 import datetime
 from data.modelbase import SqlAlchemyBase  # pylint: disable = import-error
@@ -8,7 +9,7 @@ class User(SqlAlchemyBase):
 
     id = sa.Column(sa.Integer, primary_key=True, autoincrement=True)
     name = sa.Column(sa.String)
-    email = sa.Column(sa.String, index=True)
+    email = sa.Column(sa.String, index=True, unique=True)
     hashed_pw = sa.Column(sa.String)
     creation_date = sa.Column(sa.DateTime, default=datetime.datetime.now)
     is_active = sa.Column(sa.Integer, default=True)

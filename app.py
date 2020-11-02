@@ -15,8 +15,10 @@ def setup_db():
 
 def register_blueprints(app):
     from views import home_views
+    from views import account_views
 
     app.register_blueprint(home_views.blueprint)
+    app.register_blueprint(account_views.blueprint)
 
 
 if __name__ == "__main__":

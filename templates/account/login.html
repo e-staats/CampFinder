@@ -1,0 +1,29 @@
+{% extends "shared/_layout.html" %}
+
+{% block nav %}{% endblock %}
+{% block main_content %}
+
+<div class="form-container">
+
+    <form action="" method="POST" class="account-form">
+        <h1>Log In</h1>
+        <a href="/todo">Forgot your password?</a>
+        {% if error %}
+        <div class="error-msg">{{error}}</div>
+        {% endif %}
+        <input name="email" type="text" placeholder=" Your email" class="form-control" value="{{email}}" required>
+        <input name="password" type="text" placeholder=" Your password" class="form-control" value="{{password}}" required>
+        <button type="submit" class="btn btn-success">Log In</button>
+        <!-- TODO: make the email field have to be an email -->
+
+
+    </form>
+
+</div>
+
+
+{% endblock %}
+
+{% block additional_css %}
+<link rel="stylesheet" href="/static/css/account.css">
+{% endblock %}

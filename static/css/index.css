@@ -8,7 +8,8 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace; }
 
 .parkList {
-  display: flex; }
+  display: flex;
+  line-height: 15px; }
   .parkList input[type="checkbox"] {
     flex: 0 0 auto; }
   .parkList label {
