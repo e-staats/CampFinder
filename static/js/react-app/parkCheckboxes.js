@@ -5,13 +5,12 @@ class ParkSelector extends Component {
 
     handleSelectAllButtonClick = (e) => {
         this.props.handleSelectAllButtonClick(e)
-        console.log("heyo")
     }
 
     regionClassName = (name) => {
         return ('col-md-3 ' + name)
-
     }
+
     render() {
         return (
 

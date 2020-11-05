@@ -16,6 +16,14 @@ def populate_regions():
     session.close()
     return True
 
+def regions_exist():
+    session = db_session.create_session()
+    region = session.query(Region).first()
+    if region==None:
+        session.close()
+        return False
+    session.close()
+    return True
 
 def get_region_dict():
     return {

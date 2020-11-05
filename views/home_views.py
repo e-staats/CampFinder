@@ -2,14 +2,17 @@
 # even though the app itself runs fine:
 # pylint: disable = import-error
 
+from services.search_services import add_search, create_search
 import flask
 import os
 import sys
+import datetime
 
 folder = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
 sys.path.insert(0, folder)
 from viewmodels.home.index_viewmodel import IndexViewModel
 from infrastructure.view_modifiers import response
+import infrastructure.request_dict as request_dict
 from flask import jsonify
 from scraper_shell import setup_info_dict, scrape_searches
 
@@ -28,3 +31,24 @@ def index():
 def scraper_post():
     vm = IndexViewModel()
     return vm.to_dict()
+
+
+@blueprint.route("/_submit_search", methods=["POST"])
+@response(template_file="home/index.html")
+def submit_search():
+    vm = IndexViewModel()
+    request = request_dict.data_create("")
+    owner_id = vm.user_id
+    start_date = datetime.date.fromisoformat(request["start_date"].split("T")[0])
+    end_date = datetime.date.fromisoformat(request["end_date"].split("T")[0])
+    preferred_region = request["preferred_region"]
+    parks = request["parks"]
+    is_active = True
+    print(f"Preferred Region: {preferred_region} - preferred parks: {parks}")
+    search = create_search(
+        owner_id, start_date, end_date, preferred_region, parks, is_active
+    )
+    if not search:
+        return jsonify(status="error")
+    success = add_search(search)
+    return jsonify(success)

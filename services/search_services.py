@@ -15,6 +15,13 @@ def create_search(owner_id, start_date, end_date, preferred_region, parks, is_ac
 
     return s
 
+def add_search(search):
+    session = db_session.create_session()
+    session.add(search)
+    session.commit()
+    session.close()
+    return True
+
 def find_search_by_id(search_id):
     session = db_session.create_session()
 
