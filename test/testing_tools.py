@@ -39,12 +39,8 @@ def add_data_to_session(data, session):
 
 def test_users():
     return [
-        user_services.create_user(
-            "Beau", "michael.v.cambria@gmail.com", "abc", constants.user_active_status
-        ),
-        user_services.create_user(
-            "Liam", "eric.k.staats@gmail.com", "def", constants.user_active_status
-        ),
+        user_services.create_user("Beau", "michael.v.cambria@gmail.com", "abc"),
+        user_services.create_user("Liam", "eric.k.staats@gmail.com", "def"),
     ]
 
 
@@ -64,9 +60,7 @@ def test_availabilities():
 def test_results():
     return [
         result_services.create_result(tomorrow, overmorrow, datetime.now()),
-        result_services.create_result(
-            overmorrow, overovermorrow, datetime.now()
-        ),
+        result_services.create_result(overmorrow, overovermorrow, datetime.now()),
     ]
 
 
@@ -74,7 +68,9 @@ def test_searches():
     return [
         search_services.create_search(1, tomorrow, overmorrow, None, "1,2", True),
         search_services.create_search(1, tomorrow, overmorrow, None, "1", False),
-        search_services.create_search(2, overmorrow, overovermorrow, None, "1,2", False),
+        search_services.create_search(
+            2, overmorrow, overovermorrow, None, "1,2", False
+        ),
         search_services.create_search(2, tomorrow, overmorrow, None, "1,2", True),
         search_services.create_search(2, overmorrow, overovermorrow, None, "2", True),
     ]

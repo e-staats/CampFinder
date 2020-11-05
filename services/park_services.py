@@ -13,7 +13,14 @@ def get_park_id_from_name(name):
     else:
         return False
 
-
+def parks_exist():
+    session = db_session.create_session()
+    park = session.query(Park).first()
+    if park==None:
+        session.close()
+        return False
+    session.close()
+    return True
 
 def populate_parks():
     park_dict = get_park_dict()

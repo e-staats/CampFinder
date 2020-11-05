@@ -1,4 +1,5 @@
 import flask
+import json
 from werkzeug.datastructures import MultiDict
 
 
@@ -29,6 +30,26 @@ def create(default_val=None, **route_args) -> RequestDictionary:
         **args,  # The key/value pairs in the URL query string
         **request.headers,  # Header values
         **form,  # The key/value pairs in the body, from a HTML post form
+        **route_args  # And additional arguments the method access, if they want them merged.
+    }
+
+    return RequestDictionary(data, default_val=default_val)
+
+def data_create(default_val=None, **route_args) -> RequestDictionary:
+    request = flask.request
+
+    args = request.args
+    if isinstance(request.args, MultiDict):
+        args = request.args.to_dict()
+
+    api_data = request.data
+    if isinstance(request.args, MultiDict):
+        api_data = json.loads(api_data)
+
+    data = {
+        **args,  # The key/value pairs in the URL query string
+        **request.headers,  # Header values
+        **api_data,  # The key/value pairs in the body, from a HTML post form
         **route_args  # And additional arguments the method access, if they want them merged.
     }
 
