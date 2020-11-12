@@ -79,7 +79,7 @@ class ParkScraper:
 
         for circle in circles:
             if circle.get_attribute("id") != None:
-                park_id = park_services.get_park_id_from_name(
+                park_id = park_services.get_id_from_name(
                     str(circle.get_attribute("id"))
                 )
                 if park_id == False:

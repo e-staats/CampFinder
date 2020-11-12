@@ -1,6 +1,7 @@
 # pylint thinks it can't find the infrastructure and viewmodels folders
 # even though the app itself runs fine:
 # pylint: disable = import-error
+import services.search_services as search_services
 import flask
 from infrastructure.view_modifiers import response
 import infrastructure.cookie_auth as cookie
@@ -8,7 +9,9 @@ import services.user_services as user_service
 from viewmodels.account.index_viewmodel import IndexViewModel
 from viewmodels.account.register_viewmodel import RegisterViewModel
 from viewmodels.account.login_viewmodel import LoginViewModel
+from viewmodels.account.change_pw_viewmodel import ChangePwViewModel
 from data.user import User
+import pprint
 # pylint: disable=no-member
 
 blueprint = flask.Blueprint('account', __name__, template_folder='templates')
@@ -21,6 +24,13 @@ def index():
     vm = IndexViewModel()
     if not vm.user_id:
         return flask.redirect('account/login')
+
+    searches = search_services.find_all_searches_for_user(vm.user_id)
+    if searches == []:
+        return vm.to_dict()
+    
+    for search in searches:
+        vm.search_list.append(search_services.convert_to_dict(search))
 
     return vm.to_dict()
 
@@ -81,6 +91,37 @@ def login_post():
 
     return resp
 
+# ################### CHANGE PASSWORD #################################
+
+@blueprint.route('/account/change_password', methods=['GET'])
+@response(template_file='account/change_password.html')
+def change_pw_get():
+    vm = ChangePwViewModel()
+    if not vm.user_id:
+        return flask.redirect('/')
+    return vm.to_dict()
+
+
+@blueprint.route('/account/change_password', methods=['POST'])
+@response(template_file='account/change_password.html')
+def change_pw_post():
+    vm =ChangePwViewModel()
+    vm.validate()
+
+    if vm.error:
+        return vm.to_dict()
+
+    user = user_service.change_password(vm.user_id, vm.new_password)
+    if not user:
+        vm.error = "The password could not be changed. Please contact the site administrator for help."
+        return vm.to_dict()
+
+    vm.success = "Your password was successfully changed"
+    vm.new_password = ""
+    vm.old_password = ""
+    vm.confirm_password = ""
+
+    return vm.to_dict()
 
 # ################### LOGOUT #################################
 

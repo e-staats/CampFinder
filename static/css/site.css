@@ -88,3 +88,8 @@ nav {
 .prof-pic-small {
     width: 100%;
 }
+
+.table-header {
+    font-weight: bold;
+    font-size: 14px;
+}

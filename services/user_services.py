@@ -53,6 +53,20 @@ def create_user(name, email, password):
 
     return user
 
+def change_password(user_id, password):
+    session = db_session.create_session()
+    user = find_user_by_id(user_id)
+    if user == None:
+        return None
+    user.hashed_pw = hash_text(password)    
+    try:
+        session.add(user)
+        session.commit()
+    finally:
+        session.close()
+
+    return user
+
 
 def hash_text(text: str) -> str:
     hashed_text = crypto.encrypt(text, rounds=171204)
@@ -78,3 +92,6 @@ def create_test_user(name, email, hashed_pw, active_status):
     u.hashed_pw = hashed_pw
     u.is_active = active_status
     return u
+
+def validate_password(password):
+    return True

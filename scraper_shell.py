@@ -1,4 +1,5 @@
 import datetime
+from services.search_services import deactivate_past_searches
 from selenium_scraper import ParkScraper
 from urllib.parse import urlencode
 import datetime
@@ -132,6 +133,8 @@ def scrape_searches(*args):
 
     start_scraper(search_definition)
 
+    cleanup_searches()
+
 
 def add_search_definition(search_definitions, search):
     date_range = date_range_to_string(search.start_date, search.end_date)
@@ -143,6 +146,9 @@ def add_search_definition(search_definitions, search):
     search_definitions[date_range] = setup_info_dict(search)
     return search_definitions
 
+def cleanup_searches():
+    deactivate_past_searches()
+    return
 
 if __name__ == "__main__":
     print(

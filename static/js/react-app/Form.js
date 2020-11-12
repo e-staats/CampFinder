@@ -239,7 +239,7 @@ class Form extends React.Component {
       body: JSON.stringify({
         'start_date': fromDate,
         'end_date': toDate,
-        'preferred_region': preferredRegions,
+        'regions': preferredRegions,
         'parks': parkList,
       }),
     }).then(data => {
