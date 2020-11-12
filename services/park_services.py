@@ -2,7 +2,18 @@ from data.park import Park  # pylint: disable = import-error
 import data.db_session as db_session  # pylint: disable = import-error
 import os
 
-def get_park_id_from_name(name):
+def get_park_from_id(park_id):
+    session = db_session.create_session()
+    park = session.query(Park).filter(Park.id == park_id).first()
+    session.close()
+    if park == None:
+        return False
+    if isinstance(park.id,int):
+        return park
+    else:
+        return False
+
+def get_id_from_name(name):
     session = db_session.create_session()
     park = session.query(Park).filter(Park.name == name).first()
     session.close()
@@ -10,6 +21,17 @@ def get_park_id_from_name(name):
         return False
     if isinstance(park.id,int):
         return park.id
+    else:
+        return False
+
+def get_name_from_id(park_id):
+    session = db_session.create_session()
+    park = session.query(Park).filter(Park.id == park_id).first()
+    session.close()
+    if park == None:
+        return False
+    if isinstance(park.id,int):
+        return park.name
     else:
         return False
 

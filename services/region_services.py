@@ -2,6 +2,16 @@ from data.region import Region  # pylint: disable = import-error
 import data.db_session as db_session  # pylint: disable = import-error
 import os
 
+def get_name_from_id(region_id):
+    session = db_session.create_session()
+    region = session.query(Region).filter(Region.id == region_id).first()
+    session.close()
+    if region == None:
+        return False
+    if isinstance(region.id,int):
+        return region.name
+    else:
+        return False
 
 def populate_regions():
     region_dict = get_region_dict()

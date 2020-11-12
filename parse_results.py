@@ -24,7 +24,7 @@ def process_results():
             continue
 
         # turn the results into an email
-        park_id_list = search_services.deserialize_park_list(search)
+        park_id_list = search_services.deserialize_park_list(search.parks)
         message = convert_availability_to_message(availability_info, park_id_list)
         if message == False:
             continue

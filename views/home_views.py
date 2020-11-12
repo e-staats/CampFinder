@@ -7,6 +7,7 @@ import flask
 import os
 import sys
 import datetime
+import pprint
 
 folder = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
 sys.path.insert(0, folder)
@@ -41,12 +42,11 @@ def submit_search():
     owner_id = vm.user_id
     start_date = datetime.date.fromisoformat(request["start_date"].split("T")[0])
     end_date = datetime.date.fromisoformat(request["end_date"].split("T")[0])
-    preferred_region = request["preferred_region"]
+    regions = request["regions"]
     parks = request["parks"]
     is_active = True
-    print(f"Preferred Region: {preferred_region} - preferred parks: {parks}")
     search = create_search(
-        owner_id, start_date, end_date, preferred_region, parks, is_active
+        owner_id, start_date, end_date, regions, parks, is_active
     )
     if not search:
         return jsonify(status="error")

@@ -1,3 +1,4 @@
+import datetime
 import sqlalchemy as sa
 from data.modelbase import SqlAlchemyBase # pylint: disable = import-error
 
@@ -9,9 +10,10 @@ class Search(SqlAlchemyBase):
     owner_id = sa.Column(sa.Integer)
     start_date = sa.Column(sa.Date)
     end_date = sa.Column(sa.Date)
-    preferred_region = sa.Column(sa.String)
+    regions = sa.Column(sa.String)
     parks = sa.Column(sa.String)
     is_active = sa.Column(sa.Boolean, default=True)
+    submit_instant = sa.Column(sa.DateTime, default=datetime.datetime.now)
     
 
     def __repr__(self):

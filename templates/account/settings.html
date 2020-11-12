@@ -2,10 +2,51 @@
 {% block nav %}Home{% endblock %}
 {% block main_content %}
 
-<h3>This should be some settings</h3>
+<h3>Hello {{user_name}}</h3>
+<div><a href="/account/change_password">Change password</a></div>
+<div>
+    {% if search_list %}
+    Your searches:
+    <div class="row table-header">
+        <div class="col-sm-2">Start Date</div>
+        <div class="col-sm-2">End Date</div>
+        <div class="col-sm-2">Region Preference</div>
+        <div class="col-sm-2">Additional Selected Parks</div>
+        <div class="col-sm-2">Active?</div>
+        <div class="col-sm-2">Submitted Date</div>
+    </div>
+
+    {% for search in search_list %}
+    <div class="row">
+        <div class="col-sm-2">{{search['start_date']}}</div>
+        <div class="col-sm-2">{{search['end_date']}}</div>
+        <div class="col-sm-2">
+            <ul>
+                {% for region in search['region_names'] %}
+                <li>{{region}}</li>
+                {% endfor %}
+            </ul>
+        </div>
+        <div class="col-sm-2">
+            <ul>
+            {% for park in search['park_names'] %}
+            <li>{{park}}</li>
+            {% endfor %}
+        </ul>
+        </div>
+        <div class="col-sm-2">{{search['is_active']}}</div>
+        <div class="col-sm-2">{{search['submit_instant']}}</div>
+    </div>
+    {% endfor %}
+
+    {% else %}
+    You have not submitted any searches
+
+    {% endif %}
+</div>
+
 
 {% endblock %}
 
 {% block additional_js %}
-<script src="/static/js/attempt.js"></script>
 {% endblock %}
