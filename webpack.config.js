@@ -2,7 +2,10 @@
 const path = require('path');
 
 module.exports = {
-   entry: { app: path.resolve(__dirname, 'static/js/react-app', 'index.js') },
+   entry: {
+      app: path.resolve(__dirname, 'static/js/react-app', 'index.js'),
+      searchList: path.resolve(__dirname, 'static/js/react-app/account', 'account.js')
+   },
    output: {
       path: path.resolve(__dirname, 'static/js/compiled_js'),
       filename: '[name].js',

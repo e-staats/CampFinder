@@ -31,6 +31,7 @@ def index():
 @response(template_file="home/index.html")
 def scraper_post():
     vm = IndexViewModel()
+    print("Not implemented yet")
     return vm.to_dict()
 
 
