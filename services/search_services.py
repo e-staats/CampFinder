@@ -1,4 +1,4 @@
-from re import search
+from re import L, search
 from data.search import Search  # pylint: disable = import-error
 import data.db_session as db_session  # pylint: disable = import-error
 import services.user_services as user_services  # pylint: disable = import-error
@@ -33,7 +33,6 @@ def find_search_by_id(search_id):
     search = (
         session.query(Search)
         .filter(Search.id == search_id)
-        .filter(Search.is_active == 1)
         .first()
     )
     session.close()
@@ -77,6 +76,7 @@ def deserialize_region_list(regions):
 
 def convert_to_dict(search):
     search_dict = search.__dict__
+    search_dict.pop('_sa_instance_state',None)
     search_dict = format_dict_dates(search_dict)
     search_dict = format_dict_parks_and_regions(search_dict)
     return search_dict
@@ -85,9 +85,9 @@ def convert_to_dict(search):
 def format_dict_dates(search_dict):
     for key, value in search_dict.items():
         if isinstance(value, datetime.date):
-            search_dict[key] = value.isoformat()
+            search_dict[key] = value.strftime("%a %m/%d/%y")
         if isinstance(value, datetime.datetime):
-            search_dict[key] = value.isoformat()
+            search_dict[key] = value.strftime("%a %m/%d/%y %I:%M %p")
     return search_dict
 
 
@@ -125,10 +125,25 @@ def compress_parks_to_regions(parks, regions):
 def deactivate_past_searches():
     session = db_session.create_session()
     today = datetime.datetime.today()
-    old_searches = session.query(Search).filter(Search.end_date < today).all()
+    old_searches = session.query(Search).filter(Search.start_date < today).all()
     for search in old_searches:
-        search.is_active = False
+        search = deactivate_search(search)
     session.commit()
     session.close()
 
     return
+
+def deactivate_search(search):
+    search.is_active = False
+    return search
+
+def toggle_search_status(search_id, new_val):
+    session = db_session.create_session()
+    search = find_search_by_id(search_id)
+    if not search:
+        return False
+    search.is_active = new_val
+    session.add(search)
+    session.commit()
+    session.close()
+    return True

@@ -61,7 +61,6 @@ nav {
 
 .account-controls {
     text-align: right;
-
 }
 
 .copyright {
@@ -92,4 +91,32 @@ nav {
 .table-header {
     font-weight: bold;
     font-size: 14px;
+    margin: 0px;
+}
+
+.table-row {
+    font-size: 12px;
+    margin: 0px;
+    padding: 3px;
+    border-bottom: 1px dotted black
+}
+
+.inactive {
+    color: #909090;
+    background-color: #F8DDDE;
+}
+
+.active {
+    background-color: #DEF8DD;
+}
+
+ul {
+    list-style: none;
+    padding: 0
+}
+
+.pwChange {
+    font-size: 18px;
+    margin-top: 20px;
+    margin-bottom: 20px;
 }

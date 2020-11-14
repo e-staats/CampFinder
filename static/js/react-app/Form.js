@@ -123,6 +123,7 @@ class Form extends React.Component {
     regions: { "northwest": 1, "northeast": 3, "southwest": 2, "southeast": 4 },
     from: undefined,
     to: undefined,
+    success: false
   }
 
   handleDayClick = (day) => {
@@ -159,9 +160,11 @@ class Form extends React.Component {
     })
   };
 
-  handleSelectAllButtonClick = e => {
-    let checked
-    e.target.name === "checkAll" ? checked = true : checked = false
+  handleSelectAllButtonClick = (e, checkedOverride = null) => {
+    let checked = checkedOverride
+    if (checked === null) {
+      e.target.name === "checkAll" ? checked = true : checked = false
+    }
     this.setState(prevState => {
       let parks = prevState['parks']
       for (let regionName in prevState.regions) {
@@ -190,12 +193,10 @@ class Form extends React.Component {
         }
       }
     }
-    console.log(parkString)
     return parkString
   }
 
-  handleSubmit = e => {
-
+  validateDatesForSubmit = () => {
     //validate and assemble data
     let error = false
 
@@ -209,12 +210,36 @@ class Form extends React.Component {
       error = true
     }
 
+    if (error === true) {
+      alert("error")
+      return
+    }
+
+    return {
+      from: this.state.from,
+      to: this.state.to
+    }
+  }
+
+  validateRegionsForSubmit = () => {
+    //validate and assemble data
+    let error = false
     let preferredRegions = this.assemblePreferredRegions()
     if (preferredRegions === undefined) {
       console.log("regions - I should handle this better")
       error = true
     }
 
+    if (error === true) {
+      return "Issue with Region list"
+    }
+
+    return preferredRegions
+  }
+
+  validateParksForSubmit = () => {
+    //validate and assemble data
+    let error = false
     let parkList = this.assembleParkString()
     if (parkList === undefined) {
       console.log("parks - I should handle this better")
@@ -222,12 +247,23 @@ class Form extends React.Component {
     }
 
     if (error === true) {
-      alert("error")
-      return error
+      return "Issue with Park list"
     }
 
-    let fromDate = this.state.from.toISOString()
-    let toDate = this.state.to.toISOString()
+    return parkList
+  }
+
+  handleSubmit = () => {
+
+    let dates = this.validateDatesForSubmit()
+    let regions = this.validateRegionsForSubmit()
+    let parks = this.validateParksForSubmit()
+    if (dates === undefined || regions === undefined || parks === undefined) {
+      return
+    }
+
+    let fromDate = dates.from.toISOString()
+    let toDate = dates.to.toISOString()
 
     //call down to server
     fetch('/_submit_search', {
@@ -239,13 +275,17 @@ class Form extends React.Component {
       body: JSON.stringify({
         'start_date': fromDate,
         'end_date': toDate,
-        'regions': preferredRegions,
-        'parks': parkList,
+        'regions': regions,
+        'parks': parks,
       }),
-    }).then(data => {
-      console.log(data)
+    }).then(() => {
+      this.handleSelectAllButtonClick(null, false)
+      this.handleResetClick()
+      this.setState(prevState => {
+        prevState.success = true
+        return prevState
+      })
     })
-    alert("you clicked submit")
   }
 
   getInitialState() {
@@ -256,6 +296,11 @@ class Form extends React.Component {
   }
 
   render() {
+    let successBanner = ""
+    if (this.state.success === true) {
+      successBanner = <div>Search submitted!</div>
+    }
+
     return (<div>
       <div>
         <h3>Choose the dates you would like to camp:</h3>
@@ -270,6 +315,7 @@ class Form extends React.Component {
         />
       </div>
       <button className="btn btn-success" onClick={this.handleSubmit}>Submit</button>
+      {successBanner}
     </div>)
   }
 }
