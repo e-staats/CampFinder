@@ -29,16 +29,16 @@ class ParkSelector extends Component {
                 </div>
                 <div className='row'>
                     <div className={this.regionClassName(this.props.parks.northwest.name)}>
-                        < Region name={this.props.parks.northwest.name} parkList={this.props.parks.northwest.parkList} allChecked={this.props.parks.northwest.allChecked} handleCheckboxChange={this.props.handleCheckboxChange} />
+                        < Region name={this.props.parks.northwest.name} link={this.props.parks.northwest.link} parkList={this.props.parks.northwest.parkList} allChecked={this.props.parks.northwest.allChecked} handleCheckboxChange={this.props.handleCheckboxChange} />
                     </div>
                     <div className={this.regionClassName(this.props.parks.northeast.name)}>
-                        < Region name={this.props.parks.northeast.name} parkList={this.props.parks.northeast.parkList} allChecked={this.props.parks.northeast.allChecked} handleCheckboxChange={this.props.handleCheckboxChange} />
+                        < Region name={this.props.parks.northeast.name} link={this.props.parks.northeast.link} parkList={this.props.parks.northeast.parkList} allChecked={this.props.parks.northeast.allChecked} handleCheckboxChange={this.props.handleCheckboxChange} />
                     </div>
                     <div className={this.regionClassName(this.props.parks.southeast.name)}>
-                        < Region name={this.props.parks.southeast.name} parkList={this.props.parks.southeast.parkList} allChecked={this.props.parks.southeast.allChecked} handleCheckboxChange={this.props.handleCheckboxChange} />
+                        < Region name={this.props.parks.southeast.name} link={this.props.parks.southeast.link} parkList={this.props.parks.southeast.parkList} allChecked={this.props.parks.southeast.allChecked} handleCheckboxChange={this.props.handleCheckboxChange} />
                     </div>
                     <div className={this.regionClassName(this.props.parks.southwest.name)}>
-                        < Region name={this.props.parks.southwest.name} parkList={this.props.parks.southwest.parkList} allChecked={this.props.parks.southwest.allChecked} handleCheckboxChange={this.props.handleCheckboxChange} />
+                        < Region name={this.props.parks.southwest.name} link={this.props.parks.southwest.link} parkList={this.props.parks.southwest.parkList} allChecked={this.props.parks.southwest.allChecked} handleCheckboxChange={this.props.handleCheckboxChange} />
                     </div>
                 </div>
             </div>

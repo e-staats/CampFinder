@@ -29,7 +29,7 @@ class Region extends Component {
         return (
 
             <div>
-                <h5>{this.toCapitalCase(this.props.name)}</h5>
+                <h5><a href={this.props.link} target="_blank">{this.toCapitalCase(this.props.name)}</a></h5>
                 <div className="checkAll">
                     <input
                         type="checkbox"

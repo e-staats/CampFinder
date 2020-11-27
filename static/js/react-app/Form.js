@@ -4,6 +4,30 @@ import { DateUtils } from 'react-day-picker';
 import ParkSelector from "./parkCheckboxes"
 
 class Form extends React.Component {
+
+  componentDidMount() {
+    this.fetchData()
+  }
+
+  fetchData = () => {
+    fetch('/_load_region_links', {
+      method: 'GET', // *GET, POST, PUT, DELETE, etc.
+      headers: {
+        'Content-Type': 'application/json'
+      },
+    })
+      .then(response => response.json())
+      .then(data => {
+        this.setState(prevState => {
+          let parks = prevState['parks']
+          for (let regionName in prevState.regions) {
+            parks[regionName]["link"] = data[regionName]
+          }
+      return { parks }
+        })
+      })
+    return
+  }
   northwest = {
     'Amnicon Falls': 1,
     'Big Bay': 3,
@@ -40,7 +64,7 @@ class Form extends React.Component {
     'Willow Flowage': 60,
   }
 
-  southeast = {
+  southwest = {
     'Black River': 5,
     'Blue Mound': 6,
     'Buckhorn': 9,
@@ -65,7 +89,7 @@ class Form extends React.Component {
     'Yellowstone Lake': 63,
   }
 
-  southwest = {
+  southeast = {
     'Aztalan': 2,
     'Big Foot Beach': 4,
     'Glacial Drumlin': 18,
@@ -101,21 +125,25 @@ class Form extends React.Component {
       northwest: {
         name: "northwest",
         allChecked: false,
+        link: "",
         parkList: this.convertParksToList(this.northwest),
       },
       southwest: {
         name: "southwest",
         allChecked: false,
+        link: "",
         parkList: this.convertParksToList(this.southwest),
       },
       northeast: {
         name: "northeast",
         allChecked: false,
+        link: "",
         parkList: this.convertParksToList(this.northeast),
       },
       southeast: {
         name: "southeast",
         allChecked: false,
+        link: "",
         parkList: this.convertParksToList(this.southeast),
       },
     },
@@ -123,7 +151,8 @@ class Form extends React.Component {
     regions: { "northwest": 1, "northeast": 3, "southwest": 2, "southeast": 4 },
     from: undefined,
     to: undefined,
-    success: false
+    success: null,
+    error: null
   }
 
   handleDayClick = (day) => {
@@ -196,22 +225,24 @@ class Form extends React.Component {
     return parkString
   }
 
+  setErrorState = (errorMessage) => {
+    this.setState(prevState => {
+      prevState.success = false
+      prevState.error = errorMessage
+      return prevState
+    })
+  }
+
   validateDatesForSubmit = () => {
     //validate and assemble data
-    let error = false
 
     if (this.state.from === undefined) {
-      console.log("from date error - I should handle this better")
-      error = true
+      this.setErrorState("Please enter a start date!")
+      return
     }
 
     if (this.state.to === undefined) {
-      console.log("to date error - I should handle this better")
-      error = true
-    }
-
-    if (error === true) {
-      alert("error")
+      this.setErrorState("Please enter an end date!")
       return
     }
 
@@ -223,15 +254,10 @@ class Form extends React.Component {
 
   validateRegionsForSubmit = () => {
     //validate and assemble data
-    let error = false
     let preferredRegions = this.assemblePreferredRegions()
     if (preferredRegions === undefined) {
-      console.log("regions - I should handle this better")
-      error = true
-    }
-
-    if (error === true) {
-      return "Issue with Region list"
+      this.setErrorState("There is an issue with the Region selection. Please re-select and try again.")
+      return
     }
 
     return preferredRegions
@@ -239,26 +265,24 @@ class Form extends React.Component {
 
   validateParksForSubmit = () => {
     //validate and assemble data
-    let error = false
     let parkList = this.assembleParkString()
     if (parkList === undefined) {
-      console.log("parks - I should handle this better")
-      error = true
-    }
-
-    if (error === true) {
-      return "Issue with Park list"
+      this.setErrorState("There is an issure with the Park list. Please re-select and try again.")
+      return
     }
 
     return parkList
   }
 
   handleSubmit = () => {
-
     let dates = this.validateDatesForSubmit()
     let regions = this.validateRegionsForSubmit()
     let parks = this.validateParksForSubmit()
     if (dates === undefined || regions === undefined || parks === undefined) {
+      return
+    }
+    if (regions === "" && parks === "") {
+      this.setErrorState("Please select some parks!")
       return
     }
 
@@ -296,9 +320,13 @@ class Form extends React.Component {
   }
 
   render() {
-    let successBanner = ""
+    let banner = ""
     if (this.state.success === true) {
-      successBanner = <div>Search submitted!</div>
+      banner = <div className="successBanner">Search submitted! Remember, if
+      you get an email about an availability, you'll need to make a
+      reservation directly on the Wisconsin Going To Camp website.</div> }
+    if (this.state.success === false) {
+      banner = <div className="errorBanner">{this.state.error}</div>
     }
 
     return (<div>
@@ -315,7 +343,7 @@ class Form extends React.Component {
         />
       </div>
       <button className="btn btn-success" onClick={this.handleSubmit}>Submit</button>
-      {successBanner}
+      {banner}
     </div>)
   }
 }
