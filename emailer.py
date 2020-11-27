@@ -1,14 +1,12 @@
 import smtplib, ssl
-import data.db_session
-from data.user import User
-import data.db_session
+import os
 
 class ParkEmailer:
     def __init__(self):
         # Create a secure SSL context
         self.context = ssl.create_default_context()
         self.sender_email = "wiparkscraper@gmail.com"
-        self.password = "sickpassword" #This is a terrible thing
+        self.password = os.environ["EMAIL_PASSWORD"]
         self.port = 465  # For SSL
 
     def send_email(self,to_address,message):        

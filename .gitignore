@@ -139,3 +139,9 @@ db/*
 
 #JS frontend dev:
 node_modules/*
+
+#keep todos local:
+todo.txt
+
+#secrets:
+secrets.py
