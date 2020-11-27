@@ -7,6 +7,7 @@ import flask
 from infrastructure.view_modifiers import response
 import infrastructure.cookie_auth as cookie
 import services.user_services as user_service
+import services.security_services as security_service
 from viewmodels.account.index_viewmodel import IndexViewModel
 from viewmodels.account.register_viewmodel import RegisterViewModel
 from viewmodels.account.login_viewmodel import LoginViewModel
@@ -47,9 +48,13 @@ def index():
 @response(template_file="account/register.html")
 def register_get():
     vm = RegisterViewModel()
-    if vm.user_id:
+    if hasattr(vm, "user") == False:
+        return {"admin": False}
+    if vm.user_id and vm.admin:
+        return {"admin": True}
+    elif vm.user_id:
         return flask.redirect("/account")
-    return {}
+    return {"admin": False}
 
 
 @blueprint.route("/account/register", methods=["POST"])
@@ -61,7 +66,8 @@ def register_post():
     if vm.error:
         return vm.to_dict()
 
-    user = user_service.create_user(vm.name, vm.email, vm.password)
+    security_class = security_service.find_default_security_class()
+    user = user_service.create_user(vm.name, vm.email, vm.password, security_class)
     if not user:
         vm.error = "The account could not be created"
         return vm.to_dict()

@@ -40,8 +40,8 @@ def add_data_to_session(data, session):
 
 def test_users():
     return [
-        user_services.create_user("Beau", "michael.v.cambria@gmail.com", "abc"),
-        user_services.create_user("Liam", "eric.k.staats@gmail.com", "def"),
+        user_services.create_user("Beau", "michael.v.cambria@gmail.com", "abc", 1),
+        user_services.create_user("Liam", "eric.k.staats@gmail.com", "def", 2),
     ]
 
 

@@ -9,6 +9,6 @@ import scraper_shell # pylint: disable = import-error
 if __name__=='__main__':
     global_test_setup.prep_db()
     testing_tools.setup_all_test_data()
-    scraper_shell.scrape_searches(all_searches=True)
+    scraper_shell.scrape_searches([True])
 
     

@@ -1,4 +1,3 @@
-from re import L, search
 from data.search import Search  # pylint: disable = import-error
 import data.db_session as db_session  # pylint: disable = import-error
 import services.user_services as user_services  # pylint: disable = import-error
@@ -67,11 +66,11 @@ def find_users_interested_in_search(search_id):
 
 
 def deserialize_park_list(parks):
-    return [int(p_id) for p_id in parks.split(",") if p_id is not '']
+    return [int(p_id) for p_id in parks.split(",") if p_id != '']
 
 
 def deserialize_region_list(regions):
-    return [int(r_id) for r_id in regions.split(",") if r_id is not '']
+    return [int(r_id) for r_id in regions.split(",") if r_id != '']
 
 
 def convert_to_dict(search):

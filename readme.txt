@@ -4,8 +4,9 @@ to run the flask frontend: python app.py
 - see https://flask.palletsprojects.com/en/1.1.x/quickstart/ for more info
 
 to develop on the react piece:
+install node.js
 install yarn
-use yarn to add everything in the package.json file
+run 'yarn install' to install all the packages in packages.json
 do your dev
 run "npx webpack" at the command line
 refresh the flask page

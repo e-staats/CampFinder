@@ -1,7 +1,6 @@
 from data.db_session import create_session # pylint: disable = import-error
 from data.user import User  # pylint: disable = import-error
 import data.db_session as db_session  # pylint: disable = import-error
-import datetime
 from passlib.handlers.sha2_crypt import sha512_crypt as crypto
 
 
@@ -31,7 +30,7 @@ def get_user_email(user_id):
     return user.email
 
 
-def create_user(name, email, password):
+def create_user(name, email, password, security):
 
     # todo: validation
     if find_user_by_email(email):
@@ -41,6 +40,7 @@ def create_user(name, email, password):
     user.email = email
     user.hashed_pw = hash_text(password)
     user.is_active = True
+    user.security_class = security
 
     session = db_session.create_session()
     session.expire_on_commit = False
