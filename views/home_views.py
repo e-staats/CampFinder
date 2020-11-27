@@ -34,6 +34,11 @@ def scraper_post():
     print("Not implemented yet")
     return vm.to_dict()
 
+@blueprint.route("/about", methods=["GET","POST"])
+@response(template_file="home/about.html")
+def about():
+    vm = IndexViewModel()
+    return vm.to_dict()
 
 @blueprint.route("/_submit_search", methods=["POST"])
 @response(template_file="home/index.html")
