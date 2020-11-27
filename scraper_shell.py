@@ -72,12 +72,8 @@ def create_info_dict(
     info["search_time"] = search_time
     return info
 
-
-def setup_info_dict(search: Search) -> dict:
-    if search.id == None:
-        return "Invalid Search object"
-
-    url_setup = {
+def def_url_setup():
+  return {
         "mapId": None,
         "searchTabGroupId": 0,
         "bookingCategoryId": 0,
@@ -90,14 +86,16 @@ def setup_info_dict(search: Search) -> dict:
         "partySize": 1,
     }
 
+ 
+def setup_info_dict(start_date, end_date) -> dict:
     quadrant_defs = define_regions()
     url_base = define_url_base()
     search_time = datetime.datetime.now()
     return create_info_dict(
         url_base,
-        url_setup,
-        search.start_date,
-        search.end_date,
+        def_url_setup(),
+        start_date,
+        end_date,
         search_time,
         quadrant_defs,
     )
@@ -143,7 +141,7 @@ def add_search_definition(search_definitions, search):
     if date_range in search_definitions.keys():
         return search_definitions
 
-    search_definitions[date_range] = setup_info_dict(search)
+    search_definitions[date_range] = setup_info_dict(search.start_date, search.end_date)
     return search_definitions
 
 def cleanup_searches():

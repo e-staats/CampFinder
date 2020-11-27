@@ -58,3 +58,14 @@ def submit_search():
         return jsonify(status="error")
     success = add_search(search)
     return jsonify(success)
+
+@blueprint.route("/_load_region_links", methods=["GET"])
+@response(template_file="home/index.html")
+def load_region_links():
+    output = {}
+    region_links = setup_info_dict(datetime.datetime.today(), datetime.datetime.today())
+    for key in region_links["start_urls"].keys():
+        new_key = key.split()[0].lower()
+        output[new_key] = region_links["start_urls"][key]
+    pprint.pprint(output)
+    return jsonify(output) 
