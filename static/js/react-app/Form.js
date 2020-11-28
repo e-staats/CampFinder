@@ -23,7 +23,7 @@ class Form extends React.Component {
           for (let regionName in prevState.regions) {
             parks[regionName]["link"] = data[regionName]
           }
-      return { parks }
+          return { parks }
         })
       })
     return
@@ -324,7 +324,8 @@ class Form extends React.Component {
     if (this.state.success === true) {
       banner = <div className="successBanner">Search submitted! Remember, if
       you get an email about an availability, you'll need to make a
-      reservation directly on the Wisconsin Going To Camp website.</div> }
+      reservation directly on the Wisconsin Going To Camp website.</div>
+    }
     if (this.state.success === false) {
       banner = <div className="errorBanner">{this.state.error}</div>
     }
@@ -342,7 +343,10 @@ class Form extends React.Component {
           parks={this.state.parks}
         />
       </div>
-      <button className="btn btn-success" onClick={this.handleSubmit}>Submit</button>
+      <div>
+        <button className="submitButton" onClick={this.handleSubmit}>Schedule Search</button>
+        <button class="instascrapeButton" disabled>InstaScrape (coming soon)</button>
+      </div>
       {banner}
     </div>)
   }

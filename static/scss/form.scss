@@ -1,0 +1,152 @@
+$nwBackground: #fad87b;
+$neBackground: #b1d5bc;
+$swBackground: #bcd682;
+$seBackground: #ffca6e;
+$primaryGreen: #2c6e49;
+$primaryOrange: #fc5110;
+$primaryRed: #772014;
+$primaryOrange: #fc5110;
+$primaryYellow: #ffae10;
+$primaryNavy: #0a122a;
+$primaryAqua: #177e89;
+$siteBackground: #fff3dd;
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
+}
+
+@mixin myLabel {
+  position: relative;
+  top: -3px;
+  padding-left: 4px;
+  font-size: smaller;
+  text-overflow: ellipsis;
+}
+
+.parkList {
+  display: flex;
+  input[type="checkbox"] {
+    flex: 0 0 auto;
+  }
+  label {
+    @include myLabel();
+  }
+}
+
+.masterButton {
+  margin-left: 20px;
+}
+
+@mixin masterButton {
+  width: 200px;
+  height: 40px;
+  align-items: center;
+  border-radius: 5px;
+  color: white;
+  font-size: 14pt;
+}
+
+.masterCheckAll {
+  @include masterButton();
+  background-color: lighten($primaryAqua, 20%);
+  border-color: darken($primaryAqua, 10%);
+}
+
+.masterUncheckAll {
+  @include masterButton();
+  background-color: $primaryYellow;
+  border-color: darken($primaryYellow, 10%);
+}
+
+@mixin actionButton {
+  border-radius: 5px;
+  color: white;
+  font-size: 12pt;
+  margin-right: 20px;
+  height: 35px;
+}
+
+.submitButton {
+  @include actionButton();
+  background-color: #42a56d;
+  border-color: darken(#42a56d, 10%);
+}
+
+.instascrapeButton {
+  @include actionButton();
+  background-color: $primaryRed;
+  border-color: darken($primaryRed, 10%);
+}
+
+.successBanner {
+  color: $primaryGreen;
+}
+
+.errorBanner {
+  color: $primaryOrange;
+}
+
+.checkboxArray {
+  margin-top: 10px;
+}
+
+.checkAll label {
+  @include myLabel();
+  font-weight: bold;
+}
+
+@mixin parkCheckbox {
+  position: relative;
+  color: black;
+  border: 1px solid gray;
+  width: 1.5em;
+  height: 1em;
+  border-radius: 4px;
+  appearance: none;
+  outline: 0;
+  cursor: pointer;
+}
+
+input[type="checkbox"] {
+  @include parkCheckbox();
+  &::before {
+    position: absolute;
+    content: "";
+    display: block;
+    top: 1px;
+    left: 9px;
+    width: 5px;
+    height: 10px;
+    border-style: solid;
+    border-color: white;
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+    opacity: 0;
+  }
+  &:checked {
+    color: black;
+    .northeast & {
+      border-color: $neBackground;
+      background-color: $neBackground;
+    }
+    .northwest & {
+      border-color: $nwBackground;
+      background-color: $nwBackground;
+    }
+    .southwest & {
+      border-color: $swBackground;
+      background-color: $swBackground;
+    }
+    .southeast & {
+      border-color: $seBackground;
+      background-color: $seBackground;
+    }
+    &::before {
+      opacity: 1;
+    }
+    ~ label::before {
+      clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+    }
+  }
+}
+

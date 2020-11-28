@@ -6,56 +6,53 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title> {% block title %}{% endblock %}</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
-        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-    <link rel="stylesheet" href="/static/css/site.css" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="/static/css/index.css" />
     {% block additional_css %}
     {% endblock %}
 </head>
 
 <body>
-    <div class="row">
-        <div class="col-md-2"></div>
-        <nav class="col-md-8">
-            <div class="row">
-                <div class="col-md-2">
-                    <a href="/">Home</a> </div>
-                <div class="col-md-2">
-                    <a href="/about">About</a>
-                </div>
+    <nav class="row nav-bar">
+        <div class="col-md-2 nav-pad"></div>
+        <div class="col-md-1 nav-item"><a href="/">Home</a></div>
+        <div class="col-md-1 nav-item"><a href="/about">About</a></div>
+        {% if user_id %}
 
-                {% if user_id %}
-                <div class="col-md-3">
-                    <a href="/account">Account</a>
-                </div>
-                <div class="col-md-3 text-right">
-                    <a href="/account/logout" class="account-controls">Log Out</a>
-                </div>
+        <div class="col-md-1 nav-item">
+            <a href="/account">Account</a>
+        </div>
+        {% else %}
+        <div class="col-md-1 nav-pad"></div>
+        {% endif %}
 
-                {% else %}
-                <div class="col-md-6 text-right">
-                    <a href="/account/login" class="btn btn-primary account-controls">Log In</a>
-                </div>
-                {% endif %}
-                {% if not user_id or admin %}
-                <div class="col-md-2 text-right">
-                    <a href="/account/register" class="btn btn-secondary account-controls">Register</a>
-                </div>
-                {% else %}
-                <div class="col-md-2 text-right"></div>
-                {% endif %}
+        <div class="col-md-3 nav-pad"></div>
 
-            </div>
-        </nav>
+        {% if not user_id or admin %}
+        <div class="col-md-1 nav-item register">
+            <a href="/account/register">Register</a>
+        </div>
+        {% else %}
+        <div class="col-md-1 nav-pad"></div>
+        {% endif %}
+
+        {% if user_id %}
+        <div class="col-md-1 nav-item logout">
+            <a href="/account/logout">Log Out</a>
+        </div>
+        {% else %}
+        <div class="col-md-1 nav-item login">
+            <a href="/account/login">Log In</a>
+        </div>
+        {% endif %}
+        <div class="col-md-2 nav-pad"></div>
+    </nav>
+    <div class="row main-body">
         <div class="col-md-2"></div>
-    </div>
-    <div class="row">
-        <div class="col-md-2"></div>
-        <div class="col-md-8">
-            <div class="main_content">
-                {% block main_content %}
-                {% endblock %}
-            </div>
+        <div class="col-md-8 main-content">
+            {% block main_content %}
+            {% endblock %}
         </div>
         <div class="col-md-2"></div>
     </div>

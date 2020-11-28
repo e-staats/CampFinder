@@ -17,17 +17,17 @@ class ParkSelector extends Component {
             <div className="checkboxes">
                 <div className='row'>
                     <div className='masterButton'>
-                        <button type="button" name="checkAll" onClick={this.handleSelectAllButtonClick} className="btn btn-primary">
+                        <button type="button" name="checkAll" onClick={this.handleSelectAllButtonClick} className="masterCheckAll">
                             Check All
                     </button>
                     </div>
                     <div className='masterButton'>
-                        <button type="button" name="uncheckAll" onClick={this.handleSelectAllButtonClick} className="btn btn-danger">
+                        <button type="button" name="uncheckAll" onClick={this.handleSelectAllButtonClick} className="masterUncheckAll">
                             Uncheck All
                         </button>
                     </div>
                 </div>
-                <div className='row'>
+                <div className='row checkboxArray'>
                     <div className={this.regionClassName(this.props.parks.northwest.name)}>
                         < Region name={this.props.parks.northwest.name} link={this.props.parks.northwest.link} parkList={this.props.parks.northwest.parkList} allChecked={this.props.parks.northwest.allChecked} handleCheckboxChange={this.props.handleCheckboxChange} />
                     </div>

@@ -1,39 +1,28 @@
 {% extends "/shared/_layout.html" %}
 {% block additional_css %}
 <link rel="stylesheet" href="/static/css/daypicker_styles.css">
-<link rel="stylesheet" href="/static/css/index.css">
+<link rel="stylesheet" href="/static/css/form.css">
 {% endblock %}
 
 {% block main_content %}
-<div>
-    <div class="row">
-        <div>
-            <h1>Find WI Campsites TONIGHT</h1>
-        </div>
-    </div>
+<div class="row">
+    <h1>Fun Logo Goes Here</h1>
+</div>
 
-    <div class="row">
-        <div class="text-right">
-            <h1>RVers HATE him for using this one simple trick</h1>
-        </div>
-    </div>
-    <div className="row">
-        <a href="/about">What does this site do?</a>
-    </div>
-    <div class="row">
-        {% if user_id %}
-        <!-- The app goes here: -->
-        <div id="root"></div>
-        <button class="btn btn-info" disabled>InstaScrape (coming soon)</button>
+<div class="row">
+    <a href="/about">What does this site do?</a>
+</div>
 
-        {% else %}
-        <div>
-            <h4>This site is in closed beta. Please contact wiparkscraper@gmail.com if you have any questions.</h4>
-        </div>
-        {% endif %}
+<div class="row selectionApp">
+    {% if user_id %}
+    <!-- The app goes here: -->
+    <div id="root"></div>
+
+    {% else %}
+    <div>
+        <h4>This site is in closed beta. Please contact wiparkscraper@gmail.com if you have any questions.</h4>
     </div>
-
-
+    {% endif %}
 </div>
 {% endblock %}
 
