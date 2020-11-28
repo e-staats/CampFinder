@@ -10,10 +10,10 @@ class Header extends React.Component {
             <div className="row table-header">
             <div className="col-sm-2">Start Date</div>
             <div className="col-sm-2">End Date</div>
-            <div className="col-sm-2">Region Preference</div>
-            <div className="col-sm-2">Additional Selected Parks</div>
+            <div className="col-sm-2">Region Pref.</div>
+            <div className="col-sm-2">Addt'l Parks</div>
             <div className="col-sm-1">Active?</div>
-            <div className="col-sm-2">Submitted Date</div>
+            <div className="col-sm-2">Submit Date</div>
             <div className="col-sm-1"></div>
         </div>
         )

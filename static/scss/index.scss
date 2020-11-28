@@ -16,18 +16,27 @@ body {
     margin: 0;
 }
 
+body a {
+    color: $primaryAqua;
+}
+
 nav {
     background-color: $primaryGreen;
     padding: 0px;
     margin: 0px;
 }
 
+@mixin nav-height {
+    min-height: 30px;
+}
+
 .nav-bar {
     margin-top: 0px;
-    min-height: 60px;
+    @include nav-height();
     justify-content: center;
     align-items: center;
-    font-size: 14pt;
+    font-size: 10pt;
+    box-shadow: 5px 0px 5px #050505;
 }
 
 @mixin nav-base {
@@ -58,7 +67,7 @@ nav {
 
 nav a {
     display: block;
-    min-height: 60px;
+    @include nav-height();
     text-align: center;
     // @include center-nav();
 }
@@ -104,25 +113,29 @@ nav .logout {
 }
 
 nav .logout:hover {
-    background-color: darken($primaryNavy, 15%);
+    background-color: lighten($primaryNavy, 15%);
 }
 
 .main-body {
     margin-top: 0px;
-    min-height: 70vh;
+    min-height: 85vh;
+    margin-bottom: 0px;
 }
 
 .main-content {
     background-color: white;
-    padding-left: 100px;
-    padding-right: 100px;
-    padding-top: 50px;
-    padding-bottom: 50px;
+    padding-left: 80px;
+    padding-right: 80px;
+    padding-top: 40px;
+    padding-bottom: 40px;
+}
+
+.selectionApp {
+    margin-top: 20px;
 }
 
 .copyright {
     background-color: $primaryYellow;
-    margin-top: 50px;
     padding: 30px;
     text-align: center;
 }

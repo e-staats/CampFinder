@@ -5,28 +5,25 @@
 {% endblock %}
 
 {% block main_content %}
-    <div class="row">
-        <div>
-            <h1>Fun Logo Goes Here</h1>
-        </div>
-    </div>
+<div class="row">
+    <h1>Fun Logo Goes Here</h1>
+</div>
 
-    <div class="row">
-        <a href="/about">What does this site do?</a>
-    </div>
-    <div class="row">
-        {% if user_id %}
-        <!-- The app goes here: -->
-        <div id="root"></div>
-        <button class="btn btn-info" disabled>InstaScrape (coming soon)</button>
+<div class="row">
+    <a href="/about">What does this site do?</a>
+</div>
 
-        {% else %}
-        <div>
-            <h4>This site is in closed beta. Please contact wiparkscraper@gmail.com if you have any questions.</h4>
-        </div>
-        {% endif %}
-    </div>
+<div class="row selectionApp">
+    {% if user_id %}
+    <!-- The app goes here: -->
+    <div id="root"></div>
 
+    {% else %}
+    <div>
+        <h4>This site is in closed beta. Please contact wiparkscraper@gmail.com if you have any questions.</h4>
+    </div>
+    {% endif %}
+</div>
 {% endblock %}
 
 {% block additional_js %}

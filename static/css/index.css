@@ -2,6 +2,9 @@ body {
   background-color: #fff3dd;
   margin: 0; }
 
+body a {
+  color: #177e89; }
+
 nav {
   background-color: #2c6e49;
   padding: 0px;
@@ -9,10 +12,11 @@ nav {
 
 .nav-bar {
   margin-top: 0px;
-  min-height: 60px;
+  min-height: 30px;
   justify-content: center;
   align-items: center;
-  font-size: 14pt; }
+  font-size: 10pt;
+  box-shadow: 5px 0px 5px #050505; }
 
 .nav-pad {
   padding: 0px;
@@ -29,7 +33,7 @@ nav {
 
 nav a {
   display: block;
-  min-height: 60px;
+  min-height: 30px;
   text-align: center; }
 
 nav a:link {
@@ -64,22 +68,25 @@ nav .logout {
   background-color: #0a122a; }
 
 nav .logout:hover {
-  background-color: black; }
+  background-color: #192c68; }
 
 .main-body {
   margin-top: 0px;
-  min-height: 70vh; }
+  min-height: 85vh;
+  margin-bottom: 0px; }
 
 .main-content {
   background-color: white;
-  padding-left: 100px;
-  padding-right: 100px;
-  padding-top: 50px;
-  padding-bottom: 50px; }
+  padding-left: 80px;
+  padding-right: 80px;
+  padding-top: 40px;
+  padding-bottom: 40px; }
+
+.selectionApp {
+  margin-top: 20px; }
 
 .copyright {
   background-color: #ffae10;
-  margin-top: 50px;
   padding: 30px;
   text-align: center; }
 

@@ -1,8 +1,16 @@
 /* DayPicker styles */
 
+.formDayPicker {
+  margin: 0 auto;
+}
+
 .DayPicker {
   display: inline-block;
   font-size: 1rem;
+}
+
+.resetLink:hover {
+  cursor: pointer;
 }
 
 .DayPicker-wrapper {
@@ -188,17 +196,17 @@
 .DayPicker-Day--selected:not(.DayPicker-Day--disabled):not(.DayPicker-Day--outside) {
   position: relative;
 
-  background-color: #4A90E2;
+  background-color: #772014;
   color: #F0F8FF;
 }
 
 .DayPicker-Day--selected:not(.DayPicker-Day--disabled):not(.DayPicker-Day--outside):hover {
-  background-color: #51A0FA;
+  background-color: #772014;
 }
 
 .DayPicker:not(.DayPicker--interactionDisabled)
   .DayPicker-Day:not(.DayPicker-Day--disabled):not(.DayPicker-Day--selected):not(.DayPicker-Day--outside):hover {
-  background-color: #F0F8FF;
+  background-color: #F8DDD9;
 }
 
 /* DayPickerInput */
