@@ -13,5 +13,9 @@
     "react-helmet": "^6.1.0",
     "webpack": "^5.3.2",
     "webpack-cli": "^4.1.0"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "scss": "node-sass --watch static/scss -o static/css"
   }
 }

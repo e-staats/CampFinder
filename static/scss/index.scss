@@ -2,101 +2,160 @@ $nwBackground: #fad87b;
 $neBackground: #b1d5bc;
 $swBackground: #bcd682;
 $seBackground: #ffca6e;
+$primaryGreen: #2c6e49;
+$primaryOrange: #fc5130;
+$primaryRed: #772014;
+$primaryOrange: #fc5130;
+$primaryYellow: #ffae10;
+$primaryNavy: #0a122a;
+$primaryAqua: #177e89;
+$siteBackground: #fff3dd;
 
 body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+    background-color: $siteBackground;
+    margin: 0;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+nav {
+    background-color: $primaryGreen;
+    padding: 0px;
+    margin: 0px;
 }
 
-@mixin myLabel {
-  position: relative;
-  top: -3px;
-  padding-left:  4px;
-  font-size: smaller;
-  text-overflow: ellipsis;
+.nav-bar {
+    margin-top: 0px;
+    min-height: 60px;
+    justify-content: center;
+    align-items: center;
+    font-size: 14pt;
 }
 
-.parkList {
-  display: flex;
-  input[type="checkbox"] {
-    flex: 0 0 auto;
-  }
-  label {
-    @include myLabel(); 
-  }
+@mixin nav-base {
+    padding: 0px;
+    margin: 0px;
+    position: relative;
+}
+
+.nav-pad {
+    @include nav-base();
 }
 
 
-
-.masterButton {
-  margin-left: 20px;
+.nav-item {
+    @include nav-base();
 }
 
-.checkAll label {
-  @include myLabel();
-  font-weight: bold;
+.nav-item:hover {
+    background-color: darken($primaryGreen, 15%);
 }
 
-@mixin parkCheckbox {
-  position: relative;
-  color: black;
-  border: 1px solid gray;
-  width: 1.5em;
-  height: 1em;
-  border-radius: 4px;
-  appearance: none;
-  outline: 0;
-  cursor: pointer;
-}
-
-input[type="checkbox"] {
-  @include parkCheckbox();
-  &::before {
+@mixin center-nav {
     position: absolute;
-    content: '';
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+}
+
+nav a {
     display: block;
-    top: 1px;
-    left: 9px;
-    width: 5px;
-    height: 10px;
-    border-style: solid;
-    border-color: white;
-    border-width: 0 2px 2px 0;
-    transform: rotate(45deg);
-    opacity: 0;
-  }
-  &:checked {
-    color: black;
-    .northeast & {
-      border-color: $neBackground;
-      background-color: $neBackground;
-    }
-    .northwest & {
-      border-color: $nwBackground;
-      background-color: $nwBackground;
-    }
-    .southwest & {
-      border-color: $swBackground;
-      background-color: $swBackground;
-    }
-    .southeast & {
-      border-color: $seBackground;
-      background-color: $seBackground;
-    }
-    &::before {
-      opacity: 1;
-    }
-    ~ label::before {
-      clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
-    }
-  }
+    min-height: 60px;
+    text-align: center;
+    // @include center-nav();
+}
+
+nav a:link {
+    color: white;
+    text-decoration: none;
+}
+
+nav a:visited {
+    color: white;
+    text-decoration: none;
+}
+
+nav a:hover {
+    color: white;
+    text-decoration: none;
+}
+
+nav a:active {
+    color: white;
+    text-decoration: none;
+}
+
+nav .register {
+    background-color: $primaryYellow;
+}
+
+nav .register:hover {
+    background-color: darken($primaryYellow, 15%);
+}
+
+nav .login {
+    background-color: $primaryRed;
+}
+
+nav .login:hover {
+    background-color: darken($primaryRed, 15%);
+}
+
+nav .logout {
+    background-color: $primaryNavy;
+}
+
+nav .logout:hover {
+    background-color: darken($primaryNavy, 15%);
+}
+
+.main-body {
+    margin-top: 0px;
+    min-height: 70vh;
+}
+
+.main-content {
+    background-color: white;
+    padding-left: 100px;
+    padding-right: 100px;
+    padding-top: 50px;
+    padding-bottom: 50px;
+}
+
+.copyright {
+    background-color: $primaryYellow;
+    margin-top: 50px;
+    padding: 30px;
+    text-align: center;
+}
+
+.table-header {
+    font-weight: bold;
+    font-size: 14px;
+    margin: 0px;
+}
+
+.table-row {
+    font-size: 12px;
+    margin: 0px;
+    padding: 3px;
+    border-bottom: 1px dotted black;
+}
+
+.inactive {
+    color: #909090;
+    background-color: #f8ddde;
+}
+
+.active {
+    background-color: #def8dd;
+}
+
+ul {
+    list-style: none;
+    padding: 0;
+}
+
+.pwChange {
+    font-size: 18px;
+    margin-top: 20px;
+    margin-bottom: 20px;
 }
