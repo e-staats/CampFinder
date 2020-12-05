@@ -24,6 +24,10 @@ class RegisterViewModel(ViewModelBase):
             self.error = "You must specify a name"
         elif not self.password:
             self.error = "You must specify a password"
-        elif len(self.password.strip()) < 1:
-            self.error = 'The password must be at least 1 characters.'
+        password_validation = user_service.validate_password(self.password.strip())
+        if password_validation  != True:
+            self.error = password_validation
+        email_validation = user_service.validate_email(self.email.strip())
+        if email_validation != True:
+            self.error = email_validation        
 
