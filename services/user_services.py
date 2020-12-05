@@ -94,4 +94,24 @@ def create_test_user(name, email, hashed_pw, active_status):
     return u
 
 def validate_password(password):
+    if len(password)<8:
+        return "Password must be 8 characters or longer."
+    if password.isalpha():
+        return "Password must contain a number."
+    if password.isnumeric():
+        return "Password must contain a letter."
+    return True
+
+def validate_email(email):
+    error_string = "Please check email format"
+    if email.count("@") != 1:
+        return error_string
+    split_email = email.split("@")
+    if len(split_email[0].strip())<1 or len(split_email[1].strip())<1:
+        return error_string
+    if split_email[1].count(".") == 0:
+        return error_string
+    domain_split = split_email[1].split(".")
+    if len(domain_split[0])<1 or len(domain_split[1])<1:
+        return error_string
     return True
