@@ -67,7 +67,7 @@ def test_results():
 
 def test_searches():
     return [
-        search_services.create_search(1, tomorrow, overmorrow, None, "1,2", True),
+        search_services.create_search(1, tomorrow, overmorrow, None, "1,2", False),
         search_services.create_search(1, tomorrow, overmorrow, None, "1", False),
         search_services.create_search(
             2, overmorrow, overovermorrow, None, "1,2", False

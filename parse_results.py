@@ -16,16 +16,17 @@ def process_results():
     emailer = ParkEmailer()
     for search in searches:
         # check for results for the search and move on if there are no availabilities
+        park_id_list = search_services.deserialize_park_list(search.parks)
         availability_info = avail_services.find_availability_info_for_date_range(
             search.start_date,
             search.end_date,
+            park_id_list
         )
         if availability_info == []:
             continue
 
         # turn the results into an email
-        park_id_list = search_services.deserialize_park_list(search.parks)
-        message = convert_availability_to_message(availability_info, park_id_list)
+        message = convert_availability_to_message(availability_info)
         if message == False:
             continue
 
@@ -41,7 +42,7 @@ def process_results():
         emailer.send_email(to_address, message)
 
 
-def convert_availability_to_message(availability_info, park_id_list):
+def convert_availability_to_message(availability_info):
     avail_dict = {}
     for a, p, r in availability_info:
         availability = str(a)
@@ -52,6 +53,6 @@ def convert_availability_to_message(availability_info, park_id_list):
 
     if avail_dict == {}:
         return False
-    message = email_message.create_message(avail_dict, park_id_list)
+    message = email_message.create_message(avail_dict)
 
     return message

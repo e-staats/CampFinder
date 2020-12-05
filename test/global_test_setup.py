@@ -15,7 +15,7 @@ import data.constants  # pylint: disable = import-error
 import services.region_services as region_services  # pylint: disable = import-error
 import services.park_services as park_services  # pylint: disable = import-error
 import services.security_services as security_services  # pylint: disable = import-error
-
+import secrets
 
 def prep_db():
     # delete and re-initialize the db from scratch:
@@ -32,3 +32,4 @@ def prep_db():
     region_services.populate_regions()
     park_services.populate_parks()
     security_services.create_security_classes()
+    secrets.create_environment_variables()
