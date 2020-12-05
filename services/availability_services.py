@@ -30,7 +30,7 @@ def find_availability(start_date, end_date, park):
     return availability
 
 
-def find_availability_info_for_date_range(start_date, end_date):
+def find_availability_info_for_date_range(start_date, end_date, park_list):
     session = db_session.create_session()
 
     available_parks = (
@@ -39,6 +39,7 @@ def find_availability_info_for_date_range(start_date, end_date):
         .filter(Availability.end_date == end_date)
         .filter(Availability.availability == 1)
         .filter(Availability.park == Park.id)
+        .filter(Availability.park.in_(park_list))
         .filter(Park.region == Region.id)
         .all()
     )
