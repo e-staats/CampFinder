@@ -10,7 +10,7 @@ server {
         gzip_buffers    8 256k;
         uwsgi_buffers   8 256k;
 
-        alias /apps/app_repo/static;
+        alias /apps/app-repo/static;
         expires 365d;
     }
     location / {
