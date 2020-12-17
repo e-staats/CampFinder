@@ -10,13 +10,17 @@ nav {
   padding: 0px;
   margin: 0px; }
 
+.hero {
+  min-height: 50px;
+  background-color: #2c6e49; }
+
 .nav-bar {
   margin-top: 0px;
   min-height: 30px;
   justify-content: center;
   align-items: center;
   font-size: 10pt;
-  box-shadow: 5px 0px 5px #050505; }
+  box-shadow: 5px 5px 5px #050505; }
 
 .nav-pad {
   padding: 0px;

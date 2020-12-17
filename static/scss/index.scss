@@ -26,6 +26,11 @@ nav {
     margin: 0px;
 }
 
+.hero {
+    min-height: 50px;
+    background-color: $primaryGreen;
+}
+
 @mixin nav-height {
     min-height: 30px;
 }
@@ -36,7 +41,7 @@ nav {
     justify-content: center;
     align-items: center;
     font-size: 10pt;
-    box-shadow: 5px 0px 5px #050505;
+    box-shadow: 5px 5px 5px #050505;
 }
 
 @mixin nav-base {
