@@ -2,8 +2,7 @@ requests
 selenium
 flask
 bson
-black
 apscheduler
-Flask-APScheduler
 sqlalchemy
 passlib
+alembic
