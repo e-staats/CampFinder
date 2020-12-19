@@ -12,8 +12,16 @@ nav {
   margin: 0px; }
 
 .hero {
-  min-height: 50px;
-  background-color: #405A53; }
+  min-height: 100px;
+  background-color: #405A53;
+  justify-content: center;
+  color: #CB5134; }
+
+.image-container {
+  min-width: 500px;
+  border-style: solid;
+  border-width: 2px;
+  border-color: #CB5134; }
 
 .nav-bar {
   margin-top: 0px;

@@ -18,8 +18,17 @@ nav {
 }
 
 .hero {
-    min-height: 50px;
+    min-height: 100px;
     background-color: $primaryGreen;
+    justify-content: center;
+    color: $primaryOrange;
+}
+
+.image-container {
+    min-width: 500px;
+    border-style: solid;
+    border-width: 2px;
+    border-color: $primaryOrange;
 }
 
 @mixin nav-height {
