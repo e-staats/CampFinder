@@ -1,3 +1,4 @@
+from sqlalchemy.sql.sqltypes import Boolean
 from data.db_session import create_session # pylint: disable = import-error
 from data.user import User  # pylint: disable = import-error
 import data.db_session as db_session  # pylint: disable = import-error
@@ -28,6 +29,32 @@ def get_user_email(user_id):
         return None
     session.close()
     return user.email
+
+def get_user_preferences(user_id):
+    user = find_user_by_id(user_id)
+    if user == None:
+        return {}
+    
+    preferences = {}
+    preferences["email"]=user.send_emails
+    preferences["text"]=user.send_texts
+    #expand as you add more preferences
+
+    return preferences
+
+def update_setting(user, setting_name, setting_status: Boolean):
+    if user == None or setting_status == None:
+        return False
+    session = db_session.create_session()
+    if setting_name == "email":
+        user.send_emails = setting_status
+    if setting_name == "text":
+        user.send_texts = setting_status
+    session.add(user)
+    session.commit()
+    session.close()
+
+    return True
 
 
 def create_user(name, email, password, security):

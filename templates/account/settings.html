@@ -1,15 +1,24 @@
 {% extends "/shared/_layout.html" %}
 {% block nav %}Home{% endblock %}
+{% block additional_css %}
+<link rel="stylesheet" href="/static/css/account.css" />
+{% endblock %}
 {% block main_content %}
 
 <h2>Hello {{user_name}}</h2>
 <div class="pwChange"><a href="/account/change_password">Change password</a></div>
 
-<div><h3>Your Searches:</h3></div>
-<div id='searchTable'></div>
+<h3>Preferences:</h3>
+<div id="preferences" class="preference-block"></div>
+
+<div>
+    <h3>Your Searches:</h3>
+</div>
+<div id='searchTable' class="preference-block"></div>
 
 {% endblock %}
 
 {% block additional_js %}
+<script src="/static/js/compiled_js/preferences.js"></script>
 <script src="/static/js/compiled_js/searchList.js"></script>
 {% endblock %}

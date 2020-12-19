@@ -15,6 +15,11 @@ def process_results():
     searches = search_services.find_active_searches()
     emailer = ParkEmailer()
     for search in searches:
+        #short circuit if the user doesn't want to be notified:
+        user_prefs = user_services.get_user_preferences(search.owner_id)
+        if user_prefs['email']==False and user_prefs['text']==False:
+            continue
+
         # check for results for the search and move on if there are no availabilities
         park_id_list = search_services.deserialize_park_list(search.parks)
         availability_info = avail_services.find_availability_info_for_date_range(
@@ -25,21 +30,22 @@ def process_results():
         if availability_info == []:
             continue
 
-        # turn the results into an email
-        message = convert_availability_to_message(availability_info)
-        if message == False:
-            continue
+        if user_prefs['email'] == True:
+            # turn the results into an email
+            message = convert_availability_to_message(availability_info)
+            if message == False:
+                continue
 
-        # grab the person to email:
-        to_address = user_services.get_user_email(
-            search.owner_id,
-        )
-        if to_address == None:
-            continue
+            # grab the person to email:
+            to_address = user_services.get_user_email(
+                search.owner_id,
+            )
+            if to_address == None:
+                continue
 
-        # then send that email
-        message["To"] = to_address
-        emailer.send_email(to_address, message)
+            # then send that email
+            message["To"] = to_address
+            emailer.send_email(to_address, message)
 
 
 def convert_availability_to_message(availability_info):

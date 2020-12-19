@@ -63,6 +63,10 @@ def register_post():
     vm = RegisterViewModel()
     vm.validate()
 
+    #for the beta:
+    if vm.admin != True:
+        vm.error = "Account creation is limited during the closed beta."
+
     if vm.error:
         return vm.to_dict()
 
@@ -179,10 +183,40 @@ def toggle_search_status():
         return flask.redirect("account/login")
 
     request = request_dict.data_create("")
-    pprint.pprint(request)
-
     success = search_services.toggle_search_status(request["id"], request["is_active"])
     if not success:
         return jsonify({"status": "could not find search"})
+
+    return jsonify({"status": "success"})
+
+
+# #################### SETTINGS FUNCTIONS ######################
+
+@blueprint.route("/account/_load_user_preferences", methods=["GET"])
+@response(template_file="account/settings.html")
+def load_user_preferences():
+    vm = IndexViewModel()
+    if not vm.user_id:
+        return flask.redirect("account/login")
+
+    preferences = user_service.get_user_preferences(vm.user_id)
+    if preferences == {}:
+        return jsonify("status: no preferences")
+
+    return jsonify(preferences)
+
+
+@blueprint.route("/account/_toggle_setting_status", methods=["POST"])
+@response(template_file="account/settings.html")
+def toggle_setting_status():
+    vm = IndexViewModel()
+    if not vm.user_id:
+        return flask.redirect("account/login")
+
+    request = request_dict.data_create("")
+
+    success = user_service.update_setting(vm.user, request["setting"], request["is_checked"])
+    if not success:
+        return jsonify({"status": "could not update setting"})
 
     return jsonify({"status": "success"})

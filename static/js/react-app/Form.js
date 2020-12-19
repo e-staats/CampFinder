@@ -322,21 +322,19 @@ class Form extends React.Component {
   render() {
     let banner = ""
     if (this.state.success === true) {
-      banner = <div className="successBanner">Search submitted! Remember, if
-      you get an email about an availability, you'll need to make a
-      reservation directly on the Wisconsin Going To Camp website.</div>
+      banner = <div className="successBanner">Search submitted!</div>
     }
     if (this.state.success === false) {
       banner = <div className="errorBanner">{this.state.error}</div>
     }
 
     return (<div>
-      <div>
-        <div class="form-header">Choose the dates you would like to camp:</div>
+      <div className="form-block">
+        <div className="form-header">Choose the dates you would like to camp:</div>
         <DateRangePicker handleDayClick={this.handleDayClick} handleResetClick={this.handleResetClick} from={this.state.from} to={this.state.to} />
       </div>
-      <div>
-        <div class="form-header">Choose the parks you would like to stay at:</div>
+      <div className="form-block">
+        <div className="form-header">Choose the parks you would like to stay at:</div>
         <ParkSelector
           handleCheckboxChange={this.handleCheckboxChange}
           handleSelectAllButtonClick={this.handleSelectAllButtonClick}

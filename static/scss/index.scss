@@ -8,9 +8,8 @@ body {
 
 
 body a {
-    color: $primaryNavy;
+    color: $primaryOrange;
 }
-
 
 nav {
     background-color: $primaryGreen;
@@ -125,18 +124,19 @@ nav .logout:hover {
     background-color: $siteBackground;
     padding-left: 80px;
     padding-right: 80px;
-    padding-top: 40px;
+    padding-top: 20px;
     padding-bottom: 40px;
 }
 
 .selectionApp {
-    margin-top: 20px;
+    margin-top: 5px;
 }
 
 .footer {
     background-color: $siteBackground;
     padding: 30px;
     text-align: center;
+    color: $primaryGreen
 }
 
 .table-header {

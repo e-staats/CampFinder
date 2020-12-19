@@ -8,13 +8,32 @@ code {
   display: flex;
 }
 
+@mixin header-text {
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  // font-family: Garamond, 'Times New Roman', Times, serif;
+}
+
+.form-block {
+  margin-top: 10px;
+}
+
 .form-header {
+  @include header-text();
   // font-style: oblique;
-  font-family: Garamond, 'Times New Roman', Times, serif;
-  font-size: 18pt;
   letter-spacing: 2px;
-  background-color: $formHeaderColor;
-  padding: 5px 5px 5px 5px;
+  font-size: 18pt;
+  // background-color: $formHeaderColor;
+}
+
+.region-header {
+  @include header-text();
+  color: black;
+  letter-spacing: 1px;
+  font-size: 16pt;
+}
+
+.region-header a {
+  color: black;
 }
 
 // @mixin triangle {
@@ -61,13 +80,14 @@ code {
 }
 
 @mixin masterButton {
-  width: 200px;
-  height: 40px;
+  width: 180px;
+  height: 35px;
   align-items: center;
   border-radius: 10px;
   color: white;
   font-size: 14pt;
   border: none;
+  margin-top: 10px;
 }
 
 .masterCheckAll {
@@ -86,18 +106,21 @@ code {
   font-size: 12pt;
   margin-right: 20px;
   height: 35px;
+  margin-top: 10px;
 }
+
 
 .submitButton {
   @include actionButton();
-  background-color: #42a56d;
-  border-color: darken(#42a56d, 10%);
+  background-color: $primaryGreen;
+  border: none;
 }
+
 
 .instascrapeButton {
   @include actionButton();
   background-color: $primaryRed;
-  border-color: darken($primaryRed, 10%);
+  border: none;
 }
 
 .successBanner {

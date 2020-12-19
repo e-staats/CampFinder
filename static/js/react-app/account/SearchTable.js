@@ -56,8 +56,6 @@ class SearchTable extends React.Component {
                 'id': id,
                 'is_active': status,
             }),
-        }).then(data => {
-            console.log(data)
         })
     }
 

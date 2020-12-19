@@ -4,7 +4,7 @@ body {
   font-family: "MaisonNeue", "Segoe UI", "Helvetica Neue", -apple-system, system-ui, BlinkMacSystemFont, Roboto, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"; }
 
 body a {
-  color: #0a122a; }
+  color: #CB5134; }
 
 nav {
   background-color: #405A53;
@@ -86,16 +86,17 @@ nav .logout:hover {
   background-color: #fff3dd;
   padding-left: 80px;
   padding-right: 80px;
-  padding-top: 40px;
+  padding-top: 20px;
   padding-bottom: 40px; }
 
 .selectionApp {
-  margin-top: 20px; }
+  margin-top: 5px; }
 
 .footer {
   background-color: #fff3dd;
   padding: 30px;
-  text-align: center; }
+  text-align: center;
+  color: #405A53; }
 
 .table-header {
   font-weight: bold;
