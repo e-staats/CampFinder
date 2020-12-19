@@ -1,26 +1,26 @@
 body {
   background-color: #fff3dd;
-  margin: 0; }
+  margin: 0;
+  font-family: "MaisonNeue", "Segoe UI", "Helvetica Neue", -apple-system, system-ui, BlinkMacSystemFont, Roboto, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"; }
 
 body a {
-  color: #177e89; }
+  color: #0a122a; }
 
 nav {
-  background-color: #2c6e49;
+  background-color: #405A53;
   padding: 0px;
   margin: 0px; }
 
 .hero {
   min-height: 50px;
-  background-color: #2c6e49; }
+  background-color: #405A53; }
 
 .nav-bar {
   margin-top: 0px;
   min-height: 30px;
   justify-content: center;
   align-items: center;
-  font-size: 10pt;
-  box-shadow: 5px 5px 5px #050505; }
+  font-size: 10pt; }
 
 .nav-pad {
   padding: 0px;
@@ -33,7 +33,10 @@ nav {
   position: relative; }
 
 .nav-item:hover {
-  background-color: #163725; }
+  background-color: #202d2a; }
+
+.nav-text {
+  vertical-align: middle; }
 
 nav a {
   display: block;
@@ -57,10 +60,10 @@ nav a:active {
   text-decoration: none; }
 
 nav .register {
-  background-color: #ffae10; }
+  background-color: #CB5134; }
 
 nav .register:hover {
-  background-color: #c38100; }
+  background-color: #8e3924; }
 
 nav .login {
   background-color: #772014; }
@@ -80,7 +83,7 @@ nav .logout:hover {
   margin-bottom: 0px; }
 
 .main-content {
-  background-color: white;
+  background-color: #fff3dd;
   padding-left: 80px;
   padding-right: 80px;
   padding-top: 40px;
@@ -89,8 +92,8 @@ nav .logout:hover {
 .selectionApp {
   margin-top: 20px; }
 
-.copyright {
-  background-color: #ffae10;
+.footer {
+  background-color: #fff3dd;
   padding: 30px;
   text-align: center; }
 

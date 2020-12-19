@@ -1,6 +1,16 @@
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace; }
 
+.form-header-parent {
+  display: flex; }
+
+.form-header {
+  font-family: Garamond, 'Times New Roman', Times, serif;
+  font-size: 18pt;
+  letter-spacing: 2px;
+  background-color: #FFFFFF;
+  padding: 5px 5px 5px 5px; }
+
 .parkList {
   display: flex; }
   .parkList input[type="checkbox"] {
@@ -19,21 +29,21 @@ code {
   width: 200px;
   height: 40px;
   align-items: center;
-  border-radius: 5px;
+  border-radius: 10px;
   color: white;
   font-size: 14pt;
-  background-color: #2bcadb;
-  border-color: #10565d; }
+  border: none;
+  background-color: #1e357c; }
 
 .masterUncheckAll {
   width: 200px;
   height: 40px;
   align-items: center;
-  border-radius: 5px;
+  border-radius: 10px;
   color: white;
   font-size: 14pt;
-  background-color: #ffae10;
-  border-color: #dc9100; }
+  border: none;
+  background-color: #CB5134; }
 
 .submitButton {
   border-radius: 5px;
@@ -54,10 +64,10 @@ code {
   border-color: #4b140d; }
 
 .successBanner {
-  color: #2c6e49; }
+  color: #405A53; }
 
 .errorBanner {
-  color: #fc5110; }
+  color: #CB5134; }
 
 .checkboxArray {
   margin-top: 10px; }

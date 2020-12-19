@@ -332,11 +332,11 @@ class Form extends React.Component {
 
     return (<div>
       <div>
-        <h3>Choose the dates you would like to camp:</h3>
+        <div class="form-header">Choose the dates you would like to camp:</div>
         <DateRangePicker handleDayClick={this.handleDayClick} handleResetClick={this.handleResetClick} from={this.state.from} to={this.state.to} />
       </div>
       <div>
-        <h3>Choose the parks you would like to stay at:</h3>
+        <div class="form-header">Choose the parks you would like to stay at:</div>
         <ParkSelector
           handleCheckboxChange={this.handleCheckboxChange}
           handleSelectAllButtonClick={this.handleSelectAllButtonClick}

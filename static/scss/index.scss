@@ -1,24 +1,16 @@
-$nwBackground: #fad87b;
-$neBackground: #b1d5bc;
-$swBackground: #bcd682;
-$seBackground: #ffca6e;
-$primaryGreen: #2c6e49;
-$primaryOrange: #fc5130;
-$primaryRed: #772014;
-$primaryOrange: #fc5130;
-$primaryYellow: #ffae10;
-$primaryNavy: #0a122a;
-$primaryAqua: #177e89;
-$siteBackground: #fff3dd;
+@import '_colors';
 
 body {
     background-color: $siteBackground;
     margin: 0;
+    font-family: "MaisonNeue", "Segoe UI", "Helvetica Neue", -apple-system, system-ui, BlinkMacSystemFont, Roboto, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
 }
 
+
 body a {
-    color: $primaryAqua;
+    color: $primaryNavy;
 }
+
 
 nav {
     background-color: $primaryGreen;
@@ -41,7 +33,6 @@ nav {
     justify-content: center;
     align-items: center;
     font-size: 10pt;
-    box-shadow: 5px 5px 5px #050505;
 }
 
 @mixin nav-base {
@@ -63,6 +54,10 @@ nav {
     background-color: darken($primaryGreen, 15%);
 }
 
+.nav-text {
+    vertical-align: middle;
+}
+
 @mixin center-nav {
     position: absolute;
     top: 50%;
@@ -74,7 +69,6 @@ nav a {
     display: block;
     @include nav-height();
     text-align: center;
-    // @include center-nav();
 }
 
 nav a:link {
@@ -98,11 +92,11 @@ nav a:active {
 }
 
 nav .register {
-    background-color: $primaryYellow;
+    background-color: $primaryOrange;
 }
 
 nav .register:hover {
-    background-color: darken($primaryYellow, 15%);
+    background-color: darken($primaryOrange, 15%);
 }
 
 nav .login {
@@ -128,7 +122,7 @@ nav .logout:hover {
 }
 
 .main-content {
-    background-color: white;
+    background-color: $siteBackground;
     padding-left: 80px;
     padding-right: 80px;
     padding-top: 40px;
@@ -139,8 +133,8 @@ nav .logout:hover {
     margin-top: 20px;
 }
 
-.copyright {
-    background-color: $primaryYellow;
+.footer {
+    background-color: $siteBackground;
     padding: 30px;
     text-align: center;
 }

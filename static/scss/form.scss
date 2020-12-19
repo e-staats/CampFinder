@@ -1,19 +1,41 @@
-$nwBackground: #fad87b;
-$neBackground: #b1d5bc;
-$swBackground: #bcd682;
-$seBackground: #ffca6e;
-$primaryGreen: #2c6e49;
-$primaryOrange: #fc5110;
-$primaryRed: #772014;
-$primaryOrange: #fc5110;
-$primaryYellow: #ffae10;
-$primaryNavy: #0a122a;
-$primaryAqua: #177e89;
-$siteBackground: #fff3dd;
+@import '_colors';
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
 }
+
+.form-header-parent {
+  display: flex;
+}
+
+.form-header {
+  // font-style: oblique;
+  font-family: Garamond, 'Times New Roman', Times, serif;
+  font-size: 18pt;
+  letter-spacing: 2px;
+  background-color: $formHeaderColor;
+  padding: 5px 5px 5px 5px;
+}
+
+// @mixin triangle {
+//   width: 0; 
+//   height: 0; 
+//   border-top: 10px solid transparent;
+//   border-bottom: 10px solid transparent;
+  
+//   border-left: 10px solid $formHeaderColor;
+// }
+
+// .left-triangle {
+//   @include triangle();
+//   transform: rotate(45deg);
+// }
+
+// .right-triangle {
+//   @include triangle();
+//   transform: rotate(-45deg);
+// }
+
 
 @mixin myLabel {
   position: relative;
@@ -22,6 +44,7 @@ code {
   font-size: smaller;
   text-overflow: ellipsis;
 }
+
 
 .parkList {
   display: flex;
@@ -41,21 +64,20 @@ code {
   width: 200px;
   height: 40px;
   align-items: center;
-  border-radius: 5px;
+  border-radius: 10px;
   color: white;
   font-size: 14pt;
+  border: none;
 }
 
 .masterCheckAll {
   @include masterButton();
-  background-color: lighten($primaryAqua, 20%);
-  border-color: darken($primaryAqua, 10%);
+  background-color: lighten($primaryNavy, 20%);
 }
 
 .masterUncheckAll {
   @include masterButton();
-  background-color: $primaryYellow;
-  border-color: darken($primaryYellow, 10%);
+  background-color: $primaryOrange;
 }
 
 @mixin actionButton {

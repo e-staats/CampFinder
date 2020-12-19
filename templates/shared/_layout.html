@@ -17,12 +17,12 @@
     <div class="nav hero">big ole image goes here</div>
     <nav class="row nav-bar">
         <div class="col-md-3 nav-pad"></div>
-        <div class="col-md-1 nav-item"><a href="/">Home</a></div>
-        <div class="col-md-1 nav-item"><a href="/about">About</a></div>
+        <div class="col-md-1 nav-item"><a href="/"><span class="nav-text">Home</span></a></div>
+        <div class="col-md-1 nav-item"><a href="/about"><span class="nav-text">About</span></a></div>
         {% if user_id %}
 
         <div class="col-md-1 nav-item">
-            <a href="/account">Account</a>
+            <a href="/account"><span class="nav-text">Account</span></a>
         </div>
         {% else %}
         <div class="col-md-1 nav-pad"></div>
@@ -32,7 +32,7 @@
 
         {% if not user_id or admin %}
         <div class="col-md-1 nav-item register">
-            <a href="/account/register">Register</a>
+            <a href="/account/register"><span class="nav-text">Register</span></a>
         </div>
         {% else %}
         <div class="col-md-1 nav-pad"></div>
@@ -40,11 +40,11 @@
 
         {% if user_id %}
         <div class="col-md-1 nav-item logout">
-            <a href="/account/logout">Log Out</a>
+            <a href="/account/logout"><span class="nav-text">Log Out</span></a>
         </div>
         {% else %}
         <div class="col-md-1 nav-item login">
-            <a href="/account/login">Log In</a>
+            <a href="/account/login"><span class="nav-text">Log In</span></a>
         </div>
         {% endif %}
         <div class="col-md-3 nav-pad"></div>
@@ -69,7 +69,7 @@
 {% endblock %}
 
 <footer>
-    <div class="copyright">
+    <div class="footer">
         <p>Issues or feedback? Let us know at wiparkscraper@gmail.com
         <br>Or head to GitHub to <a href="https://github.com/e-staats/CampFinder/issues">open an issue</a> or <a href="https://github.com/e-staats/CampFinder/discussions">start a discussion</a>!</p>
     </div>
