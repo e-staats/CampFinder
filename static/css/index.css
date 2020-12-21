@@ -13,10 +13,8 @@ nav {
   margin: 0px; }
 
 .hero {
-  min-height: 100px;
   background-color: #1D2A3D;
-  justify-content: center;
-  color: #F15451; }
+  justify-content: center; }
 
 .image-container img {
   max-width: 100%; }
