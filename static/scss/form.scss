@@ -1,41 +1,12 @@
 @import '_colors';
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
-}
-
 .form-header-parent {
   display: flex;
-}
-
-@mixin header-text {
-  font-family: Verdana, Geneva, Tahoma, sans-serif;
-  // font-family: Garamond, 'Times New Roman', Times, serif;
 }
 
 .form-block {
   margin-top: 10px;
 }
-
-.form-header {
-  @include header-text();
-  // font-style: oblique;
-  letter-spacing: 2px;
-  font-size: 18pt;
-  // background-color: $formHeaderColor;
-}
-
-.region-header {
-  @include header-text();
-  color: black;
-  letter-spacing: 1px;
-  font-size: 16pt;
-}
-
-.region-header a {
-  color: black;
-}
-
 // @mixin triangle {
 //   width: 0; 
 //   height: 0; 
@@ -60,7 +31,7 @@ code {
   position: relative;
   top: -3px;
   padding-left: 4px;
-  font-size: smaller;
+  font-size: 11pt;
   text-overflow: ellipsis;
 }
 
@@ -76,19 +47,21 @@ code {
 }
 
 .masterButton {
-  margin-left: 20px;
+  margin-left: 10px;
+  margin-right: 20px;
 }
 
 @mixin masterButton {
-  width: 180px;
-  height: 35px;
+  width: 130px;
+  height: 25px;
   align-items: center;
-  border-radius: 10px;
+  border-radius: 7px;
   color: white;
-  font-size: 14pt;
+  font-size: 12pt;
   border: none;
   margin-top: 10px;
 }
+
 
 .masterCheckAll {
   @include masterButton();

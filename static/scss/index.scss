@@ -3,32 +3,33 @@
 body {
     background-color: $siteBackground;
     margin: 0;
-    font-family: "MaisonNeue", "Segoe UI", "Helvetica Neue", -apple-system, system-ui, BlinkMacSystemFont, Roboto, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+    font-family: 'Cabin',"MaisonNeue", "Segoe UI", "Helvetica Neue", -apple-system, system-ui, BlinkMacSystemFont, Roboto, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+    font-size: 12pt;
 }
-
 
 body a {
     color: $primaryOrange;
 }
 
+
 nav {
-    background-color: $primaryGreen;
+    background-color: $primaryNavy;
     padding: 0px;
     margin: 0px;
 }
 
 .hero {
     min-height: 100px;
-    background-color: $primaryGreen;
+    background-color: $primaryNavy;
     justify-content: center;
     color: $primaryOrange;
 }
 
 .image-container {
     min-width: 500px;
-    border-style: solid;
-    border-width: 2px;
-    border-color: $primaryOrange;
+    // border-style: solid;
+    // border-width: 2px;
+    // border-color: $primaryOrange;
 }
 
 @mixin nav-height {
@@ -40,7 +41,7 @@ nav {
     @include nav-height();
     justify-content: center;
     align-items: center;
-    font-size: 10pt;
+    font-size: 12pt;
 }
 
 @mixin nav-base {
@@ -59,7 +60,7 @@ nav {
 }
 
 .nav-item:hover {
-    background-color: darken($primaryGreen, 15%);
+    background-color: darken($primaryNavy, 15%);
 }
 
 .nav-text {
@@ -99,20 +100,20 @@ nav a:active {
     text-decoration: none;
 }
 
-nav .register {
+// nav .register {
+//     background-color: $primaryYellow;
+// }
+
+// nav .register:hover {
+//     background-color: darken($primaryYellow, 15%);
+// }
+
+nav .login {
     background-color: $primaryOrange;
 }
 
-nav .register:hover {
-    background-color: darken($primaryOrange, 15%);
-}
-
-nav .login {
-    background-color: $primaryRed;
-}
-
 nav .login:hover {
-    background-color: darken($primaryRed, 15%);
+    background-color: darken($primaryOrange, 15%);
 }
 
 nav .logout {
@@ -120,8 +121,33 @@ nav .logout {
 }
 
 nav .logout:hover {
-    background-color: lighten($primaryNavy, 15%);
+    background-color: darken($primaryNavy, 10%);
 }
+
+@mixin header-text {
+  font-family: 'Roboto Condensed',Verdana, Geneva, Tahoma, sans-serif;
+  font-size: 18pt;
+  font-weight: 700;
+  // font-family: Garamond, 'Times New Roman', Times, serif;
+}
+
+.form-header {
+  @include header-text();
+  // font-style: oblique;
+  // background-color: $formHeaderColor;
+}
+
+.region-header {
+  @include header-text();
+  font-size: 16pt;
+}
+
+
+.region-header a {
+  color: $primaryNavy;
+}
+
+
 
 .main-body {
     margin-top: 0px;
@@ -145,7 +171,7 @@ nav .logout:hover {
     background-color: $siteBackground;
     padding: 30px;
     text-align: center;
-    color: $primaryGreen
+    color: $primaryNavy;
 }
 
 .table-header {

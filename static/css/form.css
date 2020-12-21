@@ -1,25 +1,8 @@
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace; }
-
 .form-header-parent {
   display: flex; }
 
 .form-block {
   margin-top: 10px; }
-
-.form-header {
-  font-family: Verdana, Geneva, Tahoma, sans-serif;
-  letter-spacing: 2px;
-  font-size: 18pt; }
-
-.region-header {
-  font-family: Verdana, Geneva, Tahoma, sans-serif;
-  color: black;
-  letter-spacing: 1px;
-  font-size: 16pt; }
-
-.region-header a {
-  color: black; }
 
 .parkList {
   display: flex; }
@@ -29,33 +12,34 @@ code {
     position: relative;
     top: -3px;
     padding-left: 4px;
-    font-size: smaller;
+    font-size: 11pt;
     text-overflow: ellipsis; }
 
 .masterButton {
-  margin-left: 20px; }
+  margin-left: 10px;
+  margin-right: 20px; }
 
 .masterCheckAll {
-  width: 180px;
-  height: 35px;
+  width: 130px;
+  height: 25px;
   align-items: center;
-  border-radius: 10px;
+  border-radius: 7px;
   color: white;
-  font-size: 14pt;
+  font-size: 12pt;
   border: none;
   margin-top: 10px;
-  background-color: #1e357c; }
+  background-color: #3e5a82; }
 
 .masterUncheckAll {
-  width: 180px;
-  height: 35px;
+  width: 130px;
+  height: 25px;
   align-items: center;
-  border-radius: 10px;
+  border-radius: 7px;
   color: white;
-  font-size: 14pt;
+  font-size: 12pt;
   border: none;
   margin-top: 10px;
-  background-color: #CB5134; }
+  background-color: #F15451; }
 
 .submitButton {
   border-radius: 5px;
@@ -81,7 +65,7 @@ code {
   color: #405A53; }
 
 .errorBanner {
-  color: #CB5134; }
+  color: #F15451; }
 
 .checkboxArray {
   margin-top: 10px; }
@@ -90,7 +74,7 @@ code {
   position: relative;
   top: -3px;
   padding-left: 4px;
-  font-size: smaller;
+  font-size: 11pt;
   text-overflow: ellipsis;
   font-weight: bold; }
 

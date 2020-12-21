@@ -1,34 +1,32 @@
 body {
   background-color: #fff3dd;
   margin: 0;
-  font-family: "MaisonNeue", "Segoe UI", "Helvetica Neue", -apple-system, system-ui, BlinkMacSystemFont, Roboto, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"; }
+  font-family: 'Cabin',"MaisonNeue", "Segoe UI", "Helvetica Neue", -apple-system, system-ui, BlinkMacSystemFont, Roboto, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  font-size: 12pt; }
 
 body a {
-  color: #CB5134; }
+  color: #F15451; }
 
 nav {
-  background-color: #405A53;
+  background-color: #1D2A3D;
   padding: 0px;
   margin: 0px; }
 
 .hero {
   min-height: 100px;
-  background-color: #405A53;
+  background-color: #1D2A3D;
   justify-content: center;
-  color: #CB5134; }
+  color: #F15451; }
 
 .image-container {
-  min-width: 500px;
-  border-style: solid;
-  border-width: 2px;
-  border-color: #CB5134; }
+  min-width: 500px; }
 
 .nav-bar {
   margin-top: 0px;
   min-height: 30px;
   justify-content: center;
   align-items: center;
-  font-size: 10pt; }
+  font-size: 12pt; }
 
 .nav-pad {
   padding: 0px;
@@ -41,7 +39,7 @@ nav {
   position: relative; }
 
 .nav-item:hover {
-  background-color: #202d2a; }
+  background-color: #040609; }
 
 .nav-text {
   vertical-align: middle; }
@@ -67,23 +65,31 @@ nav a:active {
   color: white;
   text-decoration: none; }
 
-nav .register {
-  background-color: #CB5134; }
-
-nav .register:hover {
-  background-color: #8e3924; }
-
 nav .login {
-  background-color: #772014; }
+  background-color: #F15451; }
 
 nav .login:hover {
-  background-color: #360e09; }
+  background-color: #e31612; }
 
 nav .logout {
-  background-color: #0a122a; }
+  background-color: #1D2A3D; }
 
 nav .logout:hover {
-  background-color: #192c68; }
+  background-color: #0d121a; }
+
+.form-header {
+  font-family: 'Roboto Condensed',Verdana, Geneva, Tahoma, sans-serif;
+  font-size: 18pt;
+  font-weight: 700; }
+
+.region-header {
+  font-family: 'Roboto Condensed',Verdana, Geneva, Tahoma, sans-serif;
+  font-size: 18pt;
+  font-weight: 700;
+  font-size: 16pt; }
+
+.region-header a {
+  color: #1D2A3D; }
 
 .main-body {
   margin-top: 0px;
@@ -104,7 +110,7 @@ nav .logout:hover {
   background-color: #fff3dd;
   padding: 30px;
   text-align: center;
-  color: #405A53; }
+  color: #1D2A3D; }
 
 .table-header {
   font-weight: bold;

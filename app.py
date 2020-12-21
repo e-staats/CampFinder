@@ -12,7 +12,7 @@ import services.region_services as region_services
 import services.park_services as park_services
 import services.security_services as security_services
 
-app = flask.Flask(__name__)
+app = flask.Flask(__name__, static_url_path = "/static", static_folder = "static")
 
 def setup_db():
     db_file = os.path.join(os.path.dirname(__file__), "db", "parkdb.sqlite")
@@ -43,6 +43,7 @@ def configure():
     print("Created environment variables")
     setup_db()
     print("Database setup complete")
+    # app.add_url_rule('/favicon.ico', redirect_to=flask.url_for('static', filename='favicon.ico'))
 
 
 def main():

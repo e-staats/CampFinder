@@ -1,7 +1,7 @@
 {% extends "/shared/_layout.html" %}
 {% block nav %}Home{% endblock %}
 {% block additional_css %}
-<link rel="stylesheet" href="/static/css/account.css" />
+<link rel="stylesheet" href="{{ url_for('static', filename='css/account.css')}}" />
 {% endblock %}
 {% block main_content %}
 
@@ -19,6 +19,6 @@
 {% endblock %}
 
 {% block additional_js %}
-<script src="/static/js/compiled_js/preferences.js"></script>
-<script src="/static/js/compiled_js/searchList.js"></script>
+<script src="{{ url_for('static', filename='/js/compiled_js/preferences.js') }}"></script>
+<script src="{{url_for('static', filename='js/compiled_js/searchList.js') }}"></script>
 {% endblock %}

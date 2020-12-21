@@ -9,13 +9,15 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
         integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" href="/static/css/index.css" />
+    <link href="https://fonts.googleapis.com/css?family=Cabin|Roboto:400,700|Roboto+Condensed:400,700" rel="stylesheet">
+    <link rel="shortcut icon" href="{{ url_for('static', filename='/img/favicon.ico') }}" />
     {% block additional_css %}
     {% endblock %}
 </head>
 
 <body>
     <div class="nav hero">
-        <div class="image-container">big ole image goes here</div>
+        <div class="image-container"><a href="/"><img src="{{ url_for('static', filename='/img/BannerHeader.png') }}"></a></div>
     </div>
     <nav class="row nav-bar">
         <div class="col-md-3 nav-pad"></div>

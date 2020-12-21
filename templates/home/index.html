@@ -1,7 +1,7 @@
 {% extends "/shared/_layout.html" %}
 {% block additional_css %}
-<link rel="stylesheet" href="/static/css/daypicker_styles.css">
-<link rel="stylesheet" href="/static/css/form.css">
+<link rel="stylesheet" href="{{ url_for('static', filename='/css/daypicker_styles.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='/css/form.css') }}">
 {% endblock %}
 
 {% block main_content %}
