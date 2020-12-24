@@ -8,13 +8,16 @@ from infrastructure.view_modifiers import response
 import infrastructure.cookie_auth as cookie
 import services.user_services as user_service
 import services.security_services as security_service
+import services.token_services as token_service
 from viewmodels.account.index_viewmodel import IndexViewModel
 from viewmodels.account.register_viewmodel import RegisterViewModel
 from viewmodels.account.login_viewmodel import LoginViewModel
 from viewmodels.account.change_pw_viewmodel import ChangePwViewModel
+from viewmodels.account.forgot_pw_viewmodel import ForgotPwViewModel
+from viewmodels.account.reset_pw_viewmodel import ResetPwViewModel
 import infrastructure.request_dict as request_dict
 from data.user import User
-from flask import jsonify
+from flask import jsonify, request
 import pprint
 
 # pylint: disable=no-member
@@ -63,7 +66,7 @@ def register_post():
     vm = RegisterViewModel()
     vm.validate()
 
-    #for the beta:
+    # for the beta:
     if vm.admin != True:
         vm.error = "Account creation is limited during the closed beta."
 
@@ -144,6 +147,73 @@ def change_pw_post():
     return vm.to_dict()
 
 
+# ################### FORGOT PASSWORD #################################
+
+
+@blueprint.route("/account/forgot_password", methods=["GET"])
+@response(template_file="account/forgot_password.html")
+def forgot_pw_get():
+    vm = ForgotPwViewModel()
+    return vm.to_dict()
+
+
+@blueprint.route("/account/forgot_password", methods=["POST"])
+@response(template_file="account/forgot_password.html")
+def forgot_pw_post():
+    vm = ForgotPwViewModel()
+    vm.validate()
+    if vm.error:
+        return vm.to_dict()
+
+    success = user_service.send_reset_email(vm.email)
+    if not success:
+        vm.error = "We could not send an email to this address. Please contact the site administrator for help."
+        return vm.to_dict()
+
+    vm.success = "A pasword reset email was sent to that address."
+
+    return vm.to_dict()
+
+
+# ################### RESET PASSWORD #################################
+
+
+@blueprint.route("/account/reset_password", methods=["GET"])
+@response(template_file="account/reset_password.html")
+def reset_pw_get():
+    vm = ResetPwViewModel()
+    token = request.args.get("token")
+    if token == None:
+        return flask.redirect("/")
+    user_id = token_service.deserialize_url_time_sensitive_value(token, 'reset_password')
+    if user_id == None or user_service.find_user_by_id(user_id) == None:
+        return flask.redirect("/")
+    vm.user_id = token_service.serialize_value(user_id,'reset_user')
+    return vm.to_dict()
+
+
+@blueprint.route("/account/reset_password", methods=["POST"])
+@response(template_file="account/reset_password.html")
+def reset_pw_post():
+    vm = ResetPwViewModel()
+    vm.validate()
+    if vm.error:
+        return vm.to_dict()
+
+    user_id = token_service.deserialize_value(vm.user_id, 'reset_user')
+    if user_id == None or user_service.find_user_by_id(user_id) == None:
+        vm.error = "Failed to reset password for this user."
+
+    user = user_service.change_password(user_id, vm.new_password)
+    if not user:
+        vm.error = "We could not change the password for this user. Please contact the site administrator for help."
+        return vm.to_dict()
+
+    vm.success = "Password successfully changed."
+
+    return vm.to_dict()
+
+
 # ################### LOGOUT #################################
 
 
@@ -192,6 +262,7 @@ def toggle_search_status():
 
 # #################### SETTINGS FUNCTIONS ######################
 
+
 @blueprint.route("/account/_load_user_preferences", methods=["GET"])
 @response(template_file="account/settings.html")
 def load_user_preferences():
@@ -215,7 +286,9 @@ def toggle_setting_status():
 
     request = request_dict.data_create("")
 
-    success = user_service.update_setting(vm.user, request["setting"], request["is_checked"])
+    success = user_service.update_setting(
+        vm.user, request["setting"], request["is_checked"]
+    )
     if not success:
         return jsonify({"status": "could not update setting"})
 

@@ -1,9 +1,8 @@
 from sqlalchemy.sql.sqltypes import Boolean
-from data.db_session import create_session # pylint: disable = import-error
 from data.user import User  # pylint: disable = import-error
 import data.db_session as db_session  # pylint: disable = import-error
 from passlib.handlers.sha2_crypt import sha512_crypt as crypto
-
+import services.email_services as email_service
 
 def find_user_by_id(user_id):
     session = db_session.create_session()
@@ -94,6 +93,14 @@ def change_password(user_id, password):
 
     return user
 
+def send_reset_email(email):
+    user = find_user_by_email(email)
+    if user==False:
+        print(f"failed to find user with email {email}")
+        return False
+    
+    success = email_service.send_pw_reset_email(user.id, user.email)
+    return success
 
 def hash_text(text: str) -> str:
     hashed_text = crypto.encrypt(text, rounds=171204)
