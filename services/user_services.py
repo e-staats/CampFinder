@@ -96,7 +96,6 @@ def change_password(user_id, password):
 def send_reset_email(email):
     user = find_user_by_email(email)
     if user==False:
-        print(f"failed to find user with email {email}")
         return False
     
     success = email_service.send_pw_reset_email(user.id, user.email)

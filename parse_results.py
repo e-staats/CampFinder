@@ -2,8 +2,8 @@ from data.db_session import create_session
 import services.search_services as search_services
 import services.user_services as user_services
 import services.availability_services as avail_services
-from emailer import ParkEmailer
-import email_message
+from services.email_services import Emailer
+import templates.email.availability_message as availability_message
 from data.availability import Availability
 from data.park import Park
 from data.region import Region
@@ -13,7 +13,7 @@ from data.region import Region
 
 def process_results():
     searches = search_services.find_active_searches()
-    emailer = ParkEmailer()
+    emailer = Emailer()
     for search in searches:
         #short circuit if the user doesn't want to be notified:
         user_prefs = user_services.get_user_preferences(search.owner_id)
@@ -59,6 +59,6 @@ def convert_availability_to_message(availability_info):
 
     if avail_dict == {}:
         return False
-    message = email_message.create_message(avail_dict)
+    message = availability_message.create_message(avail_dict)
 
     return message
