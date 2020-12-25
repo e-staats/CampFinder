@@ -67,5 +67,4 @@ def load_region_links():
     for key in region_links["start_urls"].keys():
         new_key = key.split()[0].lower()
         output[new_key] = region_links["start_urls"][key]
-    pprint.pprint(output)
     return jsonify(output) 

@@ -24,11 +24,11 @@ class ParkEmailer:
 
 
 ####################### EMAILING FUNCTIONS ###########################
-def send_confirmation_email(user_id, email):
+def send_activation_email(user_id, email):
     url = url_for(
-        "account.reset_pw_get",
+        "account.activate_account",
         token=token_service.serialize_url_time_sensitive_value(
-            user_id, salt="reset_password"
+            user_id, salt="activate"
         ),
         _external=True,
     )

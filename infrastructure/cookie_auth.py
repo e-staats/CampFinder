@@ -5,7 +5,7 @@ from typing import Optional
 from flask import Request
 from flask import Response
 
-from infrastructure.num_convert import try_int # pylint: disable = import-error
+from infrastructure.num_convert import try_str # pylint: disable = import-error
 
 auth_cookie_name = 'wi_park_scraper'
 
@@ -25,7 +25,7 @@ def __add_cookie_callback(_, response: Response, name: str, value: str):
     response.set_cookie(name, value, max_age=timedelta(days=30))
 
 
-def get_user_id_via_auth_cookie(request: Request) -> Optional[int]:
+def get_user_id_via_auth_cookie(request: Request):
     if auth_cookie_name not in request.cookies:
         return None
 
@@ -41,7 +41,7 @@ def get_user_id_via_auth_cookie(request: Request) -> Optional[int]:
         print("Warning: Hash mismatch, invalid cookie value")
         return None
 
-    return try_int(user_id)
+    return try_str(user_id)
 
 
 def logout(response: Response):

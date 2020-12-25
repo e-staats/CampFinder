@@ -1,0 +1,21 @@
+{% extends "shared/_layout.html" %}
+
+{% block title %}CampFinder - Activate{% endblock %}
+{% block nav %}{% endblock %}
+{% block main_content %}
+
+<div>
+    <div class="form-header">Your account is being activated</div>
+    <div>
+        Please wait to be redirected. If you are not redirected, try logging in.
+        {% if error %}
+        <div class="error-msg">{{error}}</div>
+        {% endif %}
+    </div>
+</div>
+
+
+{% endblock %}
+
+{% block additional_css %}
+{% endblock %}

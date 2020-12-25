@@ -15,6 +15,7 @@ from viewmodels.account.login_viewmodel import LoginViewModel
 from viewmodels.account.change_pw_viewmodel import ChangePwViewModel
 from viewmodels.account.forgot_pw_viewmodel import ForgotPwViewModel
 from viewmodels.account.reset_pw_viewmodel import ResetPwViewModel
+from viewmodels.account.activate_viewmodel import ActivateViewModel
 import infrastructure.request_dict as request_dict
 from data.user import User
 from flask import jsonify, request
@@ -78,11 +79,46 @@ def register_post():
     if not user:
         vm.error = "The account could not be created"
         return vm.to_dict()
-
+    
+    success = user_service.send_activation_email(user)
+    if success != True:
+        vm.error = "The activation email failed to send. Please contact the site administrator for help."
+        return vm.to_dict()
+    
     resp = flask.redirect("/")
-    cookie.set_auth(resp, user.id)
 
     return resp
+
+
+# ################### ACTIVATE ACCOUNT #################################
+
+
+@blueprint.route("/account/activate_account", methods=["GET", "POST"])
+@response(template_file="account/activate.html")
+def activate_account():
+    vm = ActivateViewModel()
+    token = request.args.get("token")
+    if token == None:
+        return flask.redirect("/")
+    user_id = token_service.deserialize_url_time_sensitive_value(token, "activate")
+    user = user_service.find_user_by_id(user_id)
+    if user_id == None or user == None:
+        return flask.redirect("/")
+    vm.user_id = user_id
+    vm.user_name = user.name
+    success = user_service.activate_user(user)
+    if success != True:
+        vm.error = "We ran into an issue activating your account. Please contact the site admin for help."
+        return vm.to_dict()
+    resp = flask.redirect("/account/confirmation")
+    return resp
+
+@blueprint.route("/account/confirmation", methods=["GET", "POST"])
+@response(template_file="account/confirmation.html")
+def confirmation():
+    vm = IndexViewModel()
+    
+    return vm.to_dict()
 
 
 # ################### LOGIN #################################
@@ -185,10 +221,12 @@ def reset_pw_get():
     token = request.args.get("token")
     if token == None:
         return flask.redirect("/")
-    user_id = token_service.deserialize_url_time_sensitive_value(token, 'reset_password')
+    user_id = token_service.deserialize_url_time_sensitive_value(
+        token, "reset_password"
+    )
     if user_id == None or user_service.find_user_by_id(user_id) == None:
         return flask.redirect("/")
-    vm.user_id = token_service.serialize_value(user_id,'reset_user')
+    vm.user_id = token_service.serialize_value(user_id, "reset_user")
     return vm.to_dict()
 
 
@@ -200,7 +238,7 @@ def reset_pw_post():
     if vm.error:
         return vm.to_dict()
 
-    user_id = token_service.deserialize_value(vm.user_id, 'reset_user')
+    user_id = token_service.deserialize_value(vm.user_id, "reset_user")
     if user_id == None or user_service.find_user_by_id(user_id) == None:
         vm.error = "Failed to reset password for this user."
 

@@ -6,7 +6,6 @@ import services.email_services as email_service
 
 def find_user_by_id(user_id):
     session = db_session.create_session()
-
     user = session.query(User).filter(User.id == user_id).first()
     session.close()
     return user
@@ -56,7 +55,7 @@ def update_setting(user, setting_name, setting_status: Boolean):
     return True
 
 
-def create_user(name, email, password, security):
+def create_user(name, email, password, security, is_active=False):
 
     # todo: validation
     if find_user_by_email(email):
@@ -65,7 +64,7 @@ def create_user(name, email, password, security):
     user.name = name
     user.email = email
     user.hashed_pw = hash_text(password)
-    user.is_active = True
+    user.is_active = is_active
     user.security_class = security
 
     session = db_session.create_session()
@@ -78,6 +77,17 @@ def create_user(name, email, password, security):
         session.close()
 
     return user
+
+def activate_user(user):
+    session = db_session.create_session()
+    user.is_active = True
+    try:
+        session.add(user)
+        session.commit()
+        session.close()
+        return True
+    except:
+        return False
 
 def change_password(user_id, password):
     session = db_session.create_session()
@@ -101,6 +111,10 @@ def send_reset_email(email):
     success = email_service.send_pw_reset_email(user.id, user.email)
     return success
 
+def send_activation_email(user):
+    success = email_service.send_activation_email(user.id, user.email)
+    return success
+
 def hash_text(text: str) -> str:
     hashed_text = crypto.encrypt(text, rounds=171204)
     return hashed_text
@@ -112,6 +126,11 @@ def verify_hash(hashed_text: str, plain_text: str) -> bool:
 
 def validate_user(email: str, password: str) -> User:
     user = find_user_by_email(email)
+    if user == None:
+        return False
+    if user.is_active != 1:
+        print("User is not active")
+        return False
     if not user:
         return False
     if not verify_hash(user.hashed_pw, password):

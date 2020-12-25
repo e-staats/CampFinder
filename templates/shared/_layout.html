@@ -17,13 +17,13 @@
 
 <body>
     <div class="row nav hero">
-        <div class="image-container"><a href="/"><img src="{{ url_for('static', filename='/img/BannerHeader.png') }}"></a></div>
+        <div class="image-container"><a href="/"><img src="{{ url_for('static', filename='img/BannerHeader.png') }}"></a></div>
     </div>
     <nav class="row nav-bar">
         <div class="col-md-3 nav-pad"></div>
         <div class="col-md-1 nav-item"><a href="/"><span class="nav-text">Home</span></a></div>
         <div class="col-md-1 nav-item"><a href="/about"><span class="nav-text">About</span></a></div>
-        {% if user_id %}
+        {% if user_name %}
 
         <div class="col-md-1 nav-item">
             <a href="/account"><span class="nav-text">Account</span></a>
@@ -34,7 +34,7 @@
 
         <div class="col-md-1 nav-pad"></div>
 
-        {% if not user_id or admin %}
+        {% if not user_name or admin %}
         <div class="col-md-1 nav-item register">
             <a href="/account/register"><span class="nav-text">Register</span></a>
         </div>
@@ -42,7 +42,7 @@
         <div class="col-md-1 nav-pad"></div>
         {% endif %}
 
-        {% if user_id %}
+        {% if user_name %}
         <div class="col-md-1 nav-item logout">
             <a href="/account/logout"><span class="nav-text">Log Out</span></a>
         </div>

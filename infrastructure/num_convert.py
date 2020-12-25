@@ -1,5 +1,5 @@
-def try_int(text) -> int:
+def try_str(text) -> str:
     try:
-        return int(text)
+        return str(text)
     except:
-        return 0
+        return None
