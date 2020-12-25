@@ -1,9 +1,10 @@
 from flask import url_for
 import smtplib, ssl
 import os
-import templates.email.pw_reset_message as pw_reset_message
 import templates.email.availability_message as availability_message
 import services.token_services as token_service
+from templates.email.BasicEmail import BasicEmail
+
 ####################### EMAILER CLASS ################################
 class ParkEmailer:
     def __init__(self):
@@ -23,8 +24,28 @@ class ParkEmailer:
 
 
 ####################### EMAILING FUNCTIONS ###########################
-def send_confirmation_email():
-    return
+def send_confirmation_email(user_id, email):
+    url = url_for(
+        "account.reset_pw_get",
+        token=token_service.serialize_url_time_sensitive_value(
+            user_id, salt="reset_password"
+        ),
+        _external=True,
+    )
+    print(url)
+    subject = "CampFinder Account Activation!"
+    div1 = "Welcome to CampFinder! Please click below to activate your account and start getting notified when campsites are available!"
+    div2 = f"<a href='{url}'>{url}</a>"
+    div3 = "We look forward to helping you get out there and get camping!"
+    email_message = BasicEmail(subject, div1, div2, div3)
+    message = email_message.create_message()
+    # message = pw_reset_message.create_message(reset_url)
+    emailer = ParkEmailer()
+    try:
+        emailer.send_email(email, message)
+        return True
+    except smtplib.SMTPAuthenticationError as e:
+        return False
 
 
 def send_pw_reset_email(user_id, email):
@@ -36,9 +57,15 @@ def send_pw_reset_email(user_id, email):
         _external=True,
     )
     print(reset_url)
-    message = pw_reset_message.create_message(reset_url)
+    subject = "CampFinder Password Reset"
+    div1 = "Someone requested to reset the password for your CampFinder account. If you would like to reset your password, click here:"
+    div2 = f"<a href='{reset_url}'>{reset_url}</a>"
+    div3 = "If you didn't ask to reset your password, you should ignore this email."
+    email_message = BasicEmail(subject, div1, div2, div3)
+    message = email_message.create_message()
+    # message = pw_reset_message.create_message(reset_url)
     emailer = ParkEmailer()
-    try: 
+    try:
         emailer.send_email(email, message)
         return True
     except smtplib.SMTPAuthenticationError as e:
