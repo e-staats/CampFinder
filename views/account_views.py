@@ -105,7 +105,6 @@ def activate_account():
     if user_id == None or user == None:
         return flask.redirect("/")
     vm.user_id = user_id
-    vm.user_name = user.name
     success = user_service.activate_user(user)
     if success != True:
         vm.error = "We ran into an issue activating your account. Please contact the site admin for help."

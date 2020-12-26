@@ -8,7 +8,10 @@ from sqlalchemy.sql.schema import ForeignKey
 class User(SqlAlchemyBase):
     __tablename__ = "users"
 
-    id = sa.Column(sa.String, primary_key=True, default=uuid.uuid4().hex)
+    def get_id(self):
+        return uuid.uuid4().hex
+
+    id = sa.Column(sa.String, primary_key=True, default=get_id)
     name = sa.Column(sa.String)
     email = sa.Column(sa.String, index=True, unique=True)
     phone_number = sa.Column(sa.String)
