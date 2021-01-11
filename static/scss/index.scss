@@ -1,16 +1,17 @@
-@import '_colors';
+@use "sass:color";
+@import "_colors";
 
 body {
     background-color: $siteBackground;
     margin: 0;
-    font-family: 'Cabin',"MaisonNeue", "Segoe UI", "Helvetica Neue", -apple-system, system-ui, BlinkMacSystemFont, Roboto, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+    font-family: "Cabin", "MaisonNeue", "Segoe UI", "Helvetica Neue", -apple-system, system-ui, BlinkMacSystemFont,
+        Roboto, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
     font-size: 12pt;
 }
 
 body a {
     color: $primaryOrange;
 }
-
 
 nav {
     background-color: $primaryNavy;
@@ -55,7 +56,6 @@ nav {
     @include nav-base();
 }
 
-
 .nav-item {
     @include nav-base();
 }
@@ -72,7 +72,7 @@ nav {
     position: absolute;
     top: 50%;
     left: 50%;
-    transform: translate(-50%,-50%);
+    transform: translate(-50%, -50%);
 }
 
 nav a {
@@ -126,29 +126,26 @@ nav .logout:hover {
 }
 
 @mixin header-text {
-  font-family: 'Roboto Condensed',Verdana, Geneva, Tahoma, sans-serif;
-  font-size: 18pt;
-  font-weight: 700;
-  // font-family: Garamond, 'Times New Roman', Times, serif;
+    font-family: "Roboto Condensed", Verdana, Geneva, Tahoma, sans-serif;
+    font-size: 18pt;
+    font-weight: 700;
+    // font-family: Garamond, 'Times New Roman', Times, serif;
 }
 
 .form-header {
-  @include header-text();
-  // font-style: oblique;
-  // background-color: $formHeaderColor;
+    @include header-text();
+    // font-style: oblique;
+    // background-color: $formHeaderColor;
 }
 
 .region-header {
-  @include header-text();
-  font-size: 16pt;
+    @include header-text();
+    font-size: 16pt;
 }
-
 
 .region-header a {
-  color: $primaryNavy;
+    color: $primaryNavy;
 }
-
-
 
 .main-body {
     margin-top: 0px;
@@ -164,8 +161,13 @@ nav .logout:hover {
     padding-bottom: 40px;
 }
 
-.selectionApp {
-    margin-top: 5px;
+.beta-message {
+    border: rgba(0, 0, 0, 0.15);
+    border-style: solid;
+    border-width: 1px;
+    border-radius: 3px;
+    padding: 10px;
+    background-color: color.scale($primaryOrange, $alpha: -75%);
 }
 
 .footer {

@@ -1,23 +1,29 @@
 .form-header-parent {
-  display: flex; }
+  display: flex;
+}
 
 .form-block {
-  margin-top: 10px; }
+  margin-top: 10px;
+}
 
 .parkList {
-  display: flex; }
-  .parkList input[type="checkbox"] {
-    flex: 0 0 auto; }
-  .parkList label {
-    position: relative;
-    top: -3px;
-    padding-left: 4px;
-    font-size: 11pt;
-    text-overflow: ellipsis; }
+  display: flex;
+}
+.parkList input[type=checkbox] {
+  flex: 0 0 auto;
+}
+.parkList label {
+  position: relative;
+  top: -3px;
+  padding-left: 4px;
+  font-size: 11pt;
+  text-overflow: ellipsis;
+}
 
 .masterButton {
   margin-left: 10px;
-  margin-right: 20px; }
+  margin-right: 20px;
+}
 
 .masterCheckAll {
   width: 130px;
@@ -28,7 +34,8 @@
   font-size: 12pt;
   border: none;
   margin-top: 10px;
-  background-color: #3e5a82; }
+  background-color: #3e5a82;
+}
 
 .masterUncheckAll {
   width: 130px;
@@ -39,7 +46,8 @@
   font-size: 12pt;
   border: none;
   margin-top: 10px;
-  background-color: #F15451; }
+  background-color: #F15451;
+}
 
 .submitButton {
   border-radius: 5px;
@@ -49,7 +57,8 @@
   height: 35px;
   margin-top: 10px;
   background-color: #405A53;
-  border: none; }
+  border: none;
+}
 
 .instascrapeButton {
   border-radius: 5px;
@@ -59,16 +68,20 @@
   height: 35px;
   margin-top: 10px;
   background-color: #772014;
-  border: none; }
+  border: none;
+}
 
 .successBanner {
-  color: #405A53; }
+  color: #405A53;
+}
 
 .errorBanner {
-  color: #F15451; }
+  color: #F15451;
+}
 
 .checkboxArray {
-  margin-top: 10px; }
+  margin-top: 10px;
+}
 
 .checkAll label {
   position: relative;
@@ -76,9 +89,10 @@
   padding-left: 4px;
   font-size: 11pt;
   text-overflow: ellipsis;
-  font-weight: bold; }
+  font-weight: bold;
+}
 
-input[type="checkbox"] {
+input[type=checkbox] {
   position: relative;
   color: black;
   border: 1px solid gray;
@@ -87,35 +101,46 @@ input[type="checkbox"] {
   border-radius: 4px;
   appearance: none;
   outline: 0;
-  cursor: pointer; }
-  input[type="checkbox"]::before {
-    position: absolute;
-    content: "";
-    display: block;
-    top: 1px;
-    left: 9px;
-    width: 5px;
-    height: 10px;
-    border-style: solid;
-    border-color: white;
-    border-width: 0 2px 2px 0;
-    transform: rotate(45deg);
-    opacity: 0; }
-  input[type="checkbox"]:checked {
-    color: black; }
-    .northeast input[type="checkbox"]:checked {
-      border-color: #b1d5bc;
-      background-color: #b1d5bc; }
-    .northwest input[type="checkbox"]:checked {
-      border-color: #fad87b;
-      background-color: #fad87b; }
-    .southwest input[type="checkbox"]:checked {
-      border-color: #bcd682;
-      background-color: #bcd682; }
-    .southeast input[type="checkbox"]:checked {
-      border-color: #ffca6e;
-      background-color: #ffca6e; }
-    input[type="checkbox"]:checked::before {
-      opacity: 1; }
-    input[type="checkbox"]:checked ~ label::before {
-      clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%); }
+  cursor: pointer;
+}
+input[type=checkbox]::before {
+  position: absolute;
+  content: "";
+  display: block;
+  top: 1px;
+  left: 9px;
+  width: 5px;
+  height: 10px;
+  border-style: solid;
+  border-color: white;
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
+  opacity: 0;
+}
+input[type=checkbox]:checked {
+  color: black;
+}
+.northeast input[type=checkbox]:checked {
+  border-color: #b1d5bc;
+  background-color: #b1d5bc;
+}
+.northwest input[type=checkbox]:checked {
+  border-color: #fad87b;
+  background-color: #fad87b;
+}
+.southwest input[type=checkbox]:checked {
+  border-color: #bcd682;
+  background-color: #bcd682;
+}
+.southeast input[type=checkbox]:checked {
+  border-color: #ffca6e;
+  background-color: #ffca6e;
+}
+input[type=checkbox]:checked::before {
+  opacity: 1;
+}
+input[type=checkbox]:checked ~ label::before {
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+}
+
+/*# sourceMappingURL=form.css.map */

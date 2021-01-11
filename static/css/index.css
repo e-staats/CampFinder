@@ -1,138 +1,177 @@
 body {
   background-color: #fff3dd;
   margin: 0;
-  font-family: 'Cabin',"MaisonNeue", "Segoe UI", "Helvetica Neue", -apple-system, system-ui, BlinkMacSystemFont, Roboto, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
-  font-size: 12pt; }
+  font-family: "Cabin", "MaisonNeue", "Segoe UI", "Helvetica Neue", -apple-system, system-ui, BlinkMacSystemFont, Roboto, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  font-size: 12pt;
+}
 
 body a {
-  color: #F15451; }
+  color: #F15451;
+}
 
 nav {
   background-color: #1D2A3D;
   padding: 0px;
-  margin: 0px; }
+  margin: 0px;
+}
 
 .hero {
   background-color: #1D2A3D;
-  justify-content: center; }
+  justify-content: center;
+}
 
 .image-container img {
-  max-width: 100%; }
+  max-width: 100%;
+}
 
 .nav-bar {
   margin-top: 0px;
   min-height: 30px;
   justify-content: center;
   align-items: center;
-  font-size: 12pt; }
+  font-size: 12pt;
+}
 
 .nav-pad {
   padding: 0px;
   margin: 0px;
-  position: relative; }
+  position: relative;
+}
 
 .nav-item {
   padding: 0px;
   margin: 0px;
-  position: relative; }
+  position: relative;
+}
 
 .nav-item:hover {
-  background-color: #040609; }
+  background-color: #040609;
+}
 
 .nav-text {
-  vertical-align: middle; }
+  vertical-align: middle;
+}
 
 nav a {
   display: block;
   min-height: 30px;
-  text-align: center; }
+  text-align: center;
+}
 
 nav a:link {
   color: white;
-  text-decoration: none; }
+  text-decoration: none;
+}
 
 nav a:visited {
   color: white;
-  text-decoration: none; }
+  text-decoration: none;
+}
 
 nav a:hover {
   color: white;
-  text-decoration: none; }
+  text-decoration: none;
+}
 
 nav a:active {
   color: white;
-  text-decoration: none; }
+  text-decoration: none;
+}
 
 nav .login {
-  background-color: #F15451; }
+  background-color: #F15451;
+}
 
 nav .login:hover {
-  background-color: #e31612; }
+  background-color: #e31612;
+}
 
 nav .logout {
-  background-color: #1D2A3D; }
+  background-color: #1D2A3D;
+}
 
 nav .logout:hover {
-  background-color: #0d121a; }
+  background-color: #0d121a;
+}
 
 .form-header {
-  font-family: 'Roboto Condensed',Verdana, Geneva, Tahoma, sans-serif;
-  font-size: 18pt;
-  font-weight: 700; }
-
-.region-header {
-  font-family: 'Roboto Condensed',Verdana, Geneva, Tahoma, sans-serif;
+  font-family: "Roboto Condensed", Verdana, Geneva, Tahoma, sans-serif;
   font-size: 18pt;
   font-weight: 700;
-  font-size: 16pt; }
+}
+
+.region-header {
+  font-family: "Roboto Condensed", Verdana, Geneva, Tahoma, sans-serif;
+  font-size: 18pt;
+  font-weight: 700;
+  font-size: 16pt;
+}
 
 .region-header a {
-  color: #1D2A3D; }
+  color: #1D2A3D;
+}
 
 .main-body {
   margin-top: 0px;
   min-height: 85vh;
-  margin-bottom: 0px; }
+  margin-bottom: 0px;
+}
 
 .main-content {
   background-color: #fff3dd;
   padding-left: 80px;
   padding-right: 80px;
   padding-top: 20px;
-  padding-bottom: 40px; }
+  padding-bottom: 40px;
+}
 
-.selectionApp {
-  margin-top: 5px; }
+.beta-message {
+  border: rgba(0, 0, 0, 0.15);
+  border-style: solid;
+  border-width: 1px;
+  border-radius: 3px;
+  padding: 10px;
+  background-color: rgba(241, 84, 81, 0.25);
+}
 
 .footer {
   background-color: #fff3dd;
   padding: 30px;
   text-align: center;
-  color: #1D2A3D; }
+  color: #1D2A3D;
+}
 
 .table-header {
   font-weight: bold;
   font-size: 14px;
-  margin: 0px; }
+  margin: 0px;
+}
 
 .table-row {
   font-size: 12px;
   margin: 0px;
   padding: 3px;
-  border-bottom: 1px dotted black; }
+  border-bottom: 1px dotted black;
+}
 
 .inactive {
   color: #909090;
-  background-color: #f8ddde; }
+  background-color: #f8ddde;
+}
 
 .active {
-  background-color: #def8dd; }
+  background-color: #def8dd;
+}
 
 ul {
   list-style: none;
-  padding: 0; }
+  padding: 0;
+}
 
 .pwChange {
   font-size: 18px;
   margin-top: 20px;
-  margin-bottom: 20px; }
+  margin-bottom: 20px;
+}
+
+/*# sourceMappingURL=index.css.map */
