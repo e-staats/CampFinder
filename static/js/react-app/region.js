@@ -13,15 +13,17 @@ class Region extends Component {
     renderList = () => {
         return this.props.parkList.map(item => (
             <div className="parkList">
-                <input
-                    key={item.id}
-                    type="checkbox"
-                    name={item.name}
-                    value={item.name}
-                    checked={item.isChecked}
-                    onChange={this.handleChange}
-                />
-                <label>{item.name}</label>
+                <label className="park-list-checkbox">
+                    <input
+                        key={item.id}
+                        type="checkbox"
+                        name={item.name}
+                        value={item.name}
+                        checked={item.isChecked}
+                        onChange={this.handleChange}
+                    />
+                    <span>{item.name}</span>
+                </label>
             </div>
         ));
     };
@@ -31,13 +33,15 @@ class Region extends Component {
             <div>
                 <div className="region-header"><a href={this.props.link} target="_blank">{this.toCapitalCase(this.props.name)}</a></div>
                 <div className="checkAll">
-                    <input
-                        type="checkbox"
-                        name="allChecked"
-                        checked={this.props.allChecked}
-                        onChange={this.handleChange}
-                    />
-                    <label>Check all</label>
+                    <label className="park-list-checkbox">
+                        <input
+                            type="checkbox"
+                            name="allChecked"
+                            checked={this.props.allChecked}
+                            onChange={this.handleChange}
+                        />
+                        <span>Check all</span>
+                    </label>
                 </div>
                 <div>
                     {this.renderList()}

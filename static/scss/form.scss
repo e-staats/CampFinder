@@ -1,4 +1,4 @@
-@import '_colors';
+@import "_colors";
 
 .form-header-parent {
   display: flex;
@@ -7,34 +7,13 @@
 .form-block {
   margin-top: 10px;
 }
-// @mixin triangle {
-//   width: 0; 
-//   height: 0; 
-//   border-top: 10px solid transparent;
-//   border-bottom: 10px solid transparent;
-  
-//   border-left: 10px solid $formHeaderColor;
-// }
-
-// .left-triangle {
-//   @include triangle();
-//   transform: rotate(45deg);
-// }
-
-// .right-triangle {
-//   @include triangle();
-//   transform: rotate(-45deg);
-// }
-
 
 @mixin myLabel {
   position: relative;
-  top: -3px;
   padding-left: 4px;
   font-size: 11pt;
   text-overflow: ellipsis;
 }
-
 
 .parkList {
   display: flex;
@@ -62,7 +41,6 @@
   margin-top: 10px;
 }
 
-
 .masterCheckAll {
   @include masterButton();
   background-color: lighten($primaryNavy, 20%);
@@ -82,13 +60,11 @@
   margin-top: 10px;
 }
 
-
 .submitButton {
   @include actionButton();
   background-color: $primaryGreen;
   border: none;
 }
-
 
 .instascrapeButton {
   @include actionButton();
@@ -114,57 +90,107 @@
 }
 
 @mixin parkCheckbox {
-  position: relative;
-  color: black;
-  border: 1px solid gray;
+  display: block;
+  position: absolute;
+  top: 3px;
+  left: 0;
   width: 1.5em;
   height: 1em;
   border-radius: 4px;
-  appearance: none;
   outline: 0;
   cursor: pointer;
 }
 
-input[type="checkbox"] {
+.park-list-checkbox {
+  position: relative;
+  display: block;
+}
+
+.park-list-checkbox span {
+  display: block;
+  margin-left: 1em;
+  padding-left: 0.5em;
+  text-align: left;
+}
+
+.park-list-checkbox span::before {
   @include parkCheckbox();
-  &::before {
-    position: absolute;
-    content: "";
-    display: block;
-    top: 1px;
-    left: 9px;
-    width: 5px;
-    height: 10px;
-    border-style: solid;
-    border-color: white;
-    border-width: 0 2px 2px 0;
-    transform: rotate(45deg);
-    opacity: 0;
+  content: "";
+  background: #fdf2f2;
+  border: 1px solid gray;
+}
+
+.park-list-checkbox span::after {
+  @include parkCheckbox();
+  text-align: center;
+}
+
+.park-list-checkbox input[type="checkbox"] {
+  opacity: 0;
+  z-index: -1;
+  position: absolute;
+}
+
+.park-list-checkbox input[type="checkbox"]:checked + span::after {
+  color: black;
+  position: absolute;
+  content: "";
+  display: block;
+  border-radius: 4px;
+  border: 1px solid gray;
+  .northeast & {
+    background-color: $neBackground;
   }
-  &:checked {
-    color: black;
-    .northeast & {
-      border-color: $neBackground;
-      background-color: $neBackground;
-    }
-    .northwest & {
-      border-color: $nwBackground;
-      background-color: $nwBackground;
-    }
-    .southwest & {
-      border-color: $swBackground;
-      background-color: $swBackground;
-    }
-    .southeast & {
-      border-color: $seBackground;
-      background-color: $seBackground;
-    }
-    &::before {
-      opacity: 1;
-    }
-    ~ label::before {
-      clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
-    }
+  .northwest & {
+    background-color: $nwBackground;
+  }
+  .southwest & {
+    background-color: $swBackground;
+  }
+  .southeast & {
+    background-color: $seBackground;
   }
 }
 
+// input[type="checkbox"] {
+//   @include parkCheckbox();
+//     &::before {
+//       position: absolute;
+//       content: "";
+//       display: block;
+//       top: 1px;
+//       left: 9px;
+//       width: 5px;
+//       height: 10px;
+//       border-style: solid;
+//       border-color: white;
+//       border-width: 0 2px 2px 0;
+//       transform: rotate(45deg);
+//       opacity: 0;
+//     }
+//     &:checked {
+//       color: black;
+//       .northeast & {
+//         border-color: $neBackground;
+//         background-color: $neBackground;
+//       }
+//       .northwest & {
+//         border-color: $nwBackground;
+//         background-color: $nwBackground;
+//       }
+//       .southwest & {
+//         border-color: $swBackground;
+//         background-color: $swBackground;
+//       }
+//       .southeast & {
+//         border-color: $seBackground;
+//         background-color: $seBackground;
+//       }
+//       &::before {
+//         opacity: 1;
+//       }
+//       ~ label::before {
+//         clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+//       }
+//     }
+// }
