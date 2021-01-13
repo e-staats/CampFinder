@@ -45,3 +45,11 @@ def create_external_region_dict():
     for region in regions:
         return_dict[region.external_id] = region.name
     return return_dict
+
+def create_internal_region_dict():
+    return_dict = {}
+    session = db_session.create_session()
+    regions = session.query(Region).all()
+    for region in regions:
+        return_dict[region.id] = region.name
+    return return_dict

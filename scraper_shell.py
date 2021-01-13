@@ -68,8 +68,9 @@ def create_info_dict(
     info["search_time"] = search_time
     return info
 
+
 def def_url_setup():
-  return {
+    return {
         "mapId": None,
         "searchTabGroupId": 0,
         "bookingCategoryId": 0,
@@ -82,7 +83,7 @@ def def_url_setup():
         "partySize": 1,
     }
 
- 
+
 def setup_info_dict(start_date, end_date) -> dict:
     quadrant_defs = define_regions()
     url_base = define_url_base()
@@ -116,7 +117,7 @@ def scrape_searches(*args):
             return "No searches in database"
         for search in search_list:
             search_definition = add_search_definition(search_definition, search)
-    
+
     else:
         search = session.query(Search).filter(Search.is_active == 1).first()
         if search == None:
@@ -140,9 +141,11 @@ def add_search_definition(search_definitions, search):
     search_definitions[date_range] = setup_info_dict(search.start_date, search.end_date)
     return search_definitions
 
+
 def cleanup_searches():
     deactivate_past_searches()
     return
+
 
 if __name__ == "__main__":
     print(

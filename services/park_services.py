@@ -59,6 +59,14 @@ def populate_parks():
     session.close()
     return True
 
+def get_parks_in_region(region_id):
+    session = db_session.create_session()
+    park_list = session.query(Park).filter(Park.region == region_id).all()
+    park_dict = {}
+    for park in park_list:
+        park_dict[park.name] = park.id
+    return park_dict
+
 #                                      ,@@@@@#@@@@@@@@.@@*
 #                            #@@%                            *&@@@*
 #                      .@@@                                        @
