@@ -1,3 +1,18 @@
+.account-form {
+  border: 1px solid gray;
+  border-radius: 4px;
+  padding: 20px;
+  background-color: #fff8f8;
+}
+
+.form-control {
+  margin-top: 20px;
+}
+
+.btn {
+  margin-top: 20px;
+}
+
 .preference-block {
   margin-bottom: 15px;
 }

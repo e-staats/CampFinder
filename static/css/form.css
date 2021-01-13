@@ -28,7 +28,7 @@
   width: 130px;
   height: 25px;
   align-items: center;
-  border-radius: 7px;
+  border-radius: 4px;
   color: white;
   font-size: 12pt;
   border: none;
@@ -40,7 +40,7 @@
   width: 130px;
   height: 25px;
   align-items: center;
-  border-radius: 7px;
+  border-radius: 4px;
   color: white;
   font-size: 12pt;
   border: none;
@@ -113,7 +113,7 @@
   outline: 0;
   cursor: pointer;
   content: "";
-  background: #fdf2f2;
+  background: #fff8f8;
   border: 1px solid gray;
 }
 

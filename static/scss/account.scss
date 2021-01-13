@@ -1,4 +1,19 @@
-@import '_colors';
+@import "_colors";
+
+.account-form {
+    border: 1px solid gray;
+    border-radius: 4px;
+    padding: 20px;
+    background-color: $formHeaderColor;
+}
+
+.form-control {
+    margin-top: 20px;
+}
+
+.btn {
+    margin-top: 20px;
+}
 
 .preference-block {
     margin-bottom: 15px;
@@ -7,7 +22,6 @@
 .preference-header {
     font-weight: bold;
 }
-
 
 @mixin checkbox {
     position: relative;
@@ -24,7 +38,6 @@
 .preference-checkbox {
     margin-right: 10px;
 }
-
 
 input[type="checkbox"] {
     @include checkbox();
@@ -54,8 +67,7 @@ input[type="checkbox"] {
         opacity: 1;
     }
 
-    ~label::before {
+    ~ label::before {
         clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
     }
-
 }

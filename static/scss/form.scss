@@ -34,7 +34,7 @@
   width: 130px;
   height: 25px;
   align-items: center;
-  border-radius: 7px;
+  border-radius: 4px;
   color: white;
   font-size: 12pt;
   border: none;
@@ -116,7 +116,7 @@
 .park-list-checkbox span::before {
   @include parkCheckbox();
   content: "";
-  background: #fdf2f2;
+  background: $formHeaderColor;
   border: 1px solid gray;
 }
 
@@ -151,46 +151,3 @@
     background-color: $seBackground;
   }
 }
-
-// input[type="checkbox"] {
-//   @include parkCheckbox();
-//     &::before {
-//       position: absolute;
-//       content: "";
-//       display: block;
-//       top: 1px;
-//       left: 9px;
-//       width: 5px;
-//       height: 10px;
-//       border-style: solid;
-//       border-color: white;
-//       border-width: 0 2px 2px 0;
-//       transform: rotate(45deg);
-//       opacity: 0;
-//     }
-//     &:checked {
-//       color: black;
-//       .northeast & {
-//         border-color: $neBackground;
-//         background-color: $neBackground;
-//       }
-//       .northwest & {
-//         border-color: $nwBackground;
-//         background-color: $nwBackground;
-//       }
-//       .southwest & {
-//         border-color: $swBackground;
-//         background-color: $swBackground;
-//       }
-//       .southeast & {
-//         border-color: $seBackground;
-//         background-color: $seBackground;
-//       }
-//       &::before {
-//         opacity: 1;
-//       }
-//       ~ label::before {
-//         clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
-//       }
-//     }
-// }

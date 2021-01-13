@@ -125,7 +125,8 @@ nav .logout:hover {
   padding-bottom: 40px;
 }
 
-.beta-message {
+.alert-banner {
+  margin-top: 8px;
   border: rgba(0, 0, 0, 0.15);
   border-style: solid;
   border-width: 1px;

@@ -12,7 +12,7 @@
         <h1>Register to use the Wisconsin Park Scraper</h1>
         <a href="/account/login">Already have an account?</a>
         {% if error %}
-        <div class="error-msg">{{error}}</div>
+        <div class="alert-banner">{{error}}</div>
         {% endif %}
         <input name="name" type="text" placeholder=" Your name" class="form-control" value="{{name}}" required>
         <input name="email" type="text" placeholder=" Your email" class="form-control" value="{{email}}" required>
@@ -31,4 +31,5 @@
 {% endblock %}
 
 {% block additional_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/account.css')}}" />
 {% endblock %}

@@ -9,7 +9,7 @@
     <div>
         Please wait to be redirected. If you are not redirected, try logging in.
         {% if error %}
-        <div class="error-msg">{{error}}</div>
+        <div class="alert-banner">{{error}}</div>
         {% endif %}
     </div>
 </div>
@@ -18,4 +18,5 @@
 {% endblock %}
 
 {% block additional_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/account.css')}}" />
 {% endblock %}
