@@ -1,5 +1,6 @@
 import datetime
 from services.search_services import deactivate_past_searches
+from services.region_services import create_external_region_dict
 from selenium_scraper import ParkScraper
 from urllib.parse import urlencode
 import datetime
@@ -18,12 +19,7 @@ def define_url_base():
 
 
 def define_regions():
-    return {
-        -2147483604: "Northwest WI",
-        -2147483603: "Southwest WI",
-        -2147483602: "Northeast WI",
-        -2147483601: "Southeast WI",
-    }
+    return create_external_region_dict()
 
 
 def format_date(date, suffix="") -> str:

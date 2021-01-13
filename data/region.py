@@ -7,6 +7,7 @@ class Region(SqlAlchemyBase):
 
     id = sa.Column(sa.Integer, primary_key=True)
     name = sa.Column(sa.String)
+    external_id = sa.Column(sa.Integer)
 
     def __repr__(self):
         return f"Region {self.name}"

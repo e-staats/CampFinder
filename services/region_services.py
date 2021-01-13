@@ -1,5 +1,6 @@
 from data.region import Region  # pylint: disable = import-error
 import data.db_session as db_session  # pylint: disable = import-error
+from infrastructure.load_data_from_csv import load_data_from_csv  # pylint: disable = import-error
 import os
 
 def get_name_from_id(region_id):
@@ -14,13 +15,15 @@ def get_name_from_id(region_id):
         return False
 
 def populate_regions():
-    region_dict = get_region_dict()
+    filepath = os.path.join('.','park_data','wi_regions.csv')
+    region_list = load_data_from_csv(filepath)
 
     session = db_session.create_session()
-    for name in region_dict.keys():
+    for region_item in region_list:
         r = Region()
-        r.id = region_dict[name]
-        r.name = name
+        r.name = region_item[0]
+        r.id = region_item[1]
+        r.external_id = region_item[2]
         session.add(r)
     session.commit()
     session.close()
@@ -35,10 +38,10 @@ def regions_exist():
     session.close()
     return True
 
-def get_region_dict():
-    return {
-        "Northwest WI": 1,
-        "Southwest WI": 2,
-        "Northeast WI": 3,
-        "Southeast WI": 4,
-    }
+def create_external_region_dict():
+    return_dict = {}
+    session = db_session.create_session()
+    regions = session.query(Region).all()
+    for region in regions:
+        return_dict[region.external_id] = region.name
+    return return_dict
