@@ -45,9 +45,9 @@ def parks_exist():
     session.close()
     return True
 
-def populate_parks():
-    filepath = os.path.join('.','park_data','wi_parks.csv')
-    park_list = load_data_from_csv(filepath)
+def populate_parks(filepath=None):
+    filepath = os.path.abspath('./park_data/') if filepath == None else filepath
+    park_list = load_data_from_csv(os.path.join(filepath, 'wi_parks.csv'))
 
     session = db_session.create_session()
     for park in park_list:

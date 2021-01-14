@@ -14,9 +14,9 @@ def get_name_from_id(region_id):
     else:
         return False
 
-def populate_regions():
-    filepath = os.path.join('.','park_data','wi_regions.csv')
-    region_list = load_data_from_csv(filepath)
+def populate_regions(filepath=None):
+    filepath = os.path.abspath('./park_data/') if filepath == None else filepath
+    region_list = load_data_from_csv(os.path.join(filepath, 'wi_regions.csv'))
 
     session = db_session.create_session()
     for region_item in region_list:
