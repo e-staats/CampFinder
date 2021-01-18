@@ -1,64 +1,64 @@
-Park Name,Region ID
-Amnicon Falls,1
-Aztalan,4
-Big Bay,1
-Big Foot Beach,4
-Black River,2
-Blue Mound,2
-Brule River,1
-Brunet Island,1
-Buckhorn,2
-Cadiz Springs,2
-Chippewa Flowage,1
-Chippewa Moraine,1
-Copper Falls,1
-Council Grounds,3
-Devil's Lake,2
-Elroy-Sparta,2
-Flambeau River,1
-Glacial Drumlin,4
-Governor Dodge,2
-Governor Earl Peshtigo River,3
-Governor Knowles,1
-Governor Nelson,2
-Governor Thompson,3
-Harrington Beach,4
-Hartman Creek,3
-High Cliff,3
-Interstate,1
-Kettle Moraine - Lapham Peak Unit,4
-Kettle Moraine - Northern Unit,4
-Kettle Moraine - Pike Lake Unit,4
-Kettle Moraine - Southern Unit,4
-Kohler-Andrae,4
-Lake Kegonsa,2
-Lake Wissota,1
-Lakeshore,4
-Mackenzie Center,2
-Menominee River,3
-Merrick,2
-Mill Bluff,2
-Mirror Lake,2
-Nelson Dewey,2
-New Glarus Woods,2
-Newport,3
-Northern Highland - American Legion,3
-Pattison,1
-Peninsula,3
-Perrot,2
-Point Beach,3
-Potawatomi,3
-Rib Mountain,3
-Richard Bong,4
-Roche-A-Cri,2
-Rock Island,3
-Rocky Arbor,2
-Straight Lake,1
-Tower Hill,2
-Turtle Flambeau,1
-Whitefish Dunes,3
-Wildcat Mountain,2
-Willow Flowage,3
-Willow River,1
-Wyalusing,2
-Yellowstone Lake,2
+External ID,Park Name,Region ID
+-2147483494,Amnicon Falls,1
+-2147483429,Aztalan,4
+-2147483544,Big Bay,1
+-2147483542,Big Foot Beach,4
+-2147483550,Black River,2
+-2147483515,Blue Mound,2
+-2147483436,Brule River,1
+-2147483502,Brunet Island,1
+-2147483492,Buckhorn,2
+-2147483438,Cadiz Springs,2
+-2147483427,Chippewa Flowage,1
+-2147483425,Chippewa Moraine,1
+-2147483529,Copper Falls,1
+-2147483485,Council Grounds,3
+-2147483637,Devil's Lake,2
+-2147483423,Elroy-Sparta,2
+-2147483521,Flambeau River,1
+-2147483470,Glacial Drumlin,4
+-2147483596,Governor Dodge,2
+-2147483509,Governor Earl Peshtigo River,3
+-2147483420,Governor Knowles,1
+-2147483416,Governor Nelson,2
+-2147483512,Governor Thompson,3
+-2147483546,Harrington Beach,4
+-2147483561,Hartman Creek,3
+-2147483587,High Cliff,3
+-2147483526,Interstate,1
+-2147483414,Kettle Moraine - Lapham Peak Unit,4
+-2147483628,Kettle Moraine - Northern Unit,4
+-2147483408,Kettle Moraine - Pike Lake Unit,4
+-2147483618,Kettle Moraine - Southern Unit,4
+-2147483593,Kohler-Andrae,4
+-2147483518,Lake Kegonsa,2
+-2147483538,Lake Wissota,1
+-2147483433,Lakeshore,4
+-2147483431,Mackenzie Center,2
+-2147483412,Menominee River,3
+-2147483482,Merrick,2
+-2147483478,Mill Bluff,2
+-2147483576,Mirror Lake,2
+-2147483499,Nelson Dewey,2
+-2147483476,New Glarus Woods,2
+-2147483496,Newport,3
+-2147483468,Northern Highland - American Legion,3
+-2147483531,Pattison,1
+-2147483648,Peninsula,3
+-2147483523,Perrot,2
+-2147483569,Point Beach,3
+-2147483565,Potawatomi,3
+-2147483406,Rib Mountain,3
+-2147483557,Richard Bong,4
+-2147483504,Roche-A-Cri,2
+-2147483533,Rock Island,3
+-2147483474,Rocky Arbor,2
+-2147483404,Straight Lake,1
+-2147483402,Tower Hill,2
+-2147483472,Turtle Flambeau,1
+-2147483400,Whitefish Dunes,3
+-2147483573,Wildcat Mountain,2
+-2147483398,Willow Flowage,3
+-2147483584,Willow River,1
+-2147483579,Wyalusing,2
+-2147483535,Yellowstone Lake,2

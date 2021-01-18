@@ -52,8 +52,9 @@ def populate_parks(filepath=None):
     session = db_session.create_session()
     for park in park_list:
         p = Park()
-        p.name = park[0]
-        p.region = park[1]
+        p.external_id = park[0]
+        p.name = park[1]
+        p.region = park[2]
         session.add(p)
     session.commit()
     session.close()

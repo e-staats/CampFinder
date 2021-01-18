@@ -9,7 +9,7 @@ class Park(SqlAlchemyBase):
     id = sa.Column(sa.Integer, primary_key=True, autoincrement=True)
     name = sa.Column(sa.String, index=True)
     region = sa.Column(sa.Integer, ForeignKey("regions.id"))
-    #miles_from_madison = sa.Column(sa.Column) #will be good to add eventually
+    external_id = sa.Column(sa.Integer, unique=True)
 
     def __repr__(self):
         return f"Park {self.name}"
