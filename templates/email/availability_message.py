@@ -1,8 +1,10 @@
-from data.availability import Availability
+import datetime
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
+from services.url_services import set_up_url
 
-def create_message(avail_dict):
+
+def create_message(avail_dict, start_date, end_date):
     message = MIMEMultipart("alternative")
     message["Subject"] = "New Park Availability!"
     message["From"] = "wiparkscraper@gmail.com"
@@ -10,12 +12,12 @@ def create_message(avail_dict):
     # Turn these into plain/html MIMEText objects
     part1 = MIMEText(
         create_plaintext_body(
-            create_park_list(avail_dict, html=False)
+            create_park_list(avail_dict, start_date, end_date, html=False)
         ),
         "plain",
     )
     part2 = MIMEText(
-        create_html_body(create_park_list(avail_dict, html=True)),
+        create_html_body(create_park_list(avail_dict, start_date, end_date, html=True)),
         "html",
     )
 
@@ -49,7 +51,7 @@ def create_html_body(park_list):
     return html
 
 
-def create_park_list(avail_dict, string="", html=False):
+def create_park_list(avail_dict, start_date, end_date, string="", html=False, ):
     if html == True:
         linebreak = "<br>"
         emphasis_start = "<span style='color: green'>"
@@ -68,7 +70,7 @@ def create_park_list(avail_dict, string="", html=False):
         for park, region in avail_dict[availability_range]:
             park_string = (
                 emphasis_start
-                + basic_park_string(park.name, region.name)
+                + format_park(park, region.name, html, start_date, end_date)
                 + emphasis_end
             )
             string = string + park_string + linebreak
@@ -79,9 +81,13 @@ def greeting_text():
     return "The following parks are available for your requested dates:"
 
 
-def basic_park_string(name, region):
-    return name + " - " + region
-
+def format_park(park, region, html, start_date, end_date):
+    search_now = datetime.datetime.now()
+    url = set_up_url(start_date, end_date, search_now, park.external_id)
+    if html == False:
+        return f"{park.name} - {region} ({url})"
+    else:
+        return f"""<a href="{url}">{park.name} - {region}</a>"""
 
 def cancel_text_html():
     return "To stop receiving emails for this search, you can do that from your <a href='www.parkfinder.me/account'>account page</a>."

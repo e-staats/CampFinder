@@ -66,14 +66,15 @@ def test_results():
 
 
 def test_searches():
+    user = user_services.find_user_by_email("eric.k.staats@gmail.com")
     return [
-        search_services.create_search(1, tomorrow, overmorrow, None, "1,2", False),
-        search_services.create_search(1, tomorrow, overmorrow, None, "1", False),
+        search_services.create_search(user.id, tomorrow, overmorrow, None, "1,2", False),
+        search_services.create_search(user.id, tomorrow, overmorrow, None, "1", False),
         search_services.create_search(
-            2, overmorrow, overovermorrow, None, "1,2", False
+            user.id, overmorrow, overovermorrow, None, "1,2", False
         ),
-        search_services.create_search(2, tomorrow, overmorrow, None, "1,2", True),
-        search_services.create_search(2, overmorrow, overovermorrow, None, "2", True),
-        search_services.create_search(2, overmorrow, overovermorrow, None, "2", True),
-        search_services.create_search(2, yesterday, today, None, "2", True),
+        search_services.create_search(user.id, tomorrow, overmorrow, None, "1,2", True),
+        search_services.create_search(user.id, overmorrow, overovermorrow, None, "2", True),
+        search_services.create_search(user.id, overmorrow, overovermorrow, None, "2", True),
+        search_services.create_search(user.id, yesterday, today, None, "2", True),
     ]

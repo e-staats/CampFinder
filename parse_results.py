@@ -2,7 +2,7 @@ from data.db_session import create_session
 import services.search_services as search_services
 import services.user_services as user_services
 import services.availability_services as avail_services
-from services.email_services import Emailer
+from services.email_services import ParkEmailer
 import templates.email.availability_message as availability_message
 from data.availability import Availability
 from data.park import Park
@@ -13,7 +13,7 @@ from data.region import Region
 
 def process_results():
     searches = search_services.find_active_searches()
-    emailer = Emailer()
+    emailer = ParkEmailer()
     for search in searches:
         #short circuit if the user doesn't want to be notified:
         user_prefs = user_services.get_user_preferences(search.owner_id)
@@ -32,7 +32,7 @@ def process_results():
 
         if user_prefs['email'] == True:
             # turn the results into an email
-            message = convert_availability_to_message(availability_info)
+            message = convert_availability_to_message(availability_info, search.start_date, search.end_date)
             if message == False:
                 continue
 
@@ -48,7 +48,7 @@ def process_results():
             emailer.send_email(to_address, message)
 
 
-def convert_availability_to_message(availability_info):
+def convert_availability_to_message(availability_info, start_date, end_date):
     avail_dict = {}
     for a, p, r in availability_info:
         availability = str(a)
@@ -59,6 +59,5 @@ def convert_availability_to_message(availability_info):
 
     if avail_dict == {}:
         return False
-    message = availability_message.create_message(avail_dict)
-
+    message = availability_message.create_message(avail_dict, start_date, end_date)
     return message

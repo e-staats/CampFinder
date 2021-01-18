@@ -2,6 +2,7 @@ from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+from sqlalchemy.sql.expression import extract
 import services.result_services as result_services
 import services.region_services as region_services
 import services.park_services as park_services
@@ -68,11 +69,21 @@ class ParkScraper:
         if self.element_exists(
             "consentButton"
         ):  # only exists if we haven't already consented
-            self.find_and_click_element("consentButton")
-        self.find_and_click_element("filterButton")
-        self.find_and_click_element("mat-select-7")
-        self.find_and_click_element("mat-option-83")
-        self.find_and_click_element("actionSearch")
+            result = self.find_and_click_element("consentButton")
+            if result == False:
+                return session
+        result = self.find_and_click_element("filterButton")
+        if result == False:
+            return session
+        result = self.find_and_click_element("mat-select-7")
+        if result == False:
+            return session
+        result = self.find_and_click_element("mat-option-83")
+        if result == False:
+            return session
+        result = self.find_and_click_element("actionSearch")
+        if result == False:
+            return session
 
         circles = []
         circles = self.driver.find_elements_by_tag_name("circle")
@@ -131,45 +142,3 @@ class ParkScraper:
             return value_map[fill_value]
         else:
             return 0
-
-    ##############################################################################
-    # here's the old code to write to a file:
-    def legacy_output(self, circles, region):
-        region_dict = region_services.get_region_dict()
-        for circle in circles:
-            if circle.get_attribute("id") != None:
-                string = self.convert_to_string(circle, region_dict[region])
-                self.append_to_file(string)
-
-    def map_fill_value(self, fill_value: str) -> str:
-        value_map = {
-            "icon-available": "~~AVAILABLE~~~~~~~~~~~~~~~~~~~~",
-            "icon-unavailable": "unavailable",
-            "icon-invalid": "unavailable",
-            "icon-not-operating": "not operating",
-        }
-
-        if fill_value in value_map.keys():
-            return value_map[fill_value]
-        else:
-            return "UNMAPPED VALUE - " + fill_value
-
-    def write_to_file(self, stringToWrite):
-        filename = "park_info.txt"
-        with open(filename, "w") as f:
-            f.write(stringToWrite)
-
-    def append_to_file(self, stringToAppend):
-        filename = "park_info.txt"
-        with open(filename, "a") as f:
-            f.write(stringToAppend)
-
-    def convert_to_string(self, circle, region):
-        return (
-            str(circle.get_attribute("id"))
-            + "|"
-            + str(region)
-            + ": "
-            + self.map_fill_value(str(circle.get_attribute("fill")))
-            + "\n"
-        )
