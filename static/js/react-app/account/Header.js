@@ -8,13 +8,13 @@ class Header extends React.Component {
     render() {
         return (
             <div className="row table-header">
-            <div className="col-sm-2">Start Date</div>
-            <div className="col-sm-2">End Date</div>
-            <div className="col-sm-2">Region Pref.</div>
-            <div className="col-sm-2">Addt'l Parks</div>
-            <div className="col-sm-1">Active?</div>
-            <div className="col-sm-2">Submit Date</div>
-            <div className="col-sm-1"></div>
+            <div className="col-sm-2 row-item">Start Date</div>
+            <div className="col-sm-2 row-item">End Date</div>
+            <div className="col-sm-2 row-item">Region Pref.</div>
+            <div className="col-sm-2 row-item">Addt'l Parks</div>
+            <div className="col-sm-1 row-item">Active?</div>
+            <div className="col-sm-2 row-item">Submitted on</div>
+            <div className="col-sm-1 row-item"></div>
         </div>
         )
     }

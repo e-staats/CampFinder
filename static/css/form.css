@@ -157,4 +157,25 @@
   background-color: #ffca6e;
 }
 
+.checkAll input[type=checkbox]:checked + span::after {
+  color: black;
+  position: absolute;
+  content: "";
+  display: block;
+  border-radius: 4px;
+  border: 1px solid gray;
+}
+.northeast .checkAll input[type=checkbox]:checked + span::after {
+  background-color: #5ea875;
+}
+.northwest .checkAll input[type=checkbox]:checked + span::after {
+  background-color: #edb009;
+}
+.southwest .checkAll input[type=checkbox]:checked + span::after {
+  background-color: #81a335;
+}
+.southeast .checkAll input[type=checkbox]:checked + span::after {
+  background-color: #ee9700;
+}
+
 /*# sourceMappingURL=form.css.map */

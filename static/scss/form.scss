@@ -131,14 +131,18 @@
   position: absolute;
 }
 
-.park-list-checkbox input[type="checkbox"]:checked + span::after {
+@mixin checkbox-checked {
   color: black;
   position: absolute;
   content: "";
   display: block;
   border-radius: 4px;
   border: 1px solid gray;
-  .northeast & {
+}
+
+.park-list-checkbox input[type="checkbox"]:checked + span::after {
+  @include checkbox-checked();
+ .northeast & {
     background-color: $neBackground;
   }
   .northwest & {
@@ -149,5 +153,21 @@
   }
   .southeast & {
     background-color: $seBackground;
+  }
+}
+
+.checkAll input[type="checkbox"]:checked + span::after {
+  @include checkbox-checked();
+ .northeast & {
+    background-color: darken($neBackground, 25%);
+  }
+  .northwest & {
+    background-color: darken($nwBackground, 25%);
+  }
+  .southwest & {
+    background-color: darken($swBackground, 25%);
+  }
+  .southeast & {
+    background-color: darken($seBackground, 25%);
   }
 }

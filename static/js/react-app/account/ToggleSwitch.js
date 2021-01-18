@@ -7,15 +7,14 @@ class ToggleSwitch extends React.Component {
 
     render() {
         let text = "Disable"
-        let css = "btn-outline-danger"
+        let classTitle = "search-disable"
         if (this.props.is_active === false) {
             text = "Enable"
-            css = "btn-outline-success"
+            classTitle = "search-enable"
         }
-        let classTitle = "btn btn-sm " + css
 
         return (
-            <button type="button" className={classTitle} onClick={this.handleToggleClick}>{text}</button>
+            <span className={classTitle} onClick={this.handleToggleClick}>{text}</span>
         )
     }
 }

@@ -141,6 +141,7 @@ nav .logout:hover {
 .region-header {
     @include header-text();
     font-size: 16pt;
+    text-decoration: dotted underline;
 }
 
 .region-header a {

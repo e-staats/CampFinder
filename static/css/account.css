@@ -62,4 +62,27 @@ input[type=checkbox] ~ label::before {
   clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
 }
 
+.row-item {
+  padding-left: 2px;
+  padding-right: 2px;
+}
+
+.search-disable {
+  cursor: pointer;
+  text-decoration: dotted underline;
+  color: #dc3545;
+}
+.search-disable:hover {
+  color: #a71d2a;
+}
+
+.search-enable {
+  cursor: pointer;
+  text-decoration: dotted underline;
+  color: #28a745;
+}
+.search-enable:hover {
+  color: #19692c;
+}
+
 /*# sourceMappingURL=account.css.map */

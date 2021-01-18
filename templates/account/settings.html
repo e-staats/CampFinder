@@ -7,16 +7,22 @@
 {% endblock %}
 {% block main_content %}
 
-<h2>Hello {{user_name}}</h2>
-<div class="pwChange"><a href="/account/change_password">Change password</a></div>
+<div class="account-page">
 
-<h3>Preferences:</h3>
-<div id="preferences" class="preference-block"></div>
+    <h2>Hello {{user_name}}</h2>
+    <div class="pwChange"><a href="/account/change_password">Change password</a></div>
 
-<div>
-    <h3>Your Searches:</h3>
+    <h3>Preferences:</h3>
+    <div id="preferences" class="preference-block"></div>
+
+    <div>
+        <h3>Your Searches:</h3>
+    </div>
+    <div id='searchTable' class="search-table"></div>
+
+
+    </p>
 </div>
-<div id='searchTable' class="preference-block"></div>
 
 {% endblock %}
 

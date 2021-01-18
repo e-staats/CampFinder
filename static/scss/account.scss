@@ -1,5 +1,9 @@
 @import "_colors";
 
+// .account-page {
+//     width: 550px;
+// }
+
 .account-form {
     border: 1px solid gray;
     border-radius: 4px;
@@ -69,5 +73,30 @@ input[type="checkbox"] {
 
     ~ label::before {
         clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+    }
+}
+
+.row-item {
+    padding-left: 2px;
+    padding-right: 2px;
+}
+
+@mixin search-toggle {
+    cursor: pointer;
+    text-decoration: dotted underline;
+}
+
+.search-disable {
+    @include search-toggle();
+    color: #dc3545;
+    &:hover {
+        color: darken(#dc3545, 15%);
+    }
+}
+.search-enable {
+    @include search-toggle();
+    color: #28a745;
+    &:hover {
+        color: darken(#28a745, 15%);
     }
 }
