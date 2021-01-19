@@ -48,7 +48,6 @@ def start_scraper(search_definitions=None):
     scraper = ParkScraper(search_definitions=search_definitions)
     scraper.parse()
 
-
 def scrape_searches(*args):
     all_searches = args[0]
     session = db_session.create_session()
@@ -74,6 +73,14 @@ def scrape_searches(*args):
 
     cleanup_searches()
 
+def scrape_searches_adhoc(start_date, end_date):
+    search_definition = {}
+    date_range = date_range_to_string(start_date, end_date)
+    search_definition[date_range] = setup_info_dict(start_date, end_date)
+
+    scraper = ParkScraper(search_definition, True)
+    scraper.parse()
+    print(scraper.get_results_dict())
 
 def add_search_definition(search_definitions, search):
     date_range = date_range_to_string(search.start_date, search.end_date)

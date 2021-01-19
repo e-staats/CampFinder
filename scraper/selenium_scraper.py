@@ -13,8 +13,10 @@ import datetime
 
 class ParkScraper:
     # Initalize the webdriver
-    def __init__(self, search_definitions: dict):
+    def __init__(self, search_definitions: dict, adhoc=False):
         self.search_definitions = search_definitions
+        self.adhoc = adhoc
+        self.results_dict = {}
 
     def set_firefox_options(self):
         firefox_options = webdriver.FirefoxOptions()
@@ -24,22 +26,25 @@ class ParkScraper:
     # Parse function: Scrape the webpage and store it
     def parse(self):
         self.firefox_options = self.set_firefox_options()
-        session = db_session.create_session()
         for date_range in self.search_definitions.keys():
             search_def = self.search_definitions[date_range]
             print(f"Scraping for {date_range}")
-            self.parse_search(search_def, session)
-        session.close()
+            self.parse_search(search_def)
 
-    def parse_search(self, search_def, session):
+    def parse_search(self, search_def):
         for region in search_def["start_urls"].keys():
             self.driver = webdriver.Firefox(firefox_options=self.firefox_options)
             url = search_def["start_urls"][region]
             start_date = search_def["start_date"]
             end_date = search_def["end_date"]
-            session = self.parseURL(url, region, start_date, end_date, session)
+            self.parseURL(url, region, start_date, end_date)
             self.driver.quit()
 
+        if self.adhoc == False:
+            self.add_result_in_db(search_def)
+
+    def add_result_in_db(self, search_def):
+        session = db_session.create_session()
         result = result_services.find_result(
             search_def["start_date"],
             search_def["end_date"],
@@ -56,32 +61,10 @@ class ParkScraper:
 
         session.commit()
 
-    def parseURL(self, url, region: str, start_date, end_date, session):
-        self.driver.get(url)
-
-        print("scraping " + region)
-
-        # Automate some clicks:
-        # IF THE CRAWLER ISN'T WORKING: CHECK THE NUMBERS OF THE IDs. THEY MAY HAVE CHANGED
-        if self.element_exists(
-            "consentButton"
-        ):  # only exists if we haven't already consented
-            result = self.find_and_click_element("consentButton")
-            if result == False:
-                return session
-        result = self.find_and_click_element("filterButton")
-        if result == False:
-            return session
-        result = self.find_and_click_element("mat-select-7")
-        if result == False:
-            return session
-        result = self.find_and_click_element("mat-option-83")
-        if result == False:
-            return session
-        result = self.find_and_click_element("actionSearch")
-        if result == False:
-            return session
-
+    def parseURL(self, url, region: str, start_date, end_date):
+        success = self.click_through_options(url, region)
+        if success == False:
+            return 
         circles = []
         circles = self.driver.find_elements_by_tag_name("circle")
 
@@ -93,18 +76,62 @@ class ParkScraper:
                 if park_id == False:
                     continue
                 value = self.temp_map_fill_value(str(circle.get_attribute("fill")))
-                availability = availability_services.find_availability(
-                    start_date, end_date, park_id
-                )
-                if availability == None:
-                    availability = availability_services.create_availability(
-                        start_date, end_date, park_id, value
-                    )
-                    session.add(availability)
+                if self.adhoc == True:
+                    self.store_in_dict(park_id, value)
                 else:
-                    availability.availability = value
+                    self.store_in_db(start_date, end_date, park_id, value)
 
-        return session
+    def store_in_dict(self, park_id, value):
+        self.results_dict[park_id] = value
+        return
+
+    def store_in_db(self, start_date, end_date, park_id, value):
+        session = db_session.create_session()
+        availability = availability_services.find_availability(
+            start_date, end_date, park_id
+        )
+        if availability == None:
+            availability = availability_services.create_availability(
+                start_date, end_date, park_id, value
+            )
+            session.add(availability)
+        else:
+            availability.availability = value
+        session.commit()
+        session.close()
+        return
+
+    def click_through_options(self, url, region):
+        self.driver.get(url)
+        print("- scraping " + region)
+
+        # accept cookies
+        if self.element_exists("consentButton"):
+            result = self.find_and_click_element("consentButton")
+            if result == False:
+                return False
+
+        # open up the options panel
+        result = self.find_and_click_element("filterButton")
+        if result == False:
+            return False
+
+        # open ADA menu
+        result = self.find_and_click_element("mat-select-7")
+        if result == False:
+            return False
+
+        # select No
+        result = self.find_and_click_element("mat-option-83")
+        if result == False:
+            return False
+
+        # click Search
+        result = self.find_and_click_element("actionSearch")
+        if result == False:
+            return False
+
+        return True
 
     def element_exists(self, element_id):
         try:
@@ -139,3 +166,6 @@ class ParkScraper:
             return value_map[fill_value]
         else:
             return 0
+
+    def get_results_dict(self) -> dict:
+        return self.results_dict
