@@ -1,0 +1,109 @@
+{
+	"mapLinkLocalizedValues": {
+		"-2147483584": [
+			{
+				"cultureName": "en-US",
+				"title": "Willow River",
+				"description": "Willow River Overview Map"
+			}
+		],
+		"-2147483544": [
+			{
+				"cultureName": "en-US",
+				"title": "Big Bay",
+				"description": "Big Bay Overview Map"
+			}
+		],
+		"-2147483538": [
+			{
+				"cultureName": "en-US",
+				"title": "Lake Wissota",
+				"description": "Lake Wissota Overview Map"
+			}
+		],
+		"-2147483531": [
+			{
+				"cultureName": "en-US",
+				"title": "Pattison",
+				"description": "Pattison Overview Map"
+			}
+		],
+		"-2147483529": [
+			{
+				"cultureName": "en-US",
+				"title": "Copper Falls",
+				"description": "Copper Falls Overview Map"
+			}
+		],
+		"-2147483526": [
+			{
+				"cultureName": "en-US",
+				"title": "Interstate",
+				"description": "Interstate Overview Map"
+			}
+		],
+		"-2147483521": [
+			{
+				"cultureName": "en-US",
+				"title": "Flambeau River",
+				"description": "Flambeau River Overview Map"
+			}
+		],
+		"-2147483502": [
+			{
+				"cultureName": "en-US",
+				"title": "Brunet Island",
+				"description": "Brunet Island Overview Map"
+			}
+		],
+		"-2147483494": [
+			{
+				"cultureName": "en-US",
+				"title": "Amnicon Falls",
+				"description": "Amnicon Falls Overview Map"
+			}
+		],
+		"-2147483472": [
+			{
+				"cultureName": "en-US",
+				"title": "Turtle Flambeau",
+				"description": "Turtle Flambeau Overview Map"
+			}
+		],
+		"-2147483436": [
+			{
+				"cultureName": "en-US",
+				"title": "Brule River",
+				"description": "Brule River Overview Map"
+			}
+		],
+		"-2147483427": [
+			{
+				"cultureName": "en-US",
+				"title": "Chippewa Flowage",
+				"description": "Chippewa Flowage Overview Map"
+			}
+		],
+		"-2147483425": [
+			{
+				"cultureName": "en-US",
+				"title": "Chippewa Moraine",
+				"description": "Chippewa Moraine Overview Map"
+			}
+		],
+		"-2147483420": [
+			{
+				"cultureName": "en-US",
+				"title": "Governor Knowles",
+				"description": "Governor Knowles Overview Map"
+			}
+		],
+		"-2147483404": [
+			{
+				"cultureName": "en-US",
+				"title": "Straight Lake",
+				"description": "Straight Lake Overview Map"
+			}
+		]
+	}
+}

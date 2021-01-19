@@ -1,0 +1,109 @@
+{
+	"mapLinkLocalizedValues": {
+		"-2147483648": [
+			{
+				"cultureName": "en-US",
+				"title": "Peninsula",
+				"description": "Peninsula State Park Overview"
+			}
+		],
+		"-2147483587": [
+			{
+				"cultureName": "en-US",
+				"title": "High Cliff",
+				"description": "High Cliff Overview Map"
+			}
+		],
+		"-2147483569": [
+			{
+				"cultureName": "en-US",
+				"title": "Point Beach",
+				"description": "Point Beach Overview Map"
+			}
+		],
+		"-2147483565": [
+			{
+				"cultureName": "en-US",
+				"title": "Potawatomi",
+				"description": "Potawatomi Overview Map"
+			}
+		],
+		"-2147483561": [
+			{
+				"cultureName": "en-US",
+				"title": "Hartman Creek",
+				"description": "Hartman Creek Overview Map"
+			}
+		],
+		"-2147483533": [
+			{
+				"cultureName": "en-US",
+				"title": "Rock Island",
+				"description": "Rock Island Overview Map"
+			}
+		],
+		"-2147483512": [
+			{
+				"cultureName": "en-US",
+				"title": "Governor Thompson",
+				"description": "Governor Thompson Overview Map"
+			}
+		],
+		"-2147483509": [
+			{
+				"cultureName": "en-US",
+				"title": "Governor Earl Peshtigo River",
+				"description": "Governor Earl Peshtigo River Overview Map"
+			}
+		],
+		"-2147483496": [
+			{
+				"cultureName": "en-US",
+				"title": "Newport",
+				"description": "Newport Overview Map"
+			}
+		],
+		"-2147483485": [
+			{
+				"cultureName": "en-US",
+				"title": "Council Grounds",
+				"description": "Council Grounds Overview Map"
+			}
+		],
+		"-2147483468": [
+			{
+				"cultureName": "en-US",
+				"title": "Northern Highland - American Legion",
+				"description": "Northern Highland - American Legion Overview Map"
+			}
+		],
+		"-2147483412": [
+			{
+				"cultureName": "en-US",
+				"title": "Menominee River",
+				"description": "Menominee River Overview Map"
+			}
+		],
+		"-2147483406": [
+			{
+				"cultureName": "en-US",
+				"title": "Rib Mountain",
+				"description": "Rib Mountain Overview Map"
+			}
+		],
+		"-2147483400": [
+			{
+				"cultureName": "en-US",
+				"title": "Whitefish Dunes",
+				"description": "Whitefish Dunes Overview Map"
+			}
+		],
+		"-2147483398": [
+			{
+				"cultureName": "en-US",
+				"title": "Willow Flowage",
+				"description": "Willow Flowage Overview Map"
+			}
+		]
+	}
+}
