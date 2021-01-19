@@ -90,9 +90,9 @@ def format_park(park, region, html, start_date, end_date):
         return f"""<a href="{url}">{park.name} - {region}</a>"""
 
 def cancel_text_html():
-    return "To stop receiving emails for this search, you can do that from your <a href='www.parkfinder.me/account'>account page</a>."
+    return "To stop receiving emails for this search, update your <a href='www.campfinder.me/account'>account page</a>."
 
 
 def cancel_text_plaintext():
-    return "To stop receiving emails for this search, you can do that from your account page: www.parkfinder.me/account"
+    return "To stop receiving emails for this search, update your account page: www.campfinder.me/account"
 

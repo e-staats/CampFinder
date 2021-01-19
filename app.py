@@ -1,16 +1,14 @@
 import flask
 import os
 import sys
-import datetime
-import secrets
 
 folder = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
 sys.path.insert(0, folder)
 from data.db_session import global_init
-from scraper_shell import scrape_searches
 import services.region_services as region_services
 import services.park_services as park_services
 import services.security_services as security_services
+import secrets
 
 app = flask.Flask(__name__, static_url_path = "/static", static_folder = "static")
 
@@ -43,7 +41,6 @@ def configure():
     print("Created environment variables")
     setup_db()
     print("Database setup complete")
-    # app.add_url_rule('/favicon.ico', redirect_to=flask.url_for('static', filename='favicon.ico'))
 
 
 def main():

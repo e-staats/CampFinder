@@ -4,7 +4,7 @@ folder = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
 sys.path.insert(0, folder)
 import global_test_setup
 import testing_tools
-import scraper_shell # pylint: disable = import-error
+import scraper.scraper_shell as scraper_shell# pylint: disable = import-error
 
 if __name__=='__main__':
     global_test_setup.prep_db()
