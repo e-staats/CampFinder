@@ -142,7 +142,7 @@
 
 .park-list-checkbox input[type="checkbox"]:checked + span::after {
   @include checkbox-checked();
- .northeast & {
+  .northeast & {
     background-color: $neBackground;
   }
   .northwest & {
@@ -158,7 +158,7 @@
 
 .checkAll input[type="checkbox"]:checked + span::after {
   @include checkbox-checked();
- .northeast & {
+  .northeast & {
     background-color: darken($neBackground, 25%);
   }
   .northwest & {
@@ -170,4 +170,20 @@
   .southeast & {
     background-color: darken($seBackground, 25%);
   }
+}
+
+.loader-spinner {
+  display: flex;
+  width: 100%;
+  height: 100;
+  justify-content: center;
+  align-items: center;
+}
+
+.adhoc-results {
+  border: 1px solid gray;
+  border-radius: 4px;
+  margin-top: 20px;
+  padding: 10px;
+  background-color: $formHeaderColor;
 }

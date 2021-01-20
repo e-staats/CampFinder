@@ -2,6 +2,9 @@ import React from 'react';
 import DateRangePicker from "./DateRangePicker"
 import { DateUtils } from 'react-day-picker';
 import ParkSelector from "./parkCheckboxes"
+import LoadingIndicator from "./loadingIndicator"
+import AdhocResults from "./adhocResults"
+import { trackPromise } from 'react-promise-tracker'
 
 class Form extends React.Component {
 
@@ -69,7 +72,9 @@ class Form extends React.Component {
     from: undefined,
     to: undefined,
     success: null,
-    error: null
+    successMessage: null,
+    error: null,
+    adhocResults: null,
   }
 
   handleDayClick = (day) => {
@@ -191,7 +196,11 @@ class Form extends React.Component {
     return parkList
   }
 
-  handleSubmit = () => {
+  handleSubmitAdhoc = () => {
+    this.handleSubmit(true)
+  }
+
+  handleSubmit = (adhoc) => {
     let dates = this.validateDatesForSubmit()
     let regions = this.validateRegionsForSubmit()
     let parks = this.validateParksForSubmit()
@@ -206,7 +215,41 @@ class Form extends React.Component {
     let fromDate = dates.from.toISOString()
     let toDate = dates.to.toISOString()
 
-    //call down to server
+    if (adhoc == true) {
+      this.submitSearchAdhoc(fromDate, toDate, regions, parks)
+    }
+    else {
+      this.submitSearchDB(fromDate, toDate, regions, parks)
+    }
+  }
+
+  submitSearchAdhoc = (fromDate, toDate, regions, parks) => {
+    this.resetAdhocSearch()
+
+    trackPromise(
+      fetch('/_adhoc_search', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        cache: 'no-cache',
+        body: JSON.stringify({
+          'start_date': fromDate,
+          'end_date': toDate,
+          'regions': regions,
+          'parks': parks,
+        }),
+      }).then(response => response.json())
+        .then(data => {
+          this.setState(prevState => {
+            prevState.adhocResults = data.adhocResults
+            return prevState
+          })
+        })
+    )
+  }
+
+  submitSearchDB = (fromDate, toDate, regions, parks) => {
     fetch('/_submit_search', {
       method: 'POST',
       headers: {
@@ -224,8 +267,17 @@ class Form extends React.Component {
       this.handleResetClick()
       this.setState(prevState => {
         prevState.success = true
+        prevState.successMessage = "Search Submitted!"
         return prevState
       })
+    })
+  }
+
+  resetAdhocSearch() {
+    this.setState(prevState => {
+      prevState.error = null
+      prevState.adhocResults = null
+      return prevState 
     })
   }
 
@@ -239,7 +291,7 @@ class Form extends React.Component {
   render() {
     let banner = ""
     if (this.state.success === true) {
-      banner = <div className="successBanner">Search submitted!</div>
+      banner = <div className="successBanner">{this.state.successMessage}</div>
     }
     if (this.state.success === false) {
       banner = <div className="errorBanner">{this.state.error}</div>
@@ -260,9 +312,11 @@ class Form extends React.Component {
       </div>
       <div>
         <button className="submitButton" onClick={this.handleSubmit}>Schedule Search</button>
-        <button class="instascrapeButton" disabled>InstaScrape (coming soon)</button>
+        <button className="instascrapeButton" onClick={this.handleSubmitAdhoc}>InstaScrape</button>
       </div>
       {banner}
+      < LoadingIndicator message="Scraping in progress...This can take a minute or two. Please don't navigate away from this page." />
+      < AdhocResults adhocResults={this.state.adhocResults} />
     </div>)
   }
 }

@@ -82,8 +82,7 @@ def greeting_text():
 
 
 def format_park(park, region, html, start_date, end_date):
-    search_now = datetime.datetime.now()
-    url = set_up_url(start_date, end_date, search_now, park.external_id)
+    url = set_up_url(start_date, end_date, None, park.external_id)
     if html == False:
         return f"{park.name} - {region} ({url})"
     else:

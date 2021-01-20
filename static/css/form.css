@@ -178,4 +178,20 @@
   background-color: #ee9700;
 }
 
+.loader-spinner {
+  display: flex;
+  width: 100%;
+  height: 100;
+  justify-content: center;
+  align-items: center;
+}
+
+.adhoc-results {
+  border: 1px solid gray;
+  border-radius: 4px;
+  margin-top: 20px;
+  padding: 10px;
+  background-color: #fff8f8;
+}
+
 /*# sourceMappingURL=form.css.map */

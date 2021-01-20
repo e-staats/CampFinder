@@ -1,6 +1,8 @@
 from urllib.parse import urlencode
+from datetime import datetime
 
 def set_up_url(start_date, end_date, search_time, map_id):
+    search_time = datetime.now() if search_time == None else search_time
     url_base = define_url_base()
     url_setup = def_url_setup()
     suffix = define_date_suffix()

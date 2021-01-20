@@ -10,7 +10,8 @@ import services.park_services as park_services
 import services.security_services as security_services
 import secrets
 
-app = flask.Flask(__name__, static_url_path = "/static", static_folder = "static")
+app = flask.Flask(__name__, static_url_path="/static", static_folder="static")
+
 
 def setup_db():
     db_file = os.path.join(os.path.dirname(__file__), "db", "parkdb.sqlite")
@@ -32,6 +33,7 @@ def register_blueprints():
 
     app.register_blueprint(home_views.blueprint)
     app.register_blueprint(account_views.blueprint)
+
 
 def configure():
     print("Configuring app...")

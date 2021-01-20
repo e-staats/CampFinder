@@ -73,14 +73,16 @@ def scrape_searches(*args):
 
     cleanup_searches()
 
-def scrape_searches_adhoc(start_date, end_date):
+def scrape_searches_adhoc(start_date=None, end_date=None):
+    if start_date == None or end_date == None:
+        return "Problem starting scraper: Missing dates"
     search_definition = {}
     date_range = date_range_to_string(start_date, end_date)
     search_definition[date_range] = setup_info_dict(start_date, end_date)
 
     scraper = ParkScraper(search_definition, True)
     scraper.parse()
-    print(scraper.get_results_dict())
+    return scraper.get_results_dict()
 
 def add_search_definition(search_definitions, search):
     date_range = date_range_to_string(search.start_date, search.end_date)

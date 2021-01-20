@@ -34,6 +34,7 @@ class ParkScraper:
     def parse_search(self, search_def):
         for region in search_def["start_urls"].keys():
             self.driver = webdriver.Firefox(firefox_options=self.firefox_options)
+            self.driver.set_window_size(1580, 1080)
             url = search_def["start_urls"][region]
             start_date = search_def["start_date"]
             end_date = search_def["end_date"]
@@ -62,22 +63,25 @@ class ParkScraper:
         session.commit()
 
     def parseURL(self, url, region: str, start_date, end_date):
-        success = self.click_through_options(url, region)
+        self.driver.get(url)
+        print("- scraping " + region)
+        success = self.click_through_options()
         if success == False:
-            return 
+            return
         circles = []
         circles = self.driver.find_elements_by_tag_name("circle")
 
         for circle in circles:
             if circle.get_attribute("id") != None:
+                park_name = str(circle.get_attribute("id"))
                 park_id = park_services.get_id_from_name(
-                    str(circle.get_attribute("id"))
+                    park_name
                 )
-                if park_id == False:
+                if park_id == None:
                     continue
                 value = self.temp_map_fill_value(str(circle.get_attribute("fill")))
-                if self.adhoc == True:
-                    self.store_in_dict(park_id, value)
+                if self.adhoc == True and value == 1:
+                    self.store_in_dict(park_id, park_name)
                 else:
                     self.store_in_db(start_date, end_date, park_id, value)
 
@@ -101,30 +105,27 @@ class ParkScraper:
         session.close()
         return
 
-    def click_through_options(self, url, region):
-        self.driver.get(url)
-        print("- scraping " + region)
-
+    def click_through_options(self):
         # accept cookies
         if self.element_exists("consentButton"):
             result = self.find_and_click_element("consentButton")
             if result == False:
                 return False
 
-        # open up the options panel
-        result = self.find_and_click_element("filterButton")
-        if result == False:
-            return False
+        # # open up the options panel
+        # result = self.find_and_click_element("filterButton")
+        # if result == False:
+        #     return False
 
-        # open ADA menu
-        result = self.find_and_click_element("mat-select-7")
-        if result == False:
-            return False
+        # # open ADA menu
+        # result = self.find_and_click_element("mat-select-6")
+        # if result == False:
+        #     return False
 
-        # select No
-        result = self.find_and_click_element("mat-option-83")
-        if result == False:
-            return False
+        # # select No
+        # result = self.find_and_click_element("mat-option-83")
+        # if result == False:
+        #     return False
 
         # click Search
         result = self.find_and_click_element("actionSearch")

@@ -1,7 +1,9 @@
 from data.park import Park  # pylint: disable = import-error
 import data.db_session as db_session  # pylint: disable = import-error
 from infrastructure.load_data_from_csv import load_data_from_csv  # pylint: disable = import-error
+import services.url_services as url_service
 import os
+import copy
 
 def get_park_from_id(park_id):
     session = db_session.create_session()
@@ -17,13 +19,12 @@ def get_park_from_id(park_id):
 def get_id_from_name(name):
     session = db_session.create_session()
     park = session.query(Park).filter(Park.name == name).first()
-    session.close()
     if park == None:
-        return False
-    if isinstance(park.id,int):
-        return park.id
+        return_val = None
     else:
-        return False
+        return_val = copy.deepcopy(park.id)
+    session.close()
+    return return_val
 
 def get_name_from_id(park_id):
     session = db_session.create_session()
@@ -60,13 +61,28 @@ def populate_parks(filepath=None):
     session.close()
     return True
 
-def get_parks_in_region(region_id):
+def get_parks_in_region(region_id, by_ids=False):
     session = db_session.create_session()
     park_list = session.query(Park).filter(Park.region == region_id).all()
     park_dict = {}
-    for park in park_list:
-        park_dict[park.name] = park.id
+    if by_ids == True:
+        for park in park_list:
+            park_dict[park.id] = park.name
+    else:
+        for park in park_list:
+            park_dict[park.name] = park.id
+    session.close()
     return park_dict
+
+def create_URL_from_id(park_id, start_date, end_date):
+    park = get_park_from_id(park_id)
+    return url_service.set_up_url(start_date, end_date, None, park.external_id)
+
+def create_link_from_id(park_id, start_date, end_date):
+    park = get_park_from_id(park_id)
+    url = create_URL_from_id(park, start_date, end_date)
+    return f"""<a href="{url}">{park.name}</a>"""
+
 
 #                                      ,@@@@@#@@@@@@@@.@@*
 #                            #@@%                            *&@@@*
