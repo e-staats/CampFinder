@@ -7,6 +7,7 @@ import services.park_services as park_services
 import services.availability_services as availability_services
 import data.db_session as db_session  # pylint: disable = import-error
 import datetime
+import os
 
 # pylint: disable = no-member
 
@@ -32,8 +33,15 @@ class ParkScraper:
             self.parse_search(search_def)
 
     def parse_search(self, search_def):
+        #HACKY: I'm having trouble setting the permissions on the log file in
+        #Linux, so I just send it to /dev/null. I should figure out how to
+        #actually handle this.
+        log_path = os.path.join('dev','null')
+        if os.path.isdir(log_path) == False:
+            log_path = 'geckodriver.log'
+
         for region in search_def["start_urls"].keys():
-            self.driver = webdriver.Firefox(firefox_options=self.firefox_options)
+            self.driver = webdriver.Firefox(firefox_options=self.firefox_options, service_log_path=log_path)
             self.driver.set_window_size(1580, 1080)
             url = search_def["start_urls"][region]
             start_date = search_def["start_date"]

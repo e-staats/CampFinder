@@ -14,11 +14,12 @@ if __name__ == "__main__":
     testing_tools.setup_all_test_data()
     
     # test db scraper:
-    print("Testing DB scraper")
-    scraper_shell.scrape_searches([True])
+    # print("Testing DB scraper")
+    # scraper_shell.scrape_searches([True])
    
     # test adhoc scraper
     print("Testing dictionary scraper...")
     start_date = datetime.date.today() + datetime.timedelta(days=100)
     end_date = datetime.date.today() + datetime.timedelta(days=101)
-    scraper_shell.scrape_searches_adhoc(start_date, end_date)
+    print(scraper_shell.scrape_searches_adhoc(start_date=start_date, end_date=end_date))
+    print(scraper_shell.scrape_searches_adhoc(start_date=start_date, end_date=end_date, region_id=1))

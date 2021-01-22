@@ -14,6 +14,18 @@ def get_name_from_id(region_id):
     else:
         return False
 
+def get_external_id(region_id):
+    session = db_session.create_session()
+    region = session.query(Region).filter(Region.id == region_id).first()
+    if region == None:
+        ret_val = False
+    else:
+        ret_val = region.external_id
+    session.close()
+    return ret_val
+
+
+
 def populate_regions(filepath=None):
     filepath = os.path.join(os.path.dirname(__file__),'..','park_data') if filepath == None else filepath
     region_list = load_data_from_csv(os.path.join(filepath, 'wi_regions.csv'))
@@ -37,6 +49,11 @@ def regions_exist():
         return False
     session.close()
     return True
+
+#does nothing for now, but leaving option open to expand to other states
+def define_regions():
+    return create_external_region_dict()
+
 
 def create_external_region_dict():
     return_dict = {}

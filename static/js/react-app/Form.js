@@ -69,12 +69,13 @@ class Form extends React.Component {
     },
     //mapping names to values from database:
     regions: {},
-    from: undefined,
-    to: undefined,
+    from: null,
+    to: null,
     success: null,
     successMessage: null,
     error: null,
-    adhocResults: null,
+    adhocResults: [],
+    adhocSuccess: null,
   }
 
   handleDayClick = (day) => {
@@ -135,16 +136,26 @@ class Form extends React.Component {
     return regionString
   }
 
-  assembleParkString = () => {
+  assembleParkString = (regionName) => {
     let parkString = ""
-    for (let regionName in this.state.regions) {
-      for (let parkObj of this.state['parks'][regionName]['parkList']) {
-        if (parkObj.isChecked === true) {
-          parkString += parkObj['id'].toString() + ","
-        }
+    for (let parkObj of this.state['parks'][regionName]['parkList']) {
+      if (parkObj.isChecked === true) {
+        parkString += parkObj['id'].toString() + ","
       }
     }
     return parkString
+  }
+
+  assembleParks = () => {
+    let parks = {}
+    for (let regionName in this.state.regions) {
+      let park_string = this.assembleParkString(regionName)
+      if (park_string != "") {
+        let region_id = this.state.regions[regionName]
+        parks[region_id] = park_string
+      }
+    }
+    return parks
   }
 
   setErrorState = (errorMessage) => {
@@ -156,14 +167,12 @@ class Form extends React.Component {
   }
 
   validateDatesForSubmit = () => {
-    //validate and assemble data
-
-    if (this.state.from === undefined) {
+    if (this.state.from === null) {
       this.setErrorState("Please enter a start date!")
       return
     }
 
-    if (this.state.to === undefined) {
+    if (this.state.to === null) {
       this.setErrorState("Please enter an end date!")
       return
     }
@@ -181,19 +190,16 @@ class Form extends React.Component {
       this.setErrorState("There is an issue with the Region selection. Please re-select and try again.")
       return
     }
-
     return preferredRegions
   }
 
   validateParksForSubmit = () => {
-    //validate and assemble data
-    let parkList = this.assembleParkString()
-    if (parkList === undefined) {
-      this.setErrorState("There is an issure with the Park list. Please re-select and try again.")
+    let parks = this.assembleParks()
+    if (parks === undefined) {
+      this.setErrorState("There is an issue with the Park list. Please re-select and try again.")
       return
     }
-
-    return parkList
+    return parks
   }
 
   handleSubmitAdhoc = () => {
@@ -202,12 +208,11 @@ class Form extends React.Component {
 
   handleSubmit = (adhoc) => {
     let dates = this.validateDatesForSubmit()
-    let regions = this.validateRegionsForSubmit()
     let parks = this.validateParksForSubmit()
-    if (dates === undefined || regions === undefined || parks === undefined) {
+    if (dates === undefined || parks === undefined) {
       return
     }
-    if (regions === "" && parks === "") {
+    if (Object.keys(parks).length === 0) {
       this.setErrorState("Please select some parks!")
       return
     }
@@ -216,40 +221,48 @@ class Form extends React.Component {
     let toDate = dates.to.toISOString()
 
     if (adhoc == true) {
-      this.submitSearchAdhoc(fromDate, toDate, regions, parks)
+      this.submitSearchAdhoc(fromDate, toDate, parks)
     }
     else {
-      this.submitSearchDB(fromDate, toDate, regions, parks)
+      this.submitSearchDB(fromDate, toDate, parks)
     }
   }
 
-  submitSearchAdhoc = (fromDate, toDate, regions, parks) => {
+  submitSearchAdhoc = (fromDate, toDate, parks) => {
     this.resetAdhocSearch()
 
-    trackPromise(
-      fetch('/_adhoc_search', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        cache: 'no-cache',
-        body: JSON.stringify({
-          'start_date': fromDate,
-          'end_date': toDate,
-          'regions': regions,
-          'parks': parks,
-        }),
-      }).then(response => response.json())
-        .then(data => {
-          this.setState(prevState => {
-            prevState.adhocResults = data.adhocResults
-            return prevState
+    for (let region in parks) {
+      trackPromise(
+        fetch('/_adhoc_search', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          cache: 'no-cache',
+          body: JSON.stringify({
+            'start_date': fromDate,
+            'end_date': toDate,
+            'region': region,
+            'parks': parks[region],
+          }),
+        }).then(response => response.json())
+          .then(data => {
+            this.setState(prevState => {
+              prevState.adhocSuccess = true
+              if (data.adhocResults.parks.length > 0) {prevState.adhocResults.push(data.adhocResults)}
+              return prevState
+            })
           })
-        })
-    )
+      )
+    }
   }
 
-  submitSearchDB = (fromDate, toDate, regions, parks) => {
+  submitSearchDB = (fromDate, toDate, parks) => {
+    let regions = this.validateRegionsForSubmit()
+    if (regions === undefined) {
+      return
+    }
+
     fetch('/_submit_search', {
       method: 'POST',
       headers: {
@@ -276,15 +289,16 @@ class Form extends React.Component {
   resetAdhocSearch() {
     this.setState(prevState => {
       prevState.error = null
-      prevState.adhocResults = null
-      return prevState 
+      prevState.adhocResults = []
+      prevState.adhocSuccess = null
+      return prevState
     })
   }
 
   getInitialState() {
     return {
-      from: undefined,
-      to: undefined,
+      from: null,
+      to: null,
     };
   }
 
@@ -316,7 +330,7 @@ class Form extends React.Component {
       </div>
       {banner}
       < LoadingIndicator message="Scraping in progress...This can take a minute or two. Please don't navigate away from this page." />
-      < AdhocResults adhocResults={this.state.adhocResults} />
+      < AdhocResults status={this.state.adhocSuccess} adhocResults={this.state.adhocResults} />
     </div>)
   }
 }

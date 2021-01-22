@@ -1,10 +1,12 @@
 import React from 'react'
+import AdhocRegion from './adhocRegion'
 import AdhocRow from './adhocRow'
+import Region from './region'
 
 class AdhocResults extends React.Component {
     render() {
         let css = "adhoc-results"
-        if (this.props.adhocResults === null) {
+        if (this.props.status != true) {
             return (
                 <div></div>
             )
@@ -22,10 +24,11 @@ class AdhocResults extends React.Component {
             return (
                 <div className={css}>
                     <div className="successBanner">Good news! Here are the parks that are available for the dates you selected:</div>
-                    {this.props.adhocResults.map((result, index) => (
-                        <AdhocRow additionalCss="adhoc-row"
-                            val1={result.name}
-                            val2={result.url} />
+                    {this.props.adhocResults.map((region, index1) => (
+                        <div>
+                            <AdhocRow text={region.name} additionalCss="adhoc-row-header" />
+                            <AdhocRegion regionInfo={region.parks} />
+                        </div>
                     ))}
                 </div>
             )

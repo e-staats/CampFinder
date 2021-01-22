@@ -3,9 +3,16 @@ import React from 'react'
 class AdhocRow extends React.Component {
     render() {
         let css = this.props.additionalCss
-        return (
-            <div className={css}><a href={this.props.val2}>{this.props.val1}</a></div>
-        )
+        if (this.props.url === undefined) {
+            return (
+                <div className={css}>{this.props.text}</div>
+            )
+        }
+        else {
+            return (
+                <div className={css}><a href={this.props.url}>{this.props.text}</a></div>
+            )
+        }
     }
 }
 

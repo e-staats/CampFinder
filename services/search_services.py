@@ -65,6 +65,13 @@ def find_users_interested_in_search(search_id):
     return users
 
 
+def parse_parks_from_frontend(parks_dict):
+    park_string = ""
+    for region in parks_dict:
+        park_string += parks_dict[region]
+    return park_string
+
+
 def deserialize_park_list(parks):
     return [int(p_id) for p_id in parks.split(",") if p_id != '']
 
