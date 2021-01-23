@@ -36,8 +36,8 @@ class ParkScraper:
         #HACKY: I'm having trouble setting the permissions on the log file in
         #Linux, so I just send it to /dev/null. I should figure out how to
         #actually handle this.
-        log_path = os.path.join('dev','null')
-        if os.path.isdir(log_path) == False:
+        log_path = os.path.join('/','dev','null')
+        if os.path.exists(log_path) == False:
             log_path = 'geckodriver.log'
 
         for region in search_def["start_urls"].keys():

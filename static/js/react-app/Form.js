@@ -228,11 +228,11 @@ class Form extends React.Component {
     }
   }
 
-  submitSearchAdhoc = (fromDate, toDate, parks) => {
+  async submitSearchAdhoc(fromDate, toDate, parks) {
     this.resetAdhocSearch()
 
     for (let region in parks) {
-      trackPromise(
+     await trackPromise(
         fetch('/_adhoc_search', {
           method: 'POST',
           headers: {
@@ -329,8 +329,11 @@ class Form extends React.Component {
         <button className="instascrapeButton" onClick={this.handleSubmitAdhoc}>InstaScrape</button>
       </div>
       {banner}
-      < LoadingIndicator message="Scraping in progress...This can take a minute or two. Please don't navigate away from this page." />
-      < AdhocResults status={this.state.adhocSuccess} adhocResults={this.state.adhocResults} />
+      < LoadingIndicator message="Scraping in progress...Results will load as
+      they become available, but this can take a minute or two to complete.
+      Please don't navigate away from this page." /> < AdhocResults
+      status={this.state.adhocSuccess} adhocResults={this.state.adhocResults}
+      />
     </div>)
   }
 }
