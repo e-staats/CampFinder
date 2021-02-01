@@ -14,8 +14,9 @@ if __name__ == "__main__":
     testing_tools.setup_all_test_data()
     
     # test db scraper:
-    # print("Testing DB scraper")
-    # scraper_shell.scrape_searches([True])
+    print("Testing DB scraper")
+    scraper_shell.scrape_searches([True])
+    parse_results.process_results()
    
     # test adhoc scraper
     print("Testing dictionary scraper...")

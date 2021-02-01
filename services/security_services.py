@@ -78,7 +78,7 @@ def create_admin_user():
     if security_class == None:
         raise Exception("Could not create admin: no security class found")
     user = user_services.create_user(
-        "admin", "wiparkscraper@gmail.com", password, security_class, is_active=True
+        "admin", "campfinder@campfinder.me", password, security_class, is_active=True
     )
     if not user:
         raise Exception("Could not create admin user.")
