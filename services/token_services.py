@@ -12,7 +12,7 @@ def serialize_url_time_sensitive_value(value, salt):
 def deserialize_url_time_sensitive_value(token, salt):
     serializer = itsd.URLSafeTimedSerializer(os.environ["SECRET_KEY"])
     try:
-        decoded_payload = serializer.loads(token, salt=salt, max_age=1800)
+        decoded_payload = serializer.loads(token, salt=salt, max_age=86400)
         return decoded_payload
     except itsd.BadSignature as e:
         if e.payload is not None:
