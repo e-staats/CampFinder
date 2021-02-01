@@ -42,7 +42,7 @@ def send_activation_email(user_id, email):
     div1 = "Welcome to CampFinder! Please click below to activate your account and start getting notified when campsites are available!"
     div2 = f"<a href='{url}'>{url}</a>"
     div3 = "We look forward to helping you get out there and get camping!"
-    email_message = BasicEmailBody(subject, div1, div2, div3)
+    email_message = BasicEmailBody(div1, div2, div3)
     html = email_message.create_message()
     emailer = ParkEmailer()
     try:
@@ -64,7 +64,7 @@ def send_pw_reset_email(user_id, email):
     div1 = "Someone requested to reset the password for your CampFinder account. If you would like to reset your password, click here:"
     div2 = f"<a href='{reset_url}'>{reset_url}</a>"
     div3 = "If you didn't ask to reset your password, you should ignore this email."
-    email_message = BasicEmailBody(subject, div1, div2, div3)
+    email_message = BasicEmailBody(div1, div2, div3)
     message = email_message.create_message()
     emailer = ParkEmailer()
     try:
