@@ -173,6 +173,7 @@ nav .logout:hover {
 .info-box {
     @include info-box();
     margin-top: 0px;
+    text-align: center;
 }
 
 .alert-banner {
@@ -183,6 +184,13 @@ nav .logout:hover {
     border-radius: 3px;
     padding: 10px;
     background-color: color.scale($primaryOrange, $alpha: -75%);
+}
+
+.public-facing-banner {
+    font-size: 18pt;
+    text-align: center;
+    padding-top: 15px;
+    padding-bottom: 15px;
 }
 
 .footer {
