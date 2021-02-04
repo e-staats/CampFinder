@@ -22,44 +22,59 @@
 }
 
 .preference-checkbox {
-  margin-right: 10px;
+  position: relative;
+  display: block;
 }
 
-input[type=checkbox] {
-  position: relative;
-  color: black;
-  border: 1px solid gray;
+.preference-checkbox span {
+  display: block;
+  margin-left: 1em;
+  padding-left: 0.5em;
+  text-align: left;
+}
+
+.preference-checkbox span::before {
+  display: block;
+  position: absolute;
+  top: 3px;
+  left: 0;
   width: 1em;
   height: 1em;
   border-radius: 4px;
-  appearance: none;
   outline: 0;
   cursor: pointer;
+  content: "";
+  background: #fff8f8;
+  border: 1px solid gray;
 }
-input[type=checkbox]::before {
+
+.preference-checkbox span::after {
+  display: block;
+  position: absolute;
+  top: 3px;
+  left: 0;
+  width: 1em;
+  height: 1em;
+  border-radius: 4px;
+  outline: 0;
+  cursor: pointer;
+  text-align: center;
+}
+
+.preference-checkbox input[type=checkbox] {
+  opacity: 0;
+  z-index: -1;
+  position: absolute;
+}
+
+.preference-checkbox input[type=checkbox]:checked + span::after {
+  color: black;
   position: absolute;
   content: "";
   display: block;
-  top: 1px;
-  left: 5px;
-  width: 5px;
-  height: 10px;
-  border-style: solid;
-  border-color: white;
-  border-width: 0 2px 2px 0;
-  transform: rotate(45deg);
-  opacity: 0;
-}
-input[type=checkbox]:checked {
-  color: black;
-  border-color: #405A53;
-  background-color: #405A53;
-}
-input[type=checkbox]::before {
-  opacity: 1;
-}
-input[type=checkbox] ~ label::before {
-  clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+  border-radius: 4px;
+  border: 1px solid gray;
+  background-color: #F15451;
 }
 
 .row-item {
@@ -83,6 +98,14 @@ input[type=checkbox] ~ label::before {
 }
 .search-enable:hover {
   color: #19692c;
+}
+
+.success-msg {
+  border: 1px solid gray;
+  border-radius: 4px;
+  margin-top: 20px;
+  padding: 10px;
+  color: #1D2A3D;
 }
 
 /*# sourceMappingURL=account.css.map */

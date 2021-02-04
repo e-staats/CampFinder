@@ -112,11 +112,7 @@ class Form extends React.Component {
     })
   };
 
-  handleSelectAllButtonClick = (e, checkedOverride = null) => {
-    let checked = checkedOverride
-    if (checked === null) {
-      e.target.name === "checkAll" ? checked = true : checked = false
-    }
+  handleSelectAllButtonClick = (e, checked) => {
     this.setState(prevState => {
       let parks = prevState['parks']
       for (let regionName in prevState.regions) {
@@ -232,7 +228,7 @@ class Form extends React.Component {
     this.resetAdhocSearch()
 
     for (let region in parks) {
-     await trackPromise(
+      await trackPromise(
         fetch('/_adhoc_search', {
           method: 'POST',
           headers: {
@@ -249,7 +245,7 @@ class Form extends React.Component {
           .then(data => {
             this.setState(prevState => {
               prevState.adhocSuccess = true
-              if (data.adhocResults.parks.length > 0) {prevState.adhocResults.push(data.adhocResults)}
+              if (data.adhocResults.parks.length > 0) { prevState.adhocResults.push(data.adhocResults) }
               return prevState
             })
           })
@@ -325,14 +321,26 @@ class Form extends React.Component {
         />
       </div>
       <div>
-        <button className="submitButton" onClick={this.handleSubmit}>Schedule Search</button>
-        <button className="instascrapeButton" onClick={this.handleSubmitAdhoc}>InstaScrape</button>
+        <button className="submitButton" onClick={this.handleSubmit} title="Add these search criteria to the background search process">Schedule Search</button>
+        <button className="instascrapeButton" onClick={this.handleSubmitAdhoc} title="Search now for these criteria and get results in real time">InstaScrape</button>
+        <span className="help-tip">
+          <span className="help-tip-text">
+            Which button should I choose?
+          </span>
+          <p>Submitting the search is useful if you want to get notified by email or text when
+          there is a campsite available for the dates and parks you selected.
+          Instascraping is for when you want to check if anything
+          is available for your parks and dates in real time. Caveat:
+          Instascrape is a little inconsistent and can take a few minutes. If you
+          don't get an results the first time, try again!</p>
+        </span>
       </div>
       {banner}
       < LoadingIndicator message="Scraping in progress...Results will load as
       they become available, but this can take a minute or two to complete.
-      Please don't navigate away from this page." /> < AdhocResults
-      status={this.state.adhocSuccess} adhocResults={this.state.adhocResults}
+      Please don't navigate away from this page." />
+      < AdhocResults
+        status={this.state.adhocSuccess} adhocResults={this.state.adhocResults}
       />
     </div>)
   }

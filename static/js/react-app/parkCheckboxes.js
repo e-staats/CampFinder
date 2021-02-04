@@ -3,8 +3,12 @@ import React, { Component } from "react"
 
 class ParkSelector extends Component {
 
-    handleSelectAllButtonClick = (e) => {
-        this.props.handleSelectAllButtonClick(e)
+    handleCheckAllButtonClick = (e) => {
+        this.props.handleSelectAllButtonClick(e, true)
+    }
+
+    handleUncheckAllButtonClick = (e) => {
+        this.props.handleSelectAllButtonClick(e, false)
     }
 
     regionClassName = (name) => {
@@ -15,17 +19,17 @@ class ParkSelector extends Component {
         return (
 
             <div className="checkboxes">
-                <div className='row'>
-                    <div className='masterButton'>
-                        <button type="button" name="checkAll" onClick={this.handleSelectAllButtonClick} className="masterCheckAll">
-                            Check All
-                    </button>
-                    </div>
-                    <div className='masterButton'>
-                        <button type="button" name="uncheckAll" onClick={this.handleSelectAllButtonClick} className="masterUncheckAll">
-                            Uncheck All
-                        </button>
-                    </div>
+                <div className='row masterButtonArray'>
+                        <div className='masterButton'>
+                            <span onClick={this.handleCheckAllButtonClick} className="masterCheckAll">
+                                Check All
+                    </span>
+                        </div>
+                        <div className='masterButton'>
+                            <span onClick={this.handleUncheckAllButtonClick} className="masterUncheckAll">
+                                Uncheck All
+                        </span>
+                        </div>
                 </div>
                 <div className='row checkboxArray'>
                     <div className={this.regionClassName(this.props.parks.northwest.name)}>

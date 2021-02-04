@@ -1,4 +1,5 @@
 @import "_colors";
+@import "index.scss";
 
 .form-header-parent {
   display: flex;
@@ -25,30 +26,33 @@
   }
 }
 
+.masterButtonArray {
+  padding-left: 5px;
+}
+
 .masterButton {
   margin-left: 10px;
   margin-right: 20px;
 }
-
 @mixin masterButton {
-  width: 130px;
-  height: 25px;
-  align-items: center;
-  border-radius: 4px;
-  color: white;
-  font-size: 12pt;
-  border: none;
-  margin-top: 10px;
+  cursor: pointer;
+  text-decoration: underline;
 }
 
 .masterCheckAll {
   @include masterButton();
-  background-color: lighten($primaryNavy, 20%);
+  color: $primaryOrange;
+  &:hover {
+    color: darken($primaryOrange, 15%);
+  }
 }
 
 .masterUncheckAll {
   @include masterButton();
-  background-color: $primaryOrange;
+  color: $primaryOrange;
+  &:hover {
+    color: darken($primaryOrange, 15%);
+  }
 }
 
 @mixin actionButton {
@@ -62,21 +66,23 @@
 
 .submitButton {
   @include actionButton();
-  background-color: $primaryGreen;
+  background-color: $primaryOrange;
   border: none;
 }
 
 .instascrapeButton {
   @include actionButton();
-  background-color: $primaryRed;
+  background-color: $primaryNavy;
   border: none;
 }
 
 .successBanner {
-  color: $primaryGreen;
+  @include info-box();
+  color: $primaryNavy;
 }
 
 .errorBanner {
+  @include info-box();
   color: $primaryOrange;
 }
 
@@ -172,6 +178,11 @@
   }
 }
 
+.loader {
+  @include info-box();
+  color: $primaryOrange;
+}
+
 .loader-spinner {
   display: flex;
   width: 100%;
@@ -181,11 +192,7 @@
 }
 
 .adhoc-results {
-  border: 1px solid gray;
-  border-radius: 4px;
-  margin-top: 20px;
-  padding: 10px;
-  background-color: $formHeaderColor;
+  @include info-box();
 }
 
 .adhoc-row-header {

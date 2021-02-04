@@ -28,52 +28,59 @@
 }
 
 @mixin checkbox {
-    position: relative;
-    color: black;
-    border: 1px solid gray;
-    width: 1em;
-    height: 1em;
-    border-radius: 4px;
-    appearance: none;
-    outline: 0;
-    cursor: pointer;
+  display: block;
+  position: absolute;
+  top: 3px;
+  left: 0;
+  width: 1em;
+  height: 1em;
+  border-radius: 4px;
+  outline: 0;
+  cursor: pointer;
 }
 
 .preference-checkbox {
-    margin-right: 10px;
+  position: relative;
+  display: block;
 }
 
-input[type="checkbox"] {
-    @include checkbox();
+.preference-checkbox span {
+  display: block;
+  margin-left: 1em;
+  padding-left: 0.5em;
+  text-align: left;
+}
 
-    &::before {
-        position: absolute;
-        content: "";
-        display: block;
-        top: 1px;
-        left: 5px;
-        width: 5px;
-        height: 10px;
-        border-style: solid;
-        border-color: white;
-        border-width: 0 2px 2px 0;
-        transform: rotate(45deg);
-        opacity: 0;
-    }
+.preference-checkbox span::before {
+  @include checkbox();
+  content: "";
+  background: $formHeaderColor;
+  border: 1px solid gray;
+}
 
-    &:checked {
-        color: black;
-        border-color: $primaryGreen;
-        background-color: $primaryGreen;
-    }
+.preference-checkbox span::after {
+  @include checkbox();
+  text-align: center;
+}
 
-    &::before {
-        opacity: 1;
-    }
+.preference-checkbox input[type="checkbox"] {
+  opacity: 0;
+  z-index: -1;
+  position: absolute;
+}
 
-    ~ label::before {
-        clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
-    }
+@mixin checkbox-checked {
+  color: black;
+  position: absolute;
+  content: "";
+  display: block;
+  border-radius: 4px;
+  border: 1px solid gray;
+  background-color: $primaryOrange;
+}
+
+.preference-checkbox input[type="checkbox"]:checked + span::after {
+  @include checkbox-checked();
 }
 
 .row-item {
@@ -99,4 +106,12 @@ input[type="checkbox"] {
     &:hover {
         color: darken(#28a745, 15%);
     }
+}
+
+.success-msg {
+    border: 1px solid gray;
+    border-radius: 4px;
+    margin-top: 20px;
+    padding: 10px;
+    color: $primaryNavy;
 }

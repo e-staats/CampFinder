@@ -10,11 +10,8 @@ class ContactPreferences extends React.Component {
         return (
             <div>
                 <div className="preference-header">Contact Preferences:</div>
-                <Checkbox name="email" checked={this.props.emailChecked} handleCheckboxClick={this.props.handleCheckboxClick}/>
-                Receive Email Notifications?
-                <br></br>
-                <Checkbox name="text" checked={this.props.textChecked} handleCheckboxClick={this.props.handleCheckboxClick}/>
-                Receive Text Notifications? [coming soon!]
+                <Checkbox name="email" checked={this.props.emailChecked} handleCheckboxClick={this.props.handleCheckboxClick} label="Receive Email Notifications?" />
+                <Checkbox name="text" checked={this.props.textChecked} handleCheckboxClick={this.props.handleCheckboxClick} label="Receive Text Notifications? [coming soon!]" />
             </div>
         )
     }
