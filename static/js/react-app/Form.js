@@ -272,8 +272,6 @@ class Form extends React.Component {
         'parks': parks,
       }),
     }).then(() => {
-      this.handleSelectAllButtonClick(null, false)
-      this.handleResetClick()
       this.setState(prevState => {
         prevState.success = true
         prevState.successMessage = "Search Submitted!"
@@ -287,6 +285,8 @@ class Form extends React.Component {
       prevState.error = null
       prevState.adhocResults = []
       prevState.adhocSuccess = null
+      prevState.success = null
+      prevState.successMessage = null
       return prevState
     })
   }
@@ -332,7 +332,7 @@ class Form extends React.Component {
           Instascraping is for when you want to check if anything
           is available for your parks and dates in real time. Caveat:
           Instascrape is a little inconsistent and can take a few minutes. If you
-          don't get an results the first time, try again!</p>
+          don't get results the first time, try again!</p>
         </span>
       </div>
       {banner}

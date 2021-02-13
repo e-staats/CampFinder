@@ -132,6 +132,7 @@ nav .logout:hover {
   margin-top: 20px;
   padding: 10px;
   background-color: #fff8f8;
+  width: 100%;
   margin-top: 0px;
   text-align: center;
 }
@@ -201,7 +202,6 @@ ul {
 
 .help-tip:hover p {
   display: block;
-  transform-origin: 100% 0%;
   -webkit-animation: fadeIn 0.3s ease-in-out;
   animation: fadeIn 0.3s ease-in-out;
 }
@@ -216,7 +216,7 @@ ul {
   position: absolute;
   border-radius: 3px;
   box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.2);
-  right: -4px;
+  left: 40%;
   color: #fff;
   font-size: 14px;
   line-height: 1.4;
@@ -230,7 +230,7 @@ ul {
   height: 0;
   border: 6px solid transparent;
   border-bottom-color: #F15451;
-  left: 10px;
+  left: 35%;
   top: -10px;
 }
 
@@ -339,6 +339,7 @@ ul {
   margin-top: 20px;
   padding: 10px;
   background-color: #fff8f8;
+  width: 100%;
   color: #1D2A3D;
 }
 
@@ -348,6 +349,7 @@ ul {
   margin-top: 20px;
   padding: 10px;
   background-color: #fff8f8;
+  width: 100%;
   color: #F15451;
 }
 
@@ -457,6 +459,7 @@ ul {
   margin-top: 20px;
   padding: 10px;
   background-color: #fff8f8;
+  width: 100%;
   color: #F15451;
 }
 
@@ -474,6 +477,7 @@ ul {
   margin-top: 20px;
   padding: 10px;
   background-color: #fff8f8;
+  width: 100%;
 }
 
 .adhoc-row-header {

@@ -23,7 +23,7 @@ class AdhocResults extends React.Component {
         else {
             return (
                 <div className={css}>
-                    <div className="successBanner">Good news! Here are the parks that are available for the dates you selected:</div>
+                    <div>Good news! Here are the parks that are available for the dates you selected:</div>
                     {this.props.adhocResults.map((region, index1) => (
                         <div>
                             <AdhocRow text={region.name} additionalCss="adhoc-row-header" />
