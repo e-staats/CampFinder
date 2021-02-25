@@ -105,7 +105,7 @@ nav .logout:hover {
   font-size: 18pt;
   font-weight: 700;
   font-size: 16pt;
-  text-decoration: dotted underline;
+  text-decoration: underline;
 }
 
 .region-header a {

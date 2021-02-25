@@ -68,11 +68,12 @@ class SearchTable extends React.Component {
             )
         }
         else if (this.state.searchList != null) {
+            let locale = window.navigator.userLanguage || window.navigator.language;
             return (
                 <div>
                     <Header />
                     {this.state.searchList.map((search, index) => (
-                        <TableRow search={search} handleToggleClick={this.handleToggleClick} />
+                        <TableRow search={search} handleToggleClick={this.handleToggleClick} locale={locale}/>
                     )
                     )}
                 </div>

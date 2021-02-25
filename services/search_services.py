@@ -4,6 +4,7 @@ import services.user_services as user_services  # pylint: disable = import-error
 import services.park_services as park_services  # pylint: disable = import-error
 import services.region_services as region_services  # pylint: disable = import-error
 import datetime
+import time
 
 
 def create_search(owner_id, start_date, end_date, regions, parks, is_active):
@@ -93,7 +94,7 @@ def format_dict_dates(search_dict):
         if isinstance(value, datetime.date):
             search_dict[key] = value.strftime("%a %m/%d/%y")
         if isinstance(value, datetime.datetime):
-            search_dict[key] = value.strftime("%a %m/%d/%y %I:%M %p")
+            search_dict[key] = value.timestamp() * 1000 #want to store result in milliseconds for JS Date object
     return search_dict
 
 

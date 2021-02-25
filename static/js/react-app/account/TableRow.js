@@ -15,6 +15,9 @@ class TableRow extends React.Component {
             isActive = "Yes"
         }
         let rowClass = "row table-row " + style
+        let submitInstant = new Date(this.props.search.submit_instant)
+        let submit_instant_string = submitInstant.toLocaleDateString(this.props.locale) + " " + submitInstant.toLocaleTimeString(this.props.locale)
+
 
         return (
             <div id={this.props.search.id} className={rowClass}>
@@ -23,7 +26,7 @@ class TableRow extends React.Component {
                 <div className="col-sm-2 row-item">< NameList list={this.props.search.region_names} /></div>
                 <div className="col-sm-2 row-item">< NameList list={this.props.search.park_names} /></div>
                 <div className="col-sm-1 row-item">{isActive}</div>
-                <div className="col-sm-2 row-item">{this.props.search.submit_instant} UTC</div>
+                <div className="col-sm-2 row-item">{submit_instant_string}</div>
                 <div className="col-sm-1 row-item">< ToggleSwitch is_active={this.props.search.is_active} id={this.props.search.id} handleToggleClick={this.handleToggleClick} /></div>
             </div>
         )

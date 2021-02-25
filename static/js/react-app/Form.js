@@ -76,6 +76,8 @@ class Form extends React.Component {
     error: null,
     adhocResults: [],
     adhocSuccess: null,
+    adhocRegionCount: 0,
+    adhocRegionsReturned: 0,
   }
 
   handleDayClick = (day) => {
@@ -173,6 +175,22 @@ class Form extends React.Component {
       return
     }
 
+    var today = new Date()
+    var tomorrow = new Date()
+    today.setHours(0, 0, 0, 0)
+    tomorrow.setDate(tomorrow.getDate() + 1)
+    tomorrow.setHours(0, 0, 0, 0)
+    
+    if (this.state.from < today) {
+      this.setErrorState("Start date must be today or later!")
+      return
+    }
+
+    if (this.state.to < tomorrow) {
+      this.setErrorState("End date must be tomorrow or later!")
+      return
+    }
+
     return {
       from: this.state.from,
       to: this.state.to
@@ -227,6 +245,14 @@ class Form extends React.Component {
   async submitSearchAdhoc(fromDate, toDate, parks) {
     this.resetAdhocSearch()
 
+    //get the count of regions outside the async loop
+    for (let region in parks) {
+      this.setState(prevState => {
+        prevState.adhocRegionCount++
+        return prevState
+      })
+    }
+
     for (let region in parks) {
       await trackPromise(
         fetch('/_adhoc_search', {
@@ -246,6 +272,7 @@ class Form extends React.Component {
             this.setState(prevState => {
               prevState.adhocSuccess = true
               if (data.adhocResults.parks.length > 0) { prevState.adhocResults.push(data.adhocResults) }
+              prevState.adhocRegionsReturned++
               return prevState
             })
           })
@@ -285,6 +312,8 @@ class Form extends React.Component {
       prevState.error = null
       prevState.adhocResults = []
       prevState.adhocSuccess = null
+      prevState.adhocRegionCount = 0
+      prevState.adhocRegionsReturned = 0
       prevState.success = null
       prevState.successMessage = null
       return prevState
@@ -340,7 +369,10 @@ class Form extends React.Component {
       they become available, but this can take a minute or two to complete.
       Please don't navigate away from this page." />
       < AdhocResults
-        status={this.state.adhocSuccess} adhocResults={this.state.adhocResults}
+        status={this.state.adhocSuccess}
+        adhocResults={this.state.adhocResults}
+        regionCount={this.state.adhocRegionCount}
+        regionResults={this.state.adhocRegionsReturned}
       />
     </div>)
   }

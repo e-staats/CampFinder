@@ -17,7 +17,6 @@ class Preferences extends React.Component {
         })
             .then(response => response.json())
             .then(data => {
-                console.log(data)
                 this.setState(prevState => {
                     prevState.preferences = data
                     return prevState
@@ -50,8 +49,6 @@ class Preferences extends React.Component {
                 'setting': settingName,
                 'is_checked': checked,
             }),
-        }).then(data => {
-            console.log(data)
         })
     }
 

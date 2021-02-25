@@ -6,7 +6,7 @@ import Region from './region'
 class AdhocResults extends React.Component {
     render() {
         let css = "adhoc-results"
-        if (this.props.status != true) {
+        if (this.props.status != true || this.props.regionResults < this.props.regionCount) {
             return (
                 <div></div>
             )
@@ -33,6 +33,7 @@ class AdhocResults extends React.Component {
                 </div>
             )
         }
+
     }
 }
 
