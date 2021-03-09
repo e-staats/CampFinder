@@ -3,6 +3,8 @@ body {
   margin: 0;
   font-family: "Cabin", "MaisonNeue", "Segoe UI", "Helvetica Neue", -apple-system, system-ui, BlinkMacSystemFont, Roboto, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
   font-size: 12pt;
+  overflow-x: hidden;
+  /* Hide horizontal scrollbar */
 }
 
 body a {
@@ -216,32 +218,11 @@ ul {
   position: absolute;
   border-radius: 3px;
   box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.2);
-  left: 40%;
+  left: 35%;
+  bottom: 4%;
   color: #fff;
   font-size: 14px;
   line-height: 1.4;
-}
-
-.help-tip p:before {
-  /* The pointer of the tooltip */
-  position: absolute;
-  content: "";
-  width: 0;
-  height: 0;
-  border: 6px solid transparent;
-  border-bottom-color: #F15451;
-  left: 35%;
-  top: -10px;
-}
-
-.help-tip p:after {
-  /* Prevents the tooltip from being hidden */
-  width: 100%;
-  height: 40px;
-  content: "";
-  position: absolute;
-  top: -40px;
-  left: 0;
 }
 
 /* CSS animation */
