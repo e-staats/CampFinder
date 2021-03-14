@@ -7,45 +7,48 @@ import templates.email.availability_message as availability_message
 # pylint: disable = no-member
 
 
-def process_results():
+def process_all_results():
     searches = search_services.find_active_searches()
-    emailer = ParkEmailer()
     for search in searches:
-        # short circuit if the user doesn't want to be notified:
-        user_prefs = user_services.get_user_preferences(search.owner_id)
-        if user_prefs["email"] == False and user_prefs["text"] == False:
-            continue
+        process_result(search)
+    return
 
-        # check for results for the search and move on if there are no availabilities
-        park_id_list = search_services.deserialize_park_list(search.parks)
-        availability_info = avail_services.find_availability_info_for_date_range(
-            search.start_date, search.end_date, park_id_list
+def process_result(search):
+    emailer = ParkEmailer()
+    # short circuit if the user doesn't want to be notified:
+    user_prefs = user_services.get_user_preferences(search.owner_id)
+    if user_prefs["email"] == False and user_prefs["text"] == False:
+        return
+
+    # check for results for the search and move on if there are no availabilities
+    park_id_list = search_services.deserialize_park_list(search.parks)
+    availability_info = avail_services.find_availability_info_for_date_range(
+        search.start_date, search.end_date, park_id_list
+    )
+    if availability_info == []:
+        return
+
+    if user_prefs["email"] == True:
+        # turn the results into an email
+        message = convert_availability_to_message(
+            availability_info, search.start_date, search.end_date
         )
-        if availability_info == []:
-            continue
+        if message == False:
+            return
 
-        if user_prefs["email"] == True:
-            # turn the results into an email
-            message = convert_availability_to_message(
-                availability_info, search.start_date, search.end_date
-            )
-            if message == False:
-                continue
+        # grab the person to email:
+        to_address = user_services.get_user_email(search.owner_id)
+        if to_address == None:
+            return
 
-            # grab the person to email:
-            to_address = user_services.get_user_email(
-                search.owner_id,
-            )
-            if to_address == None:
-                continue
+        # then send that email
+        emailer.send_email(
+            to_address=to_address,
+            subject="New Campsite Availability for One of Your Searches!",
+            html_message=message,
+        )
 
-            # then send that email
-            emailer.send_email(
-                to_address=to_address,
-                subject="New Campsite Availability for One of Your Searches!",
-                html_message=message,
-            )
-
+    return
 
 def convert_availability_to_message(availability_info, start_date, end_date):
     avail_dict = {}

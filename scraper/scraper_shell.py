@@ -9,23 +9,15 @@ from data.search import Search
 # pylint: disable = no-member
 
 ############################## KICK OFF FUNCTIONS ###################################
-def scrape_searches(*args):
-    all_searches = args[0]
+def scrape_searches():
     session = db_session.create_session()
     search_definition = {}
     print(f"scraping for searches at {datetime.datetime.now()}")
-
-    if all_searches == True:
-        search_list = session.query(Search).filter(Search.is_active == 1).all()
-        if search_list == []:
-            return "No searches in database"
-        for search in search_list:
-            search_definition = add_search_definition(search_definition, search)
-
-    else:
-        search = session.query(Search).filter(Search.is_active == 1).first()
-        if search == None:
-            return "No searches in database"
+    search_list = session.query(Search).filter(Search.is_active == 1).all()
+    if search_list == []:
+        return "No searches in database"
+    for search in search_list:
+        print()
         search_definition = add_search_definition(search_definition, search)
 
     session.close()
