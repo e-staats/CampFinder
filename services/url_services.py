@@ -40,7 +40,7 @@ def format_url(url_base, url_setup, search_time):
     return url.replace("%3A", ":")
 
 def define_date_suffix():
-    return "T00:00:00.000Z"
+    return "" #the app sometimes wants a suffix on the dates, and sometimes it doesn't
 
 
 def define_url_base():
@@ -50,8 +50,7 @@ def define_url_base():
 def format_searchtime(search_time):
     return (
         search_time.astimezone()
-        .strftime("%a %b %d %Y %H%M:%S GMT%z (%Z)")
-        .replace(" ", "%20")
+        .strftime("searchTime=%Y-%m-%dT%H:%M:%S")
     )
 
 

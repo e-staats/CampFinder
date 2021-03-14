@@ -17,7 +17,6 @@ def scrape_searches():
     if search_list == []:
         return "No searches in database"
     for search in search_list:
-        print()
         search_definition = add_search_definition(search_definition, search)
 
     session.close()
@@ -31,7 +30,11 @@ def scrape_searches_adhoc(start_date=None, end_date=None, region_id=None):
     if region_id == None:
         region_dict = region_services.define_regions()
     else:
-        region_dict = {region_services.get_external_id(region_id): region_services.get_name_from_id(region_id)}
+        region_dict = {
+            region_services.get_external_id(
+                region_id
+            ): region_services.get_name_from_id(region_id)
+        }
     search_definition = {}
     date_range = date_range_to_string(start_date, end_date)
     search_definition[date_range] = setup_info_dict(start_date, end_date, region_dict)
@@ -43,11 +46,13 @@ def scrape_searches_adhoc(start_date=None, end_date=None, region_id=None):
 
 ############################ Helper Functions ####################################
 
+
 def date_range_to_string(start_date, end_date) -> str:
     return format_date(start_date) + "-" + format_date(end_date)
 
 
-def create_info_dict(start_date, end_date, search_time, region_dict):
+def setup_info_dict(start_date, end_date, region_dict) -> dict:
+    search_time = datetime.datetime.now()
     info = {}
     info["start_urls"] = {}
     for map_id in region_dict.keys():
@@ -61,21 +66,13 @@ def create_info_dict(start_date, end_date, search_time, region_dict):
     return info
 
 
-def setup_info_dict(start_date, end_date, region_dict) -> dict:
-    search_time = datetime.datetime.now()
-    return create_info_dict(
-        start_date,
-        end_date,
-        search_time,
-        region_dict,
-    )
-
-
 def start_scraper(search_definitions=None):
     if search_definitions == None:
-        return "no start_urls provided - stopping"
+        print("no start_urls provided - stopping")
+        return
     scraper = ParkScraper(search_definitions=search_definitions)
     scraper.parse()
+
 
 def add_search_definition(search_definitions, search):
     date_range = date_range_to_string(search.start_date, search.end_date)
@@ -83,11 +80,14 @@ def add_search_definition(search_definitions, search):
     if date_range in search_definitions.keys():
         return search_definitions
     region_dict = region_services.define_regions()
-    search_definitions[date_range] = setup_info_dict(search.start_date, search.end_date, region_dict)
+    search_definitions[date_range] = setup_info_dict(
+        search.start_date, search.end_date, region_dict
+    )
+    search_definitions[date_range]["owner_id"] = search.owner_id
+    search_definitions[date_range]["parks"] = search.parks
     return search_definitions
 
 
 def cleanup_searches():
     deactivate_past_searches()
     return
-

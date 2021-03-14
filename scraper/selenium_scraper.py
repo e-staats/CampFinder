@@ -2,11 +2,11 @@ from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
-import services.result_services as result_services # pylint: disable = import-error 
-import services.park_services as park_services # pylint: disable = import-error 
-import services.availability_services as availability_services # pylint: disable = import-error 
+import services.result_services as result_services  # pylint: disable = import-error
+import services.park_services as park_services  # pylint: disable = import-error
+import services.availability_services as availability_services  # pylint: disable = import-error
 import data.db_session as db_session  # pylint: disable = import-error
-from scraper.parse_results import process_result # pylint: disable = import-error 
+import scraper.parse_results as parse_results  # pylint: disable = import-error
 import datetime
 import os
 import time
@@ -23,27 +23,29 @@ class ParkScraper:
 
     def set_firefox_options(self):
         firefox_options = webdriver.FirefoxOptions()
-        firefox_options.add_argument("--headless")
+        # firefox_options.add_argument("--headless")
         return firefox_options
 
     # Parse function: Scrape the webpage and store it
     def parse(self):
         self.firefox_options = self.set_firefox_options()
-        
-        #HACKY: I'm having trouble setting the permissions on the log file in
-        #Linux, so I just send it to /dev/null. I should figure out how to
-        #actually handle this.
-        log_path = os.path.join('/','dev','null')
+
+        # HACKY: I'm having trouble setting the permissions on the log file in
+        # Linux, so I just send it to /dev/null. I should figure out how to
+        # actually handle this.
+        log_path = os.path.join("/", "dev", "null")
         if os.path.exists(log_path) == False:
-            log_path = 'geckodriver.log'
-        self.driver = webdriver.Firefox(firefox_options=self.firefox_options, service_log_path=log_path)
+            log_path = "geckodriver.log"
+        self.driver = webdriver.Firefox(
+            firefox_options=self.firefox_options, service_log_path=log_path
+        )
         self.driver.set_window_size(1580, 1080)
 
         for date_range in self.search_definitions.keys():
             search_def = self.search_definitions[date_range]
             print(f"Scraping for {date_range}")
             self.parse_search(search_def)
-        
+
         self.driver.quit()
         return
 
@@ -51,6 +53,12 @@ class ParkScraper:
         self.parseURLs(search_def)
         if self.adhoc == False:
             self.add_result_in_db(search_def)
+            parse_results.process_result(
+                search_def["start_date"],
+                search_def["end_date"],
+                search_def["parks"],
+                search_def["owner_id"],
+            )
         return
 
     def add_result_in_db(self, search_def):
@@ -80,10 +88,10 @@ class ParkScraper:
             print("- scraping " + region)
             success = self.click_through_options()
             if success == False:
-                continue
+                continue  # sometimes the clicks just fail, and it's easier to give up and move on.
 
-            circles = []
-            circles = self.driver.find_elements_by_tag_name("circle")
+            circles = self.get_circles()
+
             for circle in circles:
                 if circle.get_attribute("id") == None:
                     return
@@ -95,15 +103,37 @@ class ParkScraper:
                 if self.adhoc == True and value == 1:
                     self.store_in_dict(park_id, park_name)
                 else:
-                    self.store_in_db(search_def["start_date"], search_def["start_date"], park_id, value)
+                    self.store_in_db(
+                        search_def["start_date"],
+                        search_def["start_date"],
+                        park_id,
+                        value,
+                    )
 
         return
 
-    def store_in_dict(self, park_id, value):
+    def get_circles(self) -> list:
+        """
+        The circles on the app get updated when the filters are applied, so
+        we need to get the circles, then wait for them to become stale
+        (disconnected from the DOM when the underlying info changes after the
+        filter is applied), then get them again.
+        """
+        circles = []
+        circles = self.driver.find_elements_by_tag_name("circle")
+        try:
+            WebDriverWait(self.driver, 10).until(EC.staleness_of(circles[0]))
+        except:
+            print("scraping time out waiting for filters to be applied")
+            return []
+        circles = self.driver.find_elements_by_tag_name("circle")
+        return circles
+
+    def store_in_dict(self, park_id, value) -> None:
         self.results_dict[park_id] = value
         return
 
-    def store_in_db(self, start_date, end_date, park_id, value):
+    def store_in_db(self, start_date, end_date, park_id, value) -> None:
         session = db_session.create_session()
         availability = availability_services.find_availability(
             start_date, end_date, park_id
@@ -125,37 +155,21 @@ class ParkScraper:
             result = self.find_and_click_element("consentButton")
             if result == False:
                 return False
-                
-        # open Equipment menu
-        result = self.find_and_click_element("mat-select-1")
-        if result == False:
-            return False
-        #sometimes the tents selection doesn't apply, I think because it jumps
-        #to the next field before the app registers the change of state. To
-        #account for that, I added a sleep here. Removing this in the future
-        #may be a FREE PERFORMANCE BENEFIT
-        time.sleep(0.1)
 
-        # select Tents
-        result = self.find_and_click_element("mat-option-51")
-        if result == False:
-            return False
-        time.sleep(0.1) #see comment above
- 
-        # open up the options panel
-        result = self.find_and_click_element("filterButton")
-        if result == False:
-            return False
+        # # open up the options panel
+        # result = self.find_and_click_element("filterButton")
+        # if result == False:
+        #     return False
 
-        # open ADA menu
-        result = self.find_and_click_element("mat-select-6")
-        if result == False:
-            return False
+        # # open ADA menu
+        # result = self.find_and_click_element("mat-select-6")
+        # if result == False:
+        #     return False
 
-        # select No (used to be mat-option-83)
-        result = self.find_and_click_element("mat-option-80")
-        if result == False:
-            return False
+        # # select No (used to be mat-option-83)
+        # result = self.find_and_click_element("mat-option-80")
+        # if result == False:
+        #     return False
 
         # click Search
         result = self.find_and_click_element("actionSearch")

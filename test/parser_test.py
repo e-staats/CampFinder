@@ -16,7 +16,6 @@ if __name__ == "__main__":
     # test db scraper:
     print("Testing DB scraper")
     scraper_shell.scrape_searches()
-    parse_results.process_all_results()
    
     # test adhoc scraper
     print("Testing dictionary scraper...")
