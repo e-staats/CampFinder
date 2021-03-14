@@ -23,7 +23,7 @@ class ParkScraper:
 
     def set_firefox_options(self):
         firefox_options = webdriver.FirefoxOptions()
-        # firefox_options.add_argument("--headless")
+        firefox_options.add_argument("--headless")
         return firefox_options
 
     # Parse function: Scrape the webpage and store it
@@ -83,9 +83,10 @@ class ParkScraper:
 
     def parseURLs(self, search_def):
         for region in search_def["start_urls"].keys():
+            before = time.perf_counter()
             url = search_def["start_urls"][region]
             self.driver.get(url)
-            print("- scraping " + region)
+            print("- scraping " + region, end="...")
             success = self.click_through_options()
             if success == False:
                 continue  # sometimes the clicks just fail, and it's easier to give up and move on.
@@ -109,7 +110,8 @@ class ParkScraper:
                         park_id,
                         value,
                     )
-
+            after = time.perf_counter()
+            print(f"scraped in {after - before:0.4f} seconds")
         return
 
     def get_circles(self) -> list:
@@ -167,7 +169,7 @@ class ParkScraper:
         #     return False
 
         # # select No (used to be mat-option-83)
-        # result = self.find_and_click_element("mat-option-80")
+        # result = self.find_and_click_element("mat-option-79")
         # if result == False:
         #     return False
 
