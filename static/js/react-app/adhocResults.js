@@ -6,12 +6,12 @@ import Region from './region'
 class AdhocResults extends React.Component {
     render() {
         let css = "adhoc-results"
-        if (this.props.status != true || this.props.regionResults < this.props.regionCount) {
+        if (this.props.status != true) {
             return (
                 <div></div>
             )
         }
-        else if (this.props.adhocResults.length == 0) {
+        else if (this.props.adhocResults.length == 0 && this.props.regionResults === this.props.regionCount) {
             return (
                 <div className={css}>
                     Unfortunately, no campsites are available for the parks
@@ -20,10 +20,10 @@ class AdhocResults extends React.Component {
                     dates. </div>
             )
         }
-        else {
+        else if (this.props.adhocResults.length > 0) {
             return (
                 <div className={css}>
-                    <div>Good news! Here are the parks that are available for the dates you selected:</div>
+                    <div>Here are the parks that are available for the dates you selected:</div>
                     {this.props.adhocResults.map((region, index1) => (
                         <div>
                             <AdhocRow text={region.name} additionalCss="adhoc-row-header" />
@@ -31,6 +31,11 @@ class AdhocResults extends React.Component {
                         </div>
                     ))}
                 </div>
+            )
+        }
+        else {
+            return(
+                <div></div>
             )
         }
 
