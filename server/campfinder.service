@@ -3,8 +3,8 @@ Description=uWSGI CampFinder server instance
 After=syslog.target
 
 [Service]
-ExecStart=/apps/venv/bin/uwsgi -H /apps/venv --master --processes 4 --threads 2 --http :5000 --manage-script-name --python-path /apps/app-repo/ --lazy-apps --touch-chain-reload /apps/app-repo/reloadFile --harakiri 300 --mount /=wsgi:app --uid 1000
-RuntimeDirectory=/apps/app-repo/
+ExecStart=/apps/venv/bin/uwsgi -H /apps/venv --master --processes 4 --threads 2 --http :5000 --manage-script-name --python-path /apps/campfinder/ --lazy-apps --touch-chain-reload /apps/campfinder/reloadFile --harakiri 300 --mount /=wsgi:app --uid 1000
+RuntimeDirectory=/apps/campfinder/
 Restart=always
 KillSignal=SIGQUIT
 Type=notify
