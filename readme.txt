@@ -10,3 +10,6 @@ run 'yarn install' to install all the packages in packages.json
 do your dev
 run "npx webpack" at the command line
 refresh the flask page
+
+cron job setup:
+0,30 0-6,12-23 * * * /apps/venv/bin/python /apps/campfinder/scraper_cron_wrapper.py >> /apps/campfinder/cron.log 2>&1
