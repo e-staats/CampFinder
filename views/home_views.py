@@ -73,11 +73,25 @@ def load_park_data():
     return jsonify(output)
 
 
+# ################### LOAD MAP DATA FOR FRONTEND #################################
+@blueprint.route("/_load_park_map_data", methods=["GET"])
+@response(template_file="home/index.html")
+def load_park_map_data():
+    park_dict = park_services.get_park_map_data()
+    return jsonify(park_dict)
+
+
 # ################### ADD SEARCH TO DB #################################
 @blueprint.route("/_submit_search", methods=["POST"])
 @response(template_file="home/index.html")
 def submit_search():
     vm = IndexViewModel()
+
+    #feature is temporarily disabled:
+    if True==True:
+        return()
+
+    #feature as of 8/2/21:
     request = request_dict.data_create("")
     owner_id = vm.user_id
     start_date = datetime.date.fromisoformat(request["start_date"].split("T")[0])

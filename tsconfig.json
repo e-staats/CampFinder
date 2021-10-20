@@ -1,0 +1,14 @@
+{
+  "include": [
+    "./static/js/react-app/map/*.tsx"
+  ],
+  "compilerOptions": {
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "jsx": "react",
+    "allowJs": true,
+    "skipLibCheck": true,
+    "module": "commonjs",
+    "outDir": "./static/js/react-app/compiledTS",
+  },
+}

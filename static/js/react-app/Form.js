@@ -1,5 +1,6 @@
 import React from 'react';
 import DateRangePicker from "./DateRangePicker"
+import Map from "./compiledTS/Map"
 import { DateUtils } from 'react-day-picker';
 import ParkSelector from "./parkCheckboxes"
 import LoadingIndicator from "./loadingIndicator"
@@ -28,7 +29,8 @@ class Form extends React.Component {
             parks[regionName]["link"] = data[regionName]['link']
             parks[regionName]['parkList'] = this.convertParksToList(data[regionName]["parks"])
           }
-          return { parks }
+          let initialLoading = false
+          return { parks, initialLoading }
         })
       })
     return
@@ -37,15 +39,15 @@ class Form extends React.Component {
   convertParksToList = (parkObj) => {
     let returnList = []
     for (let parkName in parkObj) {
-      returnList.push(this.stateItem(parkObj[parkName], parkName))
+      returnList.push(this.stateItem(parkObj[parkName]['id'], parkName, parkObj[parkName]['lat'], parkObj[parkName]['lng']))
     }
     return returnList
   }
 
-  stateItem = (id, parkName) => {
+  stateItem = (id, parkName, lat, lng) => {
     return (
       {
-        id: id, name: parkName, isChecked: false,
+        id: id, name: parkName, isChecked: false, lat: lat, lng: lng
       }
     )
   }
@@ -67,7 +69,6 @@ class Form extends React.Component {
       northeast: this.default_park_state('northeast'),
       southeast: this.default_park_state('southeast'),
     },
-    //mapping names to values from database:
     regions: {},
     from: null,
     to: null,
@@ -78,6 +79,7 @@ class Form extends React.Component {
     adhocSuccess: null,
     adhocRegionCount: 0,
     adhocRegionsReturned: 0,
+    initialLoading: true,
   }
 
   handleDayClick = (day) => {
@@ -98,7 +100,7 @@ class Form extends React.Component {
   handleCheckboxChange = (e, name) => {
     let itemName = e.target.name;
     let checked = e.target.checked;
-    this.setState(prevState => {
+    this.setState(...prevState => {
       let parks = prevState['parks']
       switch (itemName) {
         case ("allChecked"):
@@ -180,7 +182,7 @@ class Form extends React.Component {
     today.setHours(0, 0, 0, 0)
     tomorrow.setDate(tomorrow.getDate() + 1)
     tomorrow.setHours(0, 0, 0, 0)
-    
+
     if (this.state.from < today) {
       this.setErrorState("Start date must be today or later!")
       return
@@ -329,11 +331,15 @@ class Form extends React.Component {
 
   render() {
     let banner = ""
+    let map = <div></div>
     if (this.state.success === true) {
       banner = <div className="successBanner">{this.state.successMessage}</div>
     }
     if (this.state.success === false) {
       banner = <div className="errorBanner">{this.state.error}</div>
+    }
+    if (this.state.initialLoading === false) {
+      map = <Map handleChange={this.handleCheckboxChange} parks={this.state.parks} />
     }
 
     return (<div>
@@ -343,6 +349,7 @@ class Form extends React.Component {
       </div>
       <div className="form-block">
         <div className="form-header">Choose the parks you would like to stay at:</div>
+        {map}
         <ParkSelector
           handleCheckboxChange={this.handleCheckboxChange}
           handleSelectAllButtonClick={this.handleSelectAllButtonClick}
@@ -350,18 +357,18 @@ class Form extends React.Component {
         />
       </div>
       <div>
-        <button className="submitButton" onClick={this.handleSubmit} title="Add these search criteria to the background search process">Schedule Search</button>
+        <button className="submitButton disabled" onClick={this.handleSubmit} title="Add these search criteria to the background search process">Schedule Search</button>
         <button className="instascrapeButton" onClick={this.handleSubmitAdhoc} title="Search now for these criteria and get results in real time">InstaScrape</button>
         <span className="help-tip">
           <span className="help-tip-text">
             Which button should I choose?
           </span>
           <p>Submitting the search is useful if you want to get notified by email or text when
-          there is a campsite available for the dates and parks you selected.
-          Instascraping is for when you want to check if anything
-          is available for your parks and dates in real time. Caveat:
-          Instascrape is a little inconsistent and can take a few minutes. If you
-          don't get results the first time, try again!</p>
+            there is a campsite available for the dates and parks you selected.
+            Instascraping is for when you want to check if anything
+            is available for your parks and dates in real time. Caveat:
+            Instascrape is a little inconsistent and can take a few minutes. If you
+            don't get results the first time, try again!</p>
         </span>
       </div>
       {banner}
