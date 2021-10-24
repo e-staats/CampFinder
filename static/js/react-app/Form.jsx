@@ -1,11 +1,12 @@
 import React from 'react';
 import DateRangePicker from "./DateRangePicker"
-import Map from "./compiledTS/Map"
+import Map from "./compiledTS/map/Map"
 import { DateUtils } from 'react-day-picker';
 import ParkSelector from "./parkCheckboxes"
 import LoadingIndicator from "./loadingIndicator"
 import AdhocResults from "./adhocResults"
 import { trackPromise } from 'react-promise-tracker'
+import clone from './clone'
 
 class Form extends React.Component {
 
@@ -100,8 +101,9 @@ class Form extends React.Component {
   handleCheckboxChange = (e, name) => {
     let itemName = e.target.name;
     let checked = e.target.checked;
-    this.setState(...prevState => {
-      let parks = prevState['parks']
+    this.setState(prevState => {
+      let parks = {}
+      clone(parks, prevState['parks'])
       switch (itemName) {
         case ("allChecked"):
           parks = this.updateAllRegionalCheckboxes(parks, name, checked)
@@ -118,13 +120,15 @@ class Form extends React.Component {
 
   handleSelectAllButtonClick = (e, checked) => {
     this.setState(prevState => {
-      let parks = prevState['parks']
+      let parks = {}
+      clone(parks, prevState['parks'])
       for (let regionName in prevState.regions) {
         parks = this.updateAllRegionalCheckboxes(parks, regionName, checked)
       }
       return { parks };
     })
   };
+
 
   assemblePreferredRegions = () => {
     let regionString = ""

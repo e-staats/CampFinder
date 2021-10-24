@@ -25,35 +25,20 @@ var __assign = (this && this.__assign) || function () {
     };
     return __assign.apply(this, arguments);
 };
-var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    Object.defineProperty(o, k2, { enumerable: true, get: function() { return m[k]; } });
-}) : (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    o[k2] = m[k];
-}));
-var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
-    Object.defineProperty(o, "default", { enumerable: true, value: v });
-}) : function(o, v) {
-    o["default"] = v;
-});
-var __importStar = (this && this.__importStar) || function (mod) {
-    if (mod && mod.__esModule) return mod;
-    var result = {};
-    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
-    __setModuleDefault(result, mod);
-    return result;
-};
-var __spreadArray = (this && this.__spreadArray) || function (to, from) {
-    for (var i = 0, il = from.length, j = to.length; i < il; i++, j++)
-        to[j] = from[i];
-    return to;
+var __spreadArray = (this && this.__spreadArray) || function (to, from, pack) {
+    if (pack || arguments.length === 2) for (var i = 0, l = from.length, ar; i < l; i++) {
+        if (ar || !(i in from)) {
+            if (!ar) ar = Array.prototype.slice.call(from, 0, i);
+            ar[i] = from[i];
+        }
+    }
+    return to.concat(ar || Array.prototype.slice.call(from));
 };
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 exports.__esModule = true;
-var React = __importStar(require("react"));
+var react_1 = __importDefault(require("react"));
 var Button_1 = __importDefault(require("./resources/Button"));
 var MapBody_1 = __importDefault(require("./resources/MapBody"));
 var Map = /** @class */ (function (_super) {
@@ -61,14 +46,16 @@ var Map = /** @class */ (function (_super) {
     function Map(props) {
         var _this = _super.call(this, props) || this;
         _this.updateCheckedStatus = function (parks, prevParks) {
+            //Because the data structures are pretty weird, this is a two parter: get
+            //the list of parks to update, then go through and update the nodes
             var parksToUpdate = {};
             for (var region in parks) {
                 if (region === 'allChecked') {
                     continue;
                 }
-                for (var _i = 0, _a = parks[region]; _i < _a.length; _i++) {
+                for (var _i = 0, _a = parks[region]['parkList']; _i < _a.length; _i++) {
                     var park = _a[_i];
-                    for (var _b = 0, _c = prevParks[region]; _b < _c.length; _b++) {
+                    for (var _b = 0, _c = prevParks[region]['parkList']; _b < _c.length; _b++) {
                         var prevPark = _c[_b];
                         if (park.isChecked !== prevPark.isChecked) {
                             parksToUpdate[park.id] = park.isChecked;
@@ -76,19 +63,15 @@ var Map = /** @class */ (function (_super) {
                     }
                 }
             }
-            console.log("parksToUpdate:");
-            console.dir(parksToUpdate);
             if (Object.keys(parksToUpdate).length === 0) {
                 return;
             }
             _this.setState(function (prevState) {
                 var nodes = prevState.nodes;
-                for (var parkId in parksToUpdate) {
-                    for (var _i = 0, nodes_1 = nodes; _i < nodes_1.length; _i++) {
-                        var node = nodes_1[_i];
-                        if (parkId === node.id) {
-                            node.isChecked = parksToUpdate[parkId];
-                        }
+                for (var _i = 0, nodes_1 = nodes; _i < nodes_1.length; _i++) {
+                    var node = nodes_1[_i];
+                    if (node.id in parksToUpdate) {
+                        node.isChecked = parksToUpdate[node.id];
                     }
                 }
                 return { nodes: nodes };
@@ -116,7 +99,7 @@ var Map = /** @class */ (function (_super) {
             _this.setState(function (prevState) {
                 var nodeInfo = { id: id, name: nodeName, color: color, xPos: xPos, yPos: yPos };
                 var nodes = prevState.nodes;
-                nodes = __spreadArray(__spreadArray([], prevState.nodes), [nodeInfo]);
+                nodes = __spreadArray(__spreadArray([], prevState.nodes, true), [nodeInfo], false);
                 return { nodes: nodes };
             });
         };
@@ -306,20 +289,17 @@ var Map = /** @class */ (function (_super) {
         });
     };
     Map.prototype.componentDidUpdate = function (prevProps) {
-        console.log("I see that the props have changed...");
-        console.log(JSON.stringify(prevProps.parks));
-        console.log(JSON.stringify(this.props.parks));
         if (this.props.parks !== prevProps.parks) {
             this.updateCheckedStatus(this.props.parks, prevProps.parks);
         }
     };
     Map.prototype.render = function () {
-        return (React.createElement("div", null,
-            React.createElement("label", null, "Starting Zip Code:"),
-            React.createElement("input", { type: "text", id: "zipCode", placeholder: "Zip Code", onChange: this.handleTextInput, onKeyDown: this._handleKeyDown }),
-            React.createElement(Button_1["default"], { text: "Submit ZIP", onClick: this.submitOnClick }),
-            React.createElement(MapBody_1["default"], { nodes: this.state.nodes, origin: this.state.origin, handleChange: this.handleChange })));
+        return (react_1["default"].createElement("div", null,
+            react_1["default"].createElement("label", null, "Starting Zip Code:"),
+            react_1["default"].createElement("input", { type: "text", id: "zipCode", placeholder: "Zip Code", onChange: this.handleTextInput, onKeyDown: this._handleKeyDown }),
+            react_1["default"].createElement(Button_1["default"], { text: "Submit ZIP", onClick: this.submitOnClick }),
+            react_1["default"].createElement(MapBody_1["default"], { nodes: this.state.nodes, origin: this.state.origin, handleChange: this.handleChange })));
     };
     return Map;
-}(React.Component));
+}(react_1["default"].Component));
 exports["default"] = Map;

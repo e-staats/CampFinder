@@ -1,6 +1,7 @@
-import * as React from 'react';
+import React from 'react';
 import Button from './resources/Button';
 import MapBody from './resources/MapBody';
+import clone from '../clone'
 
 export interface Props {
   handleChange(arg1: React.ChangeEvent<HTMLInputElement>, arg2: string): any,
@@ -101,36 +102,31 @@ class Map extends React.Component<Props, State> {
   }
 
   componentDidUpdate(prevProps) {
-    console.log("I see that the props have changed...")
-    console.log(JSON.stringify(prevProps.parks))
-    console.log(JSON.stringify(this.props.parks))
     if (this.props.parks !== prevProps.parks) {
       this.updateCheckedStatus(this.props.parks, prevProps.parks)
     }
   }
 
   updateCheckedStatus = (parks: InputData, prevParks: InputData) => {
+    //Because the data structures are pretty weird, this is a two parter: get
+    //the list of parks to update, then go through and update the nodes
     let parksToUpdate: { [id: number]: boolean } = {}
     for (let region in parks) {
       if (region === 'allChecked') { continue }
-      for (let park of parks[region]) {
-        for (let prevPark of prevParks[region]) {
+      for (let park of parks[region]['parkList']) {
+        for (let prevPark of prevParks[region]['parkList']) {
           if (park.isChecked !== prevPark.isChecked) {
             parksToUpdate[park.id] = park.isChecked
           }
         }
       }
     }
-    console.log("parksToUpdate:")
-    console.dir(parksToUpdate)
     if (Object.keys(parksToUpdate).length === 0) { return }
     this.setState((prevState) => {
-      let nodes = prevState.nodes
-      for (let parkId in parksToUpdate) {
-        for (let node of nodes) {
-          if (parkId === node.id) {
-            node.isChecked = parksToUpdate[parkId]
-          }
+      let nodes = prevState.nodes 
+      for (let node of nodes) {
+        if (node.id in parksToUpdate) {
+          node.isChecked = parksToUpdate[node.id]
         }
       }
       return { nodes }
