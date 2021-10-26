@@ -22245,26 +22245,9 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
     }
   });
 
-  // static/js/react-app/compiledTS/map/resources/Button.js
-  var require_Button = __commonJS({
-    "static/js/react-app/compiledTS/map/resources/Button.js"(exports) {
-      "use strict";
-      var __importDefault = exports && exports.__importDefault || function(mod) {
-        return mod && mod.__esModule ? mod : { "default": mod };
-      };
-      exports.__esModule = true;
-      var react_1 = __importDefault(require_react());
-      function Button(_a) {
-        var text = _a.text, onClick = _a.onClick;
-        return react_1["default"].createElement("button", { type: "button", onClick }, text);
-      }
-      exports["default"] = Button;
-    }
-  });
-
-  // static/js/react-app/compiledTS/map/resources/Node.js
+  // static/js/react-app/compiledTS/resources/Node.js
   var require_Node = __commonJS({
-    "static/js/react-app/compiledTS/map/resources/Node.js"(exports) {
+    "static/js/react-app/compiledTS/resources/Node.js"(exports) {
       "use strict";
       var __extends = exports && exports.__extends || function() {
         var extendStatics = function(d, b) {
@@ -22318,9 +22301,9 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
     }
   });
 
-  // static/js/react-app/compiledTS/map/resources/MapBody.js
+  // static/js/react-app/compiledTS/resources/MapBody.js
   var require_MapBody = __commonJS({
-    "static/js/react-app/compiledTS/map/resources/MapBody.js"(exports) {
+    "static/js/react-app/compiledTS/resources/MapBody.js"(exports) {
       "use strict";
       var __extends = exports && exports.__extends || function() {
         var extendStatics = function(d, b) {
@@ -22376,9 +22359,9 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
     }
   });
 
-  // static/js/react-app/compiledTS/map/Map.js
+  // static/js/react-app/compiledTS/Map.js
   var require_Map = __commonJS({
-    "static/js/react-app/compiledTS/map/Map.js"(exports) {
+    "static/js/react-app/compiledTS/Map.js"(exports) {
       "use strict";
       var __extends = exports && exports.__extends || function() {
         var extendStatics = function(d, b) {
@@ -22429,13 +22412,12 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
       };
       exports.__esModule = true;
       var react_1 = __importDefault(require_react());
-      var Button_1 = __importDefault(require_Button());
       var MapBody_1 = __importDefault(require_MapBody());
       var Map3 = function(_super) {
         __extends(Map4, _super);
         function Map4(props) {
           var _this = _super.call(this, props) || this;
-          _this.updateCheckedStatus = function(parks, prevParks) {
+          _this.updateNodeCheckedStatus = function(parks, prevParks) {
             var parksToUpdate = {};
             for (var region in parks) {
               if (region === "allChecked") {
@@ -22465,22 +22447,14 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
               return { nodes };
             });
           };
-          _this.getDistanceData = function(origin) {
-            return _this.hardcodedTestData();
-          };
-          _this.submitOnClick = function() {
-            var origin = _this.state.zipCode;
-            if (_this.validateZipCode(origin) === false) {
-              console.log("add the fail case here " + origin);
-              return;
-            }
-            var distanceData = _this.getDistanceData(origin);
+          _this.updateOrigin = function(origin) {
+            var dimensions = _this.defineDimensions();
+            var boundaries = _this.defineBoundaries();
+            var pixelRates = _this.definePixelRate(dimensions, boundaries);
+            var coordinates = _this.calcParkPosition(origin, boundaries, pixelRates);
             _this.setState(function(prevState) {
-              var parks = distanceData.parks;
-              var nodes = prevState.nodes;
-              var originData = distanceData.origin;
-              var origin2 = _this.calcOriginPosition(originData);
-              return { nodes, origin: origin2 };
+              var originNode = __assign(__assign({}, prevState.originNode), { id: 0, name: origin.name, xPos: coordinates[0], yPos: coordinates[1] });
+              return { originNode };
             });
           };
           _this.addNode = function(id, nodeName, color, xPos, yPos) {
@@ -22490,19 +22464,6 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
               nodes = __spreadArray(__spreadArray([], prevState.nodes, true), [nodeInfo], false);
               return { nodes };
             });
-          };
-          _this.handleTextInput = function(event) {
-            console.log(event);
-            _this.setState({ zipCode: event.target.value });
-          };
-          _this.validateZipCode = function(zipCode) {
-            if (typeof Number(zipCode) !== "number") {
-              return false;
-            }
-            if (zipCode.length !== 5) {
-              return false;
-            }
-            return true;
           };
           _this.defineBoundaries = function() {
             return {
@@ -22550,19 +22511,6 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
             var yPos = boundaries.north - park.lat;
             return [xPos * pixelRate.long, yPos * pixelRate.lat];
           };
-          _this.calcOriginPosition = function(origin) {
-            var dimensions = _this.defineDimensions();
-            var boundaries = _this.defineBoundaries();
-            var pixelRates = _this.definePixelRate(dimensions, boundaries);
-            var coordinates = _this.calcParkPosition(origin, boundaries, pixelRates);
-            return {
-              id: "0",
-              name: origin.name,
-              xPos: coordinates[0],
-              yPos: coordinates[1],
-              color: "FFFFFF"
-            };
-          };
           _this.defineDimensions = function() {
             return [1e3, 1e3];
           };
@@ -22586,11 +22534,6 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
             }
             return color;
           };
-          _this._handleKeyDown = function(e) {
-            if (e.key === "Enter") {
-              _this.submitOnClick();
-            }
-          };
           _this.handleChange = function(e, regionName) {
             var name = e.target.name;
             var checked = e.target.checked;
@@ -22603,68 +22546,15 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
             });
             _this.props.handleChange(e, regionName);
           };
-          _this.hardcodedTestData = function() {
-            return {
-              "origin": {
-                "id": 0,
-                "isChecked": false,
-                "name": "53703",
-                "lat": 43.07,
-                "lng": -89.37
-              },
-              "parks": {
-                "1": {
-                  "distance": "312 mi",
-                  "time": "4 hours 43 mins"
-                },
-                "24": {
-                  "distance": "28.0 mi",
-                  "time": "34 mins"
-                },
-                "3": {
-                  "distance": "332 mi",
-                  "time": "6 hours 24 mins"
-                },
-                "4": {
-                  "distance": "76.2 mi",
-                  "time": "1 hour 31 mins"
-                },
-                "43": {
-                  "distance": "126 mi",
-                  "time": "2 hours 1 min"
-                },
-                "42": {
-                  "distance": "31.6 mi",
-                  "time": "36 mins"
-                },
-                "7": {
-                  "distance": "317 mi",
-                  "time": "4 hours 54 mins"
-                },
-                "37": {
-                  "distance": "199 mi",
-                  "time": "3 hours 17 mins"
-                },
-                "46": {
-                  "distance": "84.8 mi",
-                  "time": "1 hour 28 mins"
-                },
-                "10": {
-                  "distance": "52.0 mi",
-                  "time": "1 hour 3 mins"
-                }
-              }
-            };
-          };
           _this.state = {
             nodes: [],
             zipCode: "",
-            origin: {
-              id: "0",
+            originNode: {
+              id: 0,
               name: "undefined",
+              color: "FFFFFF",
               xPos: 0,
-              yPos: 0,
-              color: "FFFFFF"
+              yPos: 0
             }
           };
           return _this;
@@ -22678,11 +22568,14 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
         };
         Map4.prototype.componentDidUpdate = function(prevProps) {
           if (this.props.parks !== prevProps.parks) {
-            this.updateCheckedStatus(this.props.parks, prevProps.parks);
+            this.updateNodeCheckedStatus(this.props.parks, prevProps.parks);
+          }
+          if (this.props.origin !== prevProps.origin) {
+            this.updateOrigin(this.props.origin);
           }
         };
         Map4.prototype.render = function() {
-          return react_1["default"].createElement("div", null, react_1["default"].createElement("label", null, "Starting Zip Code:"), react_1["default"].createElement("input", { type: "text", id: "zipCode", placeholder: "Zip Code", onChange: this.handleTextInput, onKeyDown: this._handleKeyDown }), react_1["default"].createElement(Button_1["default"], { text: "Submit ZIP", onClick: this.submitOnClick }), react_1["default"].createElement(MapBody_1["default"], { nodes: this.state.nodes, origin: this.state.origin, handleChange: this.handleChange }));
+          return react_1["default"].createElement("div", null, react_1["default"].createElement(MapBody_1["default"], { nodes: this.state.nodes, origin: this.state.originNode, handleChange: this.handleChange }));
         };
         return Map4;
       }(react_1["default"].Component);
@@ -24978,6 +24871,23 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
     }
   });
 
+  // static/js/react-app/compiledTS/resources/Button.js
+  var require_Button = __commonJS({
+    "static/js/react-app/compiledTS/resources/Button.js"(exports) {
+      "use strict";
+      var __importDefault = exports && exports.__importDefault || function(mod) {
+        return mod && mod.__esModule ? mod : { "default": mod };
+      };
+      exports.__esModule = true;
+      var react_1 = __importDefault(require_react());
+      function Button2(_a) {
+        var text = _a.text, onClick = _a.onClick;
+        return react_1["default"].createElement("button", { type: "button", onClick }, text);
+      }
+      exports["default"] = Button2;
+    }
+  });
+
   // static/js/react-app/index.jsx
   var import_react10 = __toModule(require_react());
   var import_react_dom = __toModule(require_react_dom());
@@ -25754,8 +25664,19 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
       let firstLetter = word.charAt(0).toUpperCase();
       return firstLetter + word.slice(1);
     };
+    distanceInfo = (item) => {
+      if (item.time !== void 0) {
+        return /* @__PURE__ */ import_react3.default.createElement("div", {
+          className: "distance-info"
+        }, item.time, "; ", item.distance);
+      } else {
+        return /* @__PURE__ */ import_react3.default.createElement("span", null);
+      }
+    };
     renderList = () => {
       return this.props.parkList.map((item) => /* @__PURE__ */ import_react3.default.createElement("div", {
+        className: "checkbox-container"
+      }, /* @__PURE__ */ import_react3.default.createElement("div", {
         className: "parkList"
       }, /* @__PURE__ */ import_react3.default.createElement("label", {
         className: "park-list-checkbox"
@@ -25766,7 +25687,7 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
         value: item.name,
         checked: item.isChecked,
         onChange: this.handleChange
-      }), /* @__PURE__ */ import_react3.default.createElement("span", null, item.name))));
+      }), /* @__PURE__ */ import_react3.default.createElement("span", null, item.name))), this.distanceInfo(item)));
     };
     render() {
       return /* @__PURE__ */ import_react3.default.createElement("div", null, /* @__PURE__ */ import_react3.default.createElement("div", {
@@ -25943,7 +25864,7 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
   // static/js/react-app/Form.jsx
   var import_react_promise_tracker2 = __toModule(require_lib2());
 
-  // static/js/react-app/clone.js
+  // static/js/scripts/clone.js
   function clone(target, source) {
     for (let key in source) {
       let descriptor = Object.getOwnPropertyDescriptor(source, key);
@@ -25967,6 +25888,8 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
   var clone_default = clone;
 
   // static/js/react-app/Form.jsx
+  var import_Button = __toModule(require_Button());
+  var import_Map2 = __toModule(require_Map());
   var Form = class extends import_react9.default.Component {
     componentDidMount() {
       this.fetchData();
@@ -26033,7 +25956,8 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
       adhocSuccess: null,
       adhocRegionCount: 0,
       adhocRegionsReturned: 0,
-      initialLoading: true
+      initialLoading: true,
+      origin: {}
     };
     handleDayClick = (day) => {
       const range = import_react_day_picker2.DateUtils.addDayToRange(day, this.state);
@@ -26244,6 +26168,73 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
         return prevState;
       });
     }
+    _handleKeyDown = (e) => {
+      if (e.key === "Enter") {
+        this.submitOnClick();
+      }
+    };
+    handleTextInput = (event) => {
+      this.setState({ zipCode: event.target.value });
+    };
+    submitOnClick = () => {
+      const origin = this.state.zipCode;
+      if (origin === void 0) {
+        return;
+      }
+      if (this.validateZipCode(origin) === false) {
+        console.log("add the fail case here " + origin);
+        return;
+      }
+      let distanceData = this.getDistanceData(origin);
+      this.processDistanceData(distanceData);
+    };
+    getDistanceData = (zip) => {
+      fetch("_load_distances_from_origin", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        cache: "no-cache",
+        body: JSON.stringify({
+          "zip": zip
+        })
+      }).then((response) => response.json()).then((data) => {
+        this.processDistanceData(data);
+      });
+    };
+    processDistanceData = (serverData) => {
+      if (serverData === void 0) {
+        return;
+      }
+      this.setState((prevState) => {
+        let origin = [];
+        let parks = {};
+        clone_default(origin, prevState["origin"]);
+        clone_default(parks, prevState["parks"]);
+        origin = serverData["origin"];
+        for (let region in parks) {
+          if (region === "allChecked") {
+            continue;
+          }
+          for (let park of parks[region]["parkList"]) {
+            if (park.id in serverData["parks"]) {
+              park.distance = serverData["parks"][park.id]["distance"];
+              park.time = serverData["parks"][park.id]["time"];
+            }
+          }
+        }
+        return { origin, parks };
+      });
+    };
+    validateZipCode = (zipCode) => {
+      if (typeof Number(zipCode) !== "number") {
+        return false;
+      }
+      if (zipCode.length !== 5) {
+        return false;
+      }
+      return true;
+    };
     getInitialState() {
       return {
         from: null,
@@ -26266,7 +26257,8 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
       if (this.state.initialLoading === false) {
         map = /* @__PURE__ */ import_react9.default.createElement(import_Map.default, {
           handleChange: this.handleCheckboxChange,
-          parks: this.state.parks
+          parks: this.state.parks,
+          origin: this.state.origin
         });
       }
       return /* @__PURE__ */ import_react9.default.createElement("div", null, /* @__PURE__ */ import_react9.default.createElement("div", {
@@ -26282,7 +26274,16 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
         className: "form-block"
       }, /* @__PURE__ */ import_react9.default.createElement("div", {
         className: "form-header"
-      }, "Choose the parks you would like to stay at:"), map, /* @__PURE__ */ import_react9.default.createElement(parkCheckboxes_default, {
+      }, "Choose the parks you would like to stay at:"), /* @__PURE__ */ import_react9.default.createElement("label", null, "Starting Zip Code:"), /* @__PURE__ */ import_react9.default.createElement("input", {
+        type: "text",
+        id: "zipCode",
+        placeholder: "Zip Code",
+        onChange: this.handleTextInput,
+        onKeyDown: this._handleKeyDown
+      }), /* @__PURE__ */ import_react9.default.createElement(import_Button.default, {
+        text: "Submit ZIP",
+        onClick: this.submitOnClick
+      }), map, /* @__PURE__ */ import_react9.default.createElement(parkCheckboxes_default, {
         handleCheckboxChange: this.handleCheckboxChange,
         handleSelectAllButtonClick: this.handleSelectAllButtonClick,
         parks: this.state.parks
@@ -26307,6 +26308,59 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
         regionResults: this.state.adhocRegionsReturned
       }));
     }
+    hardcodedTestData = () => {
+      return {
+        "origin": {
+          "id": 0,
+          "isChecked": false,
+          "name": "53703",
+          "lat": 43.07,
+          "lng": -89.37
+        },
+        "parks": {
+          "1": {
+            "distance": "312 mi",
+            "time": "4 hours 43 mins"
+          },
+          "24": {
+            "distance": "28.0 mi",
+            "time": "34 mins"
+          },
+          "3": {
+            "distance": "332 mi",
+            "time": "6 hours 24 mins"
+          },
+          "4": {
+            "distance": "76.2 mi",
+            "time": "1 hour 31 mins"
+          },
+          "43": {
+            "distance": "126 mi",
+            "time": "2 hours 1 min"
+          },
+          "42": {
+            "distance": "31.6 mi",
+            "time": "36 mins"
+          },
+          "7": {
+            "distance": "317 mi",
+            "time": "4 hours 54 mins"
+          },
+          "37": {
+            "distance": "199 mi",
+            "time": "3 hours 17 mins"
+          },
+          "46": {
+            "distance": "84.8 mi",
+            "time": "1 hour 28 mins"
+          },
+          "10": {
+            "distance": "52.0 mi",
+            "time": "1 hour 3 mins"
+          }
+        }
+      };
+    };
   };
   var Form_default = Form;
 

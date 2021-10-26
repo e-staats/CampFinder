@@ -19,6 +19,7 @@ if __name__ == "__main__":
     testing_tools.setup_all_test_data()
     before = time.perf_counter()
     # ic(map_services.gmap_place_API_url("Governor Dodge State Park"))
-    ic(asyncio.run(map_services.origin_to_all_parks("53703")))
+    # ic(asyncio.run(map_services.origin_to_all_parks("53703")))
+    ic(asyncio.run(map_services.get_origin_place_data(53703)))
     after = time.perf_counter()
     print(f"{after - before:0.4f} seconds")

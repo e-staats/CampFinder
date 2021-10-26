@@ -1,13 +1,14 @@
 import React from 'react';
 import DateRangePicker from "./DateRangePicker"
-import Map from "./compiledTS/map/Map"
+import Map from "./compiledTS/Map"
 import { DateUtils } from 'react-day-picker';
 import ParkSelector from "./parkCheckboxes"
 import LoadingIndicator from "./loadingIndicator"
 import AdhocResults from "./adhocResults"
 import { trackPromise } from 'react-promise-tracker'
-import clone from './clone'
-
+import clone from '../scripts/clone'
+import Button from './compiledTS/resources/Button';
+import { defineDimensions, defineBoundaries, definePixelRate, calcParkPosition } from './compiledTS/Map'
 class Form extends React.Component {
 
   componentDidMount() {
@@ -81,6 +82,7 @@ class Form extends React.Component {
     adhocRegionCount: 0,
     adhocRegionsReturned: 0,
     initialLoading: true,
+    origin: {}
   }
 
   handleDayClick = (day) => {
@@ -326,6 +328,89 @@ class Form extends React.Component {
     })
   }
 
+  _handleKeyDown = (e) => {
+    if (e.key === 'Enter') {
+      this.submitOnClick()
+    }
+  }
+
+  handleTextInput = (event) => {
+    this.setState({ zipCode: event.target.value })
+  }
+
+
+  submitOnClick = () => {
+    const origin = this.state.zipCode
+    if (origin === undefined) {
+      return
+    }
+
+    if (this.validateZipCode(origin) === false) {
+      console.log("add the fail case here " + origin)
+      return
+    }
+    let distanceData = this.getDistanceData(origin)
+    this.processDistanceData(distanceData)
+  }
+
+
+  getDistanceData = (zip) => {
+    //return this.hardcodedTestData()
+    fetch('_load_distances_from_origin', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      cache: 'no-cache',
+      body: JSON.stringify({
+        'zip': zip,
+      }),
+    })
+      .then(response => response.json())
+      .then(data => {
+        this.processDistanceData(data)
+      })
+  }
+
+  processDistanceData = (serverData) => {
+    if (serverData === undefined) {
+      return
+    }
+    this.setState((prevState) => {
+      let origin = []
+      let parks = {}
+      clone(origin, prevState['origin'])
+      clone(parks, prevState['parks'])
+
+      origin = serverData['origin']
+
+      for (let region in parks) {
+        if (region === 'allChecked') { continue }
+        for (let park of parks[region]['parkList']) {
+          if (park.id in serverData['parks']) {
+            park.distance = serverData['parks'][park.id]['distance']
+            park.time = serverData['parks'][park.id]['time']
+          }
+        }
+      }
+
+      return { origin, parks }
+
+    })
+  }
+
+
+  validateZipCode = (zipCode) => {
+    if (typeof (Number(zipCode)) !== "number") {
+      return false
+    }
+    if (zipCode.length !== 5) {
+      return false
+    }
+    return true
+  }
+
+
   getInitialState() {
     return {
       from: null,
@@ -343,7 +428,7 @@ class Form extends React.Component {
       banner = <div className="errorBanner">{this.state.error}</div>
     }
     if (this.state.initialLoading === false) {
-      map = <Map handleChange={this.handleCheckboxChange} parks={this.state.parks} />
+      map = <Map handleChange={this.handleCheckboxChange} parks={this.state.parks} origin={this.state.origin} />
     }
 
     return (<div>
@@ -353,6 +438,9 @@ class Form extends React.Component {
       </div>
       <div className="form-block">
         <div className="form-header">Choose the parks you would like to stay at:</div>
+        <label>Starting Zip Code:</label>
+        <input type="text" id="zipCode" placeholder="Zip Code" onChange={this.handleTextInput} onKeyDown={this._handleKeyDown}></input>
+        <Button text="Submit ZIP" onClick={this.submitOnClick} />
         {map}
         <ParkSelector
           handleCheckboxChange={this.handleCheckboxChange}
@@ -387,7 +475,60 @@ class Form extends React.Component {
       />
     </div>)
   }
-}
 
+  hardcodedTestData = () => {
+    return {
+      'origin': {
+        'id': 0,
+        'isChecked': false,
+        'name': '53703',
+        'lat': 43.07,
+        'lng': -89.37,
+      },
+      'parks': {
+        '1': {
+          'distance': '312 mi',
+          'time': '4 hours 43 mins'
+        },
+        '24': {
+          'distance': '28.0 mi',
+          'time': '34 mins'
+        },
+        '3': {
+          'distance': '332 mi',
+          'time': '6 hours 24 mins'
+        },
+        '4': {
+          'distance': '76.2 mi',
+          'time': '1 hour 31 mins'
+        },
+        '43': {
+          'distance': '126 mi',
+          'time': '2 hours 1 min'
+        },
+        '42': {
+          'distance': '31.6 mi',
+          'time': '36 mins'
+        },
+        '7': {
+          'distance': '317 mi',
+          'time': '4 hours 54 mins'
+        },
+        '37': {
+          'distance': '199 mi',
+          'time': '3 hours 17 mins'
+        },
+        '46': {
+          'distance': '84.8 mi',
+          'time': '1 hour 28 mins'
+        },
+        '10': {
+          'distance': '52.0 mi',
+          'time': '1 hour 3 mins'
+        },
+      }
+    }
+  }
+}
 
 export default Form;

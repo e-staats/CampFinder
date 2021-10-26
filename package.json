@@ -13,7 +13,8 @@
     "react-dom": "^17.0.2",
     "react-helmet": "^6.1.0",
     "react-loader-spinner": "^4.0.0",
-    "react-promise-tracker": "^2.1.0"
+    "react-promise-tracker": "^2.1.0",
+    "sass": "^1.43.3"
   },
   "scripts": {
     "build": "esbuild ./static/js/react-app/index.jsx --bundle --outfile=./static/js/compiled_js/app.js",

@@ -10,20 +10,33 @@ class Region extends Component {
         return (firstLetter + word.slice(1))
     }
 
+    distanceInfo = (item) => {
+        if (item.time !== undefined) {
+            return <div className="distance-info">{item.time}; {item.distance}</div>
+        }
+        else {
+            return <span></span>
+        }
+    }
+
     renderList = () => {
+
         return this.props.parkList.map(item => (
-            <div className="parkList">
-                <label className="park-list-checkbox">
-                    <input
-                        key={item.id}
-                        type="checkbox"
-                        name={item.name}
-                        value={item.name}
-                        checked={item.isChecked}
-                        onChange={this.handleChange}
-                    />
-                    <span>{item.name}</span>
-                </label>
+            <div className="checkbox-container">
+                <div className="parkList">
+                    <label className="park-list-checkbox">
+                        <input
+                            key={item.id}
+                            type="checkbox"
+                            name={item.name}
+                            value={item.name}
+                            checked={item.isChecked}
+                            onChange={this.handleChange}
+                        />
+                        <span>{item.name}</span>
+                    </label>
+                </div>
+                {this.distanceInfo(item)}
             </div>
         ));
     };

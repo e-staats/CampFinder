@@ -267,6 +267,7 @@ ul {
   padding-left: 4px;
   font-size: 11pt;
   text-overflow: ellipsis;
+  margin-bottom: 0em;
 }
 
 .masterButtonArray {
@@ -347,7 +348,20 @@ ul {
   padding-left: 4px;
   font-size: 11pt;
   text-overflow: ellipsis;
+  margin-bottom: 0em;
   font-weight: bold;
+}
+
+.checkbox-container {
+  margin-bottom: 0.5em;
+}
+
+.distance-info {
+  color: gray;
+  font-size: 10pt;
+  font-style: italic;
+  margin-left: 1.5em;
+  line-height: 15px;
 }
 
 .park-list-checkbox {

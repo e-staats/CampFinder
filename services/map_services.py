@@ -1,3 +1,4 @@
+from icecream import ic
 from data.park import Park  # pylint: disable = import-error
 import services.park_services as park_services  # pylint: disable = import-error
 import data.db_session as db_session  # pylint: disable = import-error
@@ -8,6 +9,16 @@ import aiohttp
 from aiohttp import ClientSession
 import json
 import pprint
+
+
+def validate_zip_code(zip):
+    if len(zip) != 5:
+        return False
+
+    if zip.isnumeric() == False:
+        return False
+
+    return True
 
 
 def construct_API_call(url_base: str, url_info: dict) -> str:
@@ -76,44 +87,68 @@ async def get_place_info_for_all_parks():
     return
 
 
-async def origin_to_all_parks(origin):
+async def origin_to_all_parks(zip):
     results = {}
     parks = park_services.get_all_parks()
     arr_len = len(parks)
     max_requests = 25
     iterations = arr_len // max_requests + 1
     for i in range(iterations):
-        slice_start = i*max_requests
-        slice_end = (i+1)*max_requests
+        slice_start = i * max_requests
+        slice_end = (i + 1) * max_requests
         if slice_end >= len(parks):
             slice_end = len(parks) - 1
-        url = gmap_distance_matrix_API_url(origin, parks[slice_start:slice_end])
+        url = gmap_distance_matrix_API_url(zip, parks[slice_start:slice_end])
         async with ClientSession() as session:
             json = await asyncio.gather(api_call(url, session))
         data = json[0]
         results = parse_distance_matrix(data, results, parks[slice_start:slice_end])
     return results
 
+
 def parse_distance_matrix(data, results, parks) -> dict:
     updates = results
     for i in range(len(parks)):
         park = parks[i]
-        status =data['rows'][0]['elements'][i]['status']
+        status = data["rows"][0]["elements"][i]["status"]
         if status == "OK":
-            time = data['rows'][0]['elements'][i]['duration']['text']
-            distance = data['rows'][0]['elements'][i]['distance']['text']
+            time = data["rows"][0]["elements"][i]["duration"]["text"]
+            distance = data["rows"][0]["elements"][i]["distance"]["text"]
         else:
             time = "Not driveable"
             distance = "Not driveable"
         updates[park.id] = {
-            'name': park.name,
-            'time': time, 
-            'distance': distance,
-            'lng': park.lng,
-            'lat': park.lat,
+            "name": park.name,
+            "time": time,
+            "distance": distance,
+            "lng": park.lng,
+            "lat": park.lat,
         }
     return updates
 
+async def get_origin_place_data(zip: str):
+    place_data = {}
+    url = gmap_place_API_url(zip)
+    async with ClientSession() as session:
+        json = await asyncio.gather(api_call(url, session))
+    data = json[0]
+    try:
+        candidate = data['candidates'][0]
+    except:
+        print("Places API failed to return a candidate")
+        return {}
+    place_data['id'] = 0
+    place_data['isChecked'] = False
+    place_data['name'] = zip
+    place_data['lat'] = candidate["geometry"]["location"]["lat"]
+    place_data['lng'] = candidate["geometry"]["location"]["lng"]
+    return place_data
+
+async def get_zip_distance_data(zip):
+    return_dict = {}
+    return_dict['origin'] = await get_origin_place_data(zip)
+    return_dict['parks'] = await origin_to_all_parks(zip)
+    return return_dict
 
 async def fetch_json(url: str, session: ClientSession, **kwargs) -> json:
     resp = await session.request(method="GET", url=url, **kwargs)

@@ -1,11 +1,10 @@
 import React from 'react';
-import Button from './resources/Button';
 import MapBody from './resources/MapBody';
-import clone from '../clone'
 
 export interface Props {
   handleChange(arg1: React.ChangeEvent<HTMLInputElement>, arg2: string): any,
   parks: InputData,
+  origin?: Park,
 }
 
 export interface RegionInput {
@@ -34,7 +33,7 @@ export interface Park {
 }
 
 export interface NodeInfo {
-  id: string,
+  id: number,
   name: string,
   color: string,
   xPos: number,
@@ -75,7 +74,7 @@ export interface Distance {
 interface State {
   nodes: NodeInfo[],
   zipCode: string,
-  origin: NodeInfo,
+  originNode: NodeInfo,
 }
 
 class Map extends React.Component<Props, State> {
@@ -84,13 +83,13 @@ class Map extends React.Component<Props, State> {
     this.state = {
       nodes: [],
       zipCode: "",
-      origin: {
-        id: '0',
+      originNode: {
+        id: 0,
         name: 'undefined',
+        color: 'FFFFFF',
         xPos: 0,
         yPos: 0,
-        color: 'FFFFFF',
-      },
+      }
     }
   }
 
@@ -103,11 +102,14 @@ class Map extends React.Component<Props, State> {
 
   componentDidUpdate(prevProps) {
     if (this.props.parks !== prevProps.parks) {
-      this.updateCheckedStatus(this.props.parks, prevProps.parks)
+      this.updateNodeCheckedStatus(this.props.parks, prevProps.parks)
+    }
+    if (this.props.origin !== prevProps.origin) {
+      this.updateOrigin(this.props.origin)
     }
   }
 
-  updateCheckedStatus = (parks: InputData, prevParks: InputData) => {
+  updateNodeCheckedStatus = (parks: InputData, prevParks: InputData) => {
     //Because the data structures are pretty weird, this is a two parter: get
     //the list of parks to update, then go through and update the nodes
     let parksToUpdate: { [id: number]: boolean } = {}
@@ -123,7 +125,7 @@ class Map extends React.Component<Props, State> {
     }
     if (Object.keys(parksToUpdate).length === 0) { return }
     this.setState((prevState) => {
-      let nodes = prevState.nodes 
+      let nodes = prevState.nodes
       for (let node of nodes) {
         if (node.id in parksToUpdate) {
           node.isChecked = parksToUpdate[node.id]
@@ -133,48 +135,30 @@ class Map extends React.Component<Props, State> {
     })
   }
 
-  getDistanceData = (origin: string) => {
-    return this.hardcodedTestData() //
-  }
-
-  submitOnClick = () => {
-    const origin = this.state.zipCode
-    if (this.validateZipCode(origin) === false) {
-      console.log("add the fail case here " + origin)
-      return
-    }
-    let distanceData = this.getDistanceData(origin)
+  updateOrigin = (origin: Park) => {
+    let dimensions = this.defineDimensions()
+    let boundaries = this.defineBoundaries()
+    let pixelRates = this.definePixelRate(dimensions, boundaries)
+    let coordinates = this.calcParkPosition(origin, boundaries, pixelRates)
     this.setState((prevState) => {
-      let parks = distanceData.parks
-      let nodes = prevState.nodes
-      let originData = distanceData.origin
-      let origin = this.calcOriginPosition(originData)
-      return { nodes, origin }
+      let originNode = {
+        ...prevState.originNode,
+        id: 0,
+        name: origin.name,
+        xPos: coordinates[0],
+        yPos: coordinates[1]
+      }
+      return { originNode }
     })
   }
 
-  addNode = (id: string, nodeName: string, color: string, xPos: number, yPos: number) => {
+  addNode = (id: number, nodeName: string, color: string, xPos: number, yPos: number) => {
     this.setState(prevState => {
       let nodeInfo: NodeInfo = { id: id, name: nodeName, color: color, xPos: xPos, yPos: yPos }
       let nodes = prevState.nodes
       nodes = [...prevState.nodes, nodeInfo]
       return { nodes }
     })
-  }
-
-  handleTextInput = (event: any) => {
-    console.log(event)
-    this.setState({ zipCode: event.target.value })
-  }
-
-  validateZipCode = (zipCode: string): boolean => {
-    if (typeof (Number(zipCode)) !== "number") {
-      return false
-    }
-    if (zipCode.length !== 5) {
-      return false
-    }
-    return true
   }
 
   defineBoundaries = (): Boundaries => {
@@ -226,19 +210,6 @@ class Map extends React.Component<Props, State> {
     return [xPos * pixelRate.long, yPos * pixelRate.lat]
   }
 
-  calcOriginPosition = (origin: Park): NodeInfo => {
-    let dimensions = this.defineDimensions()
-    let boundaries = this.defineBoundaries()
-    let pixelRates = this.definePixelRate(dimensions, boundaries)
-    let coordinates = this.calcParkPosition(origin, boundaries, pixelRates)
-    return {
-      id: '0',
-      name: origin.name,
-      xPos: coordinates[0],
-      yPos: coordinates[1],
-      color: 'FFFFFF',
-    }
-  }
 
   defineDimensions = (): [number, number] => {
     return [1000, 1000]
@@ -265,12 +236,6 @@ class Map extends React.Component<Props, State> {
     return color
   }
 
-  _handleKeyDown = (e: any) => {
-    if (e.key === 'Enter') {
-      this.submitOnClick()
-    }
-  }
-
   handleChange = (e, regionName: string) => {
     let name = e.target.name
     let checked = e.target.checked
@@ -285,67 +250,9 @@ class Map extends React.Component<Props, State> {
   render() {
     return (
       <div>
-        <label>Starting Zip Code:</label>
-        <input type="text" id="zipCode" placeholder="Zip Code" onChange={this.handleTextInput} onKeyDown={this._handleKeyDown}></input>
-        <Button text="Submit ZIP" onClick={this.submitOnClick} />
-        < MapBody nodes={this.state.nodes} origin={this.state.origin} handleChange={this.handleChange} />
+        < MapBody nodes={this.state.nodes} origin={this.state.originNode} handleChange={this.handleChange} />
       </div>
     );
-  }
-
-
-  hardcodedTestData = (): ServerDistanceData => {
-    return {
-      'origin': {
-        'id': 0,
-        'isChecked': false,
-        'name': '53703',
-        'lat': 43.07,
-        'lng': -89.37,
-      },
-      'parks': {
-        '1': {
-          'distance': '312 mi',
-          'time': '4 hours 43 mins'
-        },
-        '24': {
-          'distance': '28.0 mi',
-          'time': '34 mins'
-        },
-        '3': {
-          'distance': '332 mi',
-          'time': '6 hours 24 mins'
-        },
-        '4': {
-          'distance': '76.2 mi',
-          'time': '1 hour 31 mins'
-        },
-        '43': {
-          'distance': '126 mi',
-          'time': '2 hours 1 min'
-        },
-        '42': {
-          'distance': '31.6 mi',
-          'time': '36 mins'
-        },
-        '7': {
-          'distance': '317 mi',
-          'time': '4 hours 54 mins'
-        },
-        '37': {
-          'distance': '199 mi',
-          'time': '3 hours 17 mins'
-        },
-        '46': {
-          'distance': '84.8 mi',
-          'time': '1 hour 28 mins'
-        },
-        '10': {
-          'distance': '52.0 mi',
-          'time': '1 hour 3 mins'
-        },
-      }
-    }
   }
 
 }
