@@ -225,11 +225,16 @@
   display: block;
   border-radius: 50%;
   background-color: white;
+  z-index: 10;
+  padding: 10px;
 }
 
 .map-circle-checkbox {
   position: absolute;
   display: block;
+  border-radius: 3px;
+  padding: 3px;
+  border: 1px solid rgba(256,256,256,128)
 }
 
 .map-circle-checkbox span {
@@ -247,6 +252,7 @@
   width: 10px;
   height: 10px;
   border-radius: 50%;
+  padding-top: 2px;
   outline: 0;
   cursor: pointer;
   content: "";
@@ -260,6 +266,7 @@
   width: 10px;
   height: 10px;
   border-radius: 50%;
+  padding-top: 2px;
   outline: 0;
   cursor: pointer;
   text-align: center;
@@ -269,14 +276,6 @@
   opacity: 0;
   z-index: -1;
   position: absolute;
+  padding-top: 2px
 }
 
-.map-circle-checkbox input[type="checkbox"]:checked + span::after {
-  color: black;
-  position: absolute;
-  content: "";
-  display: block;
-  border-radius: 50%;
-  border: 1px solid gray;
-  background-color: aqua;
-}

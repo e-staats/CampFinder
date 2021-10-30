@@ -14,8 +14,10 @@ class Node extends React.Component<Props> {
     }
 
     render() {
+        let alpha = (this.props.item.isChecked === true) ? "FF" : "80"
+
         let style: CSSProperties = {
-            backgroundColor: this.props.item.color,
+            backgroundColor: this.props.item.color + alpha,
             transform: "translate(" + this.props.item.xPos.toString() + "px," + this.props.item.yPos.toString() + "px)"
         }
 

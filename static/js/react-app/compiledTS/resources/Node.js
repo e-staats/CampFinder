@@ -30,8 +30,9 @@ var Node = /** @class */ (function (_super) {
         return _this;
     }
     Node.prototype.render = function () {
+        var alpha = (this.props.item.isChecked === true) ? "FF" : "80";
         var style = {
-            backgroundColor: this.props.item.color,
+            backgroundColor: this.props.item.color + alpha,
             transform: "translate(" + this.props.item.xPos.toString() + "px," + this.props.item.yPos.toString() + "px)"
         };
         if (typeof (this.props.handleChange) === 'undefined') {

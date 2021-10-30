@@ -8,7 +8,6 @@ import AdhocResults from "./adhocResults"
 import { trackPromise } from 'react-promise-tracker'
 import clone from '../scripts/clone'
 import Button from './compiledTS/resources/Button';
-import { defineDimensions, defineBoundaries, definePixelRate, calcParkPosition } from './compiledTS/Map'
 class Form extends React.Component {
 
   componentDidMount() {
@@ -475,60 +474,7 @@ class Form extends React.Component {
       />
     </div>)
   }
-
-  hardcodedTestData = () => {
-    return {
-      'origin': {
-        'id': 0,
-        'isChecked': false,
-        'name': '53703',
-        'lat': 43.07,
-        'lng': -89.37,
-      },
-      'parks': {
-        '1': {
-          'distance': '312 mi',
-          'time': '4 hours 43 mins'
-        },
-        '24': {
-          'distance': '28.0 mi',
-          'time': '34 mins'
-        },
-        '3': {
-          'distance': '332 mi',
-          'time': '6 hours 24 mins'
-        },
-        '4': {
-          'distance': '76.2 mi',
-          'time': '1 hour 31 mins'
-        },
-        '43': {
-          'distance': '126 mi',
-          'time': '2 hours 1 min'
-        },
-        '42': {
-          'distance': '31.6 mi',
-          'time': '36 mins'
-        },
-        '7': {
-          'distance': '317 mi',
-          'time': '4 hours 54 mins'
-        },
-        '37': {
-          'distance': '199 mi',
-          'time': '3 hours 17 mins'
-        },
-        '46': {
-          'distance': '84.8 mi',
-          'time': '1 hour 28 mins'
-        },
-        '10': {
-          'distance': '52.0 mi',
-          'time': '1 hour 3 mins'
-        },
-      }
-    }
-  }
 }
+
 
 export default Form;
