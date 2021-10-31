@@ -25619,7 +25619,7 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
       }, /* @__PURE__ */ import_react2.default.createElement("p", null, !from && !to && "Please select the first day.", from && !to && "Please select the last day.", from && to && `Selected from ${from.toLocaleDateString()} to
                 ${to.toLocaleDateString()}`, " ", from && to && /* @__PURE__ */ import_react2.default.createElement("a", {
         className: "resetLink",
-        tabindex: 0,
+        tabIndex: 0,
         onClick: this.handleResetClick
       }, "(Reset)")), /* @__PURE__ */ import_react2.default.createElement(import_react_day_picker.default, {
         className: "Selectable",
@@ -25902,14 +25902,15 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
         }
       }).then((response) => response.json()).then((data) => {
         this.setState((prevState) => {
+          let loggedIn = data["loggedIn"];
           let parks = prevState["parks"];
-          for (let regionName in data) {
-            prevState["regions"][regionName] = data[regionName]["id"];
-            parks[regionName]["link"] = data[regionName]["link"];
-            parks[regionName]["parkList"] = this.convertParksToList(data[regionName]["parks"]);
+          for (let regionName in data["regions"]) {
+            prevState["regions"][regionName] = data["regions"][regionName]["id"];
+            parks[regionName]["link"] = data["regions"][regionName]["link"];
+            parks[regionName]["parkList"] = this.convertParksToList(data["regions"][regionName]["parks"]);
           }
           let initialLoading = false;
-          return { parks, initialLoading };
+          return { loggedIn, parks, initialLoading };
         });
       });
       return;
@@ -25957,7 +25958,8 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
       adhocRegionCount: 0,
       adhocRegionsReturned: 0,
       initialLoading: true,
-      origin: {}
+      origin: {},
+      loggedIn: false
     };
     handleDayClick = (day) => {
       const range = import_react_day_picker2.DateUtils.addDayToRange(day, this.state);
@@ -26244,6 +26246,8 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
     render() {
       let banner = "";
       let map = /* @__PURE__ */ import_react9.default.createElement("div", null);
+      let scheduleSearchButton = "";
+      let buttonHelpText = "";
       if (this.state.success === true) {
         banner = /* @__PURE__ */ import_react9.default.createElement("div", {
           className: "successBanner"
@@ -26260,6 +26264,18 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
           parks: this.state.parks,
           origin: this.state.origin
         });
+      }
+      if (this.state.loggedIn === true) {
+        scheduleSearchButton = /* @__PURE__ */ import_react9.default.createElement("button", {
+          className: "submitButton",
+          onClick: this.handleSubmit,
+          title: "Add these search criteria to the background search process"
+        }, "Schedule Search");
+        buttonHelpText = /* @__PURE__ */ import_react9.default.createElement("span", {
+          className: "help-tip"
+        }, /* @__PURE__ */ import_react9.default.createElement("span", {
+          className: "help-tip-text"
+        }, "Which button should I choose?"), /* @__PURE__ */ import_react9.default.createElement("p", null, "Submitting the search is useful if you want to get notified by email or text when there is a campsite available for the dates and parks you selected. Instascraping is for when you want to check if anything is available for your parks and dates in real time. Caveat: Instascrape is a little inconsistent and can take a few minutes. If you don't get results the first time, try again!"));
       }
       return /* @__PURE__ */ import_react9.default.createElement("div", null, /* @__PURE__ */ import_react9.default.createElement("div", {
         className: "form-block"
@@ -26287,19 +26303,11 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
         handleCheckboxChange: this.handleCheckboxChange,
         handleSelectAllButtonClick: this.handleSelectAllButtonClick,
         parks: this.state.parks
-      })), /* @__PURE__ */ import_react9.default.createElement("div", null, /* @__PURE__ */ import_react9.default.createElement("button", {
-        className: "submitButton disabled",
-        onClick: this.handleSubmit,
-        title: "Add these search criteria to the background search process"
-      }, "Schedule Search"), /* @__PURE__ */ import_react9.default.createElement("button", {
+      })), /* @__PURE__ */ import_react9.default.createElement("div", null, scheduleSearchButton, /* @__PURE__ */ import_react9.default.createElement("button", {
         className: "instascrapeButton",
         onClick: this.handleSubmitAdhoc,
         title: "Search now for these criteria and get results in real time"
-      }, "InstaScrape"), /* @__PURE__ */ import_react9.default.createElement("span", {
-        className: "help-tip"
-      }, /* @__PURE__ */ import_react9.default.createElement("span", {
-        className: "help-tip-text"
-      }, "Which button should I choose?"), /* @__PURE__ */ import_react9.default.createElement("p", null, "Submitting the search is useful if you want to get notified by email or text when there is a campsite available for the dates and parks you selected. Instascraping is for when you want to check if anything is available for your parks and dates in real time. Caveat: Instascrape is a little inconsistent and can take a few minutes. If you don't get results the first time, try again!"))), banner, /* @__PURE__ */ import_react9.default.createElement(loadingIndicator_default, {
+      }, "InstaScrape"), buttonHelpText), banner, /* @__PURE__ */ import_react9.default.createElement(loadingIndicator_default, {
         message: "Scraping in progress...Results will load as\n      they become available, but this can take a minute or two to complete.\n      Please don't navigate away from this page."
       }), /* @__PURE__ */ import_react9.default.createElement(adhocResults_default, {
         status: this.state.adhocSuccess,

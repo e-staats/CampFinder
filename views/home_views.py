@@ -52,6 +52,8 @@ def about():
 @response(template_file="home/index.html")
 def load_park_data():
     output = {}
+    output['regions'] = {}
+    vm = IndexViewModel()
     regions = region_services.create_internal_region_dict()
 
     # get the region info:
@@ -63,13 +65,15 @@ def load_park_data():
     for region_id in regions.keys():
         region_name = regions[region_id]
         app_region_name = region_name.split()[0].lower()
-        output[app_region_name] = {}
-        output[app_region_name]["link"] = region_links["start_urls"][region_name]
-        output[app_region_name]["id"] = region_id
+        output['regions'][app_region_name] = {}
+        output['regions'][app_region_name]["link"] = region_links["start_urls"][region_name]
+        output['regions'][app_region_name]["id"] = region_id
 
         # get the park info:
         park_dict = park_services.get_parks_in_region(region_id)
-        output[app_region_name]["parks"] = park_dict
+        output['regions'][app_region_name]["parks"] = park_dict
+
+    output['loggedIn'] = (vm.user_id != None)
 
     return jsonify(output)
 
@@ -103,9 +107,12 @@ def submit_search():
 
     # feature is temporarily disabled:
     if True == True:
-        return ()
+        return {}
 
-    # feature as of 8/2/21:
+    # feature before:
+    if vm.user_id == None:
+        return {}
+
     request = request_dict.data_create("")
     owner_id = vm.user_id
     start_date = datetime.date.fromisoformat(request["start_date"].split("T")[0])
@@ -127,9 +134,6 @@ def submit_search():
 @blueprint.route("/_adhoc_search", methods=["POST"])
 @response(template_file="home/index.html")
 def adhoc_search():
-    vm = IndexViewModel()
-    if not vm.user:  # prevent people from spamming the endpoint
-        return ""
     return_dict = {"adhocResults": {}}
     request = request_dict.data_create("")
     start_date = datetime.date.fromisoformat(request["start_date"].split("T")[0])

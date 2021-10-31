@@ -9,36 +9,25 @@
 
 <div class="row">
     <div class="info-box">
-        <a href="/about">CampFinder allows you to sign up for notifications when
-            campsites are available in Wisconsin State Parks!</a>
+        <a href="/about">CampFinder allows you to find information about Wisconsin State Parks and check for availability in real time.
+            <br />
+            With an account (currently in closed beta), you can also sign up for notifications when campsites are available in Wisconsin State Parks!</a>
     </div>
 </div>
 
 <div class="row selectionApp">
-    {% if user_id %}
     <div class="alert-banner">
         Hi, thank you for joining the beta! This site is in the early stages
         of being live, so I appreciate your help in figuring out where the
         issues are. If you see something wrong, or the site is missing a key
         feature you think it should have, please drop me a message at
         campfinder@campfinder.me. You can also <a href="https://github.com/e-staats/CampFinder/issues">open an
-            issue</a> on Github if you'd like.
+            issue</a> on Github if you'd like. Happy camping! ⛺
     </div>
 
     <!-- The app goes here: -->
     <div id="root"></div>
 
-    {% else %}
-    <div class="alert-banner">
-        <div class="public-facing-banner">
-            CampFinder is in closed beta at the moment. Please contact campfinder@campfinder.me if you have any
-            questions. Happy camping!
-            <br>
-            <br>
-            ⛺
-        </div>
-    </div>
-    {% endif %}
 </div>
 {% endblock %}
 

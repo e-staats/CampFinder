@@ -24,14 +24,15 @@ class Form extends React.Component {
       .then(response => response.json())
       .then(data => {
         this.setState(prevState => {
+          let loggedIn = data['loggedIn']
           let parks = prevState['parks']
-          for (let regionName in data) {
-            prevState['regions'][regionName] = data[regionName]['id']
-            parks[regionName]["link"] = data[regionName]['link']
-            parks[regionName]['parkList'] = this.convertParksToList(data[regionName]["parks"])
+          for (let regionName in data['regions']) {
+            prevState['regions'][regionName] = data['regions'][regionName]['id']
+            parks[regionName]["link"] = data['regions'][regionName]['link']
+            parks[regionName]['parkList'] = this.convertParksToList(data['regions'][regionName]["parks"])
           }
           let initialLoading = false
-          return { parks, initialLoading }
+          return { loggedIn, parks, initialLoading }
         })
       })
     return
@@ -81,7 +82,8 @@ class Form extends React.Component {
     adhocRegionCount: 0,
     adhocRegionsReturned: 0,
     initialLoading: true,
-    origin: {}
+    origin: {},
+    loggedIn: false,
   }
 
   handleDayClick = (day) => {
@@ -420,6 +422,8 @@ class Form extends React.Component {
   render() {
     let banner = ""
     let map = <div></div>
+    let scheduleSearchButton = ""
+    let buttonHelpText = ""
     if (this.state.success === true) {
       banner = <div className="successBanner">{this.state.successMessage}</div>
     }
@@ -428,6 +432,20 @@ class Form extends React.Component {
     }
     if (this.state.initialLoading === false) {
       map = <Map handleChange={this.handleCheckboxChange} parks={this.state.parks} origin={this.state.origin} />
+    }
+    if (this.state.loggedIn === true) {
+      scheduleSearchButton = <button className="submitButton" onClick={this.handleSubmit} title="Add these search criteria to the background search process">Schedule Search</button>
+      buttonHelpText = <span className="help-tip">
+        <span className="help-tip-text">
+          Which button should I choose?
+        </span>
+        <p>Submitting the search is useful if you want to get notified by email or text when
+          there is a campsite available for the dates and parks you selected.
+          Instascraping is for when you want to check if anything
+          is available for your parks and dates in real time. Caveat:
+          Instascrape is a little inconsistent and can take a few minutes. If you
+          don't get results the first time, try again!</p>
+      </span>
     }
 
     return (<div>
@@ -448,19 +466,9 @@ class Form extends React.Component {
         />
       </div>
       <div>
-        <button className="submitButton disabled" onClick={this.handleSubmit} title="Add these search criteria to the background search process">Schedule Search</button>
+        {scheduleSearchButton}
         <button className="instascrapeButton" onClick={this.handleSubmitAdhoc} title="Search now for these criteria and get results in real time">InstaScrape</button>
-        <span className="help-tip">
-          <span className="help-tip-text">
-            Which button should I choose?
-          </span>
-          <p>Submitting the search is useful if you want to get notified by email or text when
-            there is a campsite available for the dates and parks you selected.
-            Instascraping is for when you want to check if anything
-            is available for your parks and dates in real time. Caveat:
-            Instascrape is a little inconsistent and can take a few minutes. If you
-            don't get results the first time, try again!</p>
-        </span>
+        {buttonHelpText}
       </div>
       {banner}
       < LoadingIndicator message="Scraping in progress...Results will load as
