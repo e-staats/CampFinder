@@ -1,6 +1,7 @@
 {
   "include": [
-    "./static/js/react-app/map/*.tsx"
+    "./static/js/react-app/map/*.tsx",
+    "./static/js/react-app/map/resources/*.tsx"
   ],
   "compilerOptions": {
     "esModuleInterop": true,

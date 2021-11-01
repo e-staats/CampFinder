@@ -256,6 +256,10 @@ ul {
   margin-top: 10px;
 }
 
+.zipCodeInput {
+  margin-left: 0.5em;
+}
+
 .parkList {
   display: flex;
 }
@@ -304,8 +308,8 @@ ul {
   margin-right: 20px;
   height: 35px;
   margin-top: 10px;
-  background-color: #F15451;
   border: none;
+  background-color: #F15451;
 }
 
 .instascrapeButton {
@@ -315,8 +319,20 @@ ul {
   margin-right: 20px;
   height: 35px;
   margin-top: 10px;
-  background-color: #1D2A3D;
   border: none;
+  background-color: #1D2A3D;
+}
+
+.zipCodeButton {
+  border-radius: 5px;
+  color: white;
+  font-size: 12pt;
+  margin-right: 20px;
+  height: 35px;
+  margin-top: 10px;
+  border: none;
+  background-color: #1D2A3D;
+  margin-left: 1em;
 }
 
 .successBanner {

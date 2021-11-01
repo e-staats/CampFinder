@@ -455,10 +455,12 @@ class Form extends React.Component {
       </div>
       <div className="form-block">
         <div className="form-header">Choose the parks you would like to stay at:</div>
-        <label>Starting Zip Code:</label>
-        <input type="text" id="zipCode" placeholder="Zip Code" onChange={this.handleTextInput} onKeyDown={this._handleKeyDown}></input>
-        <Button text="Submit ZIP" onClick={this.submitOnClick} />
         {map}
+        <div>
+          <label>Enter a Zip Code to get time and distance info: </label>
+          <input type="text" id="zipCode" placeholder="Zip Code" className="zipCodeInput" onChange={this.handleTextInput} onKeyDown={this._handleKeyDown}></input>
+          <Button text="Submit ZIP"  onClick={this.submitOnClick} />
+        </div>
         <ParkSelector
           handleCheckboxChange={this.handleCheckboxChange}
           handleSelectAllButtonClick={this.handleSelectAllButtonClick}

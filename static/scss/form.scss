@@ -17,6 +17,10 @@
   margin-bottom: 0em;
 }
 
+.zipCodeInput {
+  margin-left: 0.5em;
+}
+
 .parkList {
   display: flex;
   input[type="checkbox"] {
@@ -63,18 +67,23 @@
   margin-right: 20px;
   height: 35px;
   margin-top: 10px;
+  border: none;
 }
 
 .submitButton {
   @include actionButton();
   background-color: $primaryOrange;
-  border: none;
 }
 
 .instascrapeButton {
   @include actionButton();
   background-color: $primaryNavy;
-  border: none;
+}
+
+.zipCodeButton {
+  @include actionButton();
+  background-color: $primaryNavy;
+  margin-left: 1em;
 }
 
 .successBanner {

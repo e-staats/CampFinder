@@ -24883,7 +24883,7 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
       var react_1 = __importDefault(require_react());
       function Button2(_a) {
         var text = _a.text, onClick = _a.onClick;
-        return react_1["default"].createElement("button", { type: "button", onClick }, text);
+        return react_1["default"].createElement("button", { type: "button", className: "zipCodeButton", onClick }, text);
       }
       exports["default"] = Button2;
     }
@@ -26290,16 +26290,17 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
         className: "form-block"
       }, /* @__PURE__ */ import_react9.default.createElement("div", {
         className: "form-header"
-      }, "Choose the parks you would like to stay at:"), /* @__PURE__ */ import_react9.default.createElement("label", null, "Starting Zip Code:"), /* @__PURE__ */ import_react9.default.createElement("input", {
+      }, "Choose the parks you would like to stay at:"), map, /* @__PURE__ */ import_react9.default.createElement("div", null, /* @__PURE__ */ import_react9.default.createElement("label", null, "Enter a Zip Code to get time and distance info: "), /* @__PURE__ */ import_react9.default.createElement("input", {
         type: "text",
         id: "zipCode",
         placeholder: "Zip Code",
+        className: "zipCodeInput",
         onChange: this.handleTextInput,
         onKeyDown: this._handleKeyDown
       }), /* @__PURE__ */ import_react9.default.createElement(import_Button.default, {
         text: "Submit ZIP",
         onClick: this.submitOnClick
-      }), map, /* @__PURE__ */ import_react9.default.createElement(parkCheckboxes_default, {
+      })), /* @__PURE__ */ import_react9.default.createElement(parkCheckboxes_default, {
         handleCheckboxChange: this.handleCheckboxChange,
         handleSelectAllButtonClick: this.handleSelectAllButtonClick,
         parks: this.state.parks
