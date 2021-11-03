@@ -14,23 +14,23 @@ class Node extends React.Component<Props> {
     }
 
     render() {
-        let alpha = (this.props.item.isChecked === true) ? "FF" : "80"
-
+        let opacity: string = this.props.item.isChecked ? "100%" : ""
         let style: CSSProperties = {
-            backgroundColor: this.props.item.color + alpha,
-            transform: "translate(" + this.props.item.xPos.toString() + "px," + this.props.item.yPos.toString() + "px)"
+            transform: "translate(" + this.props.item.xPos.toString() + "px," + this.props.item.yPos.toString() + "px)",
+            opacity: opacity,
         }
+        let cssClass = "map-circle-checkbox " + this.props.item.cssClass
 
         if (typeof (this.props.handleChange) === 'undefined') {
             return (
-                <div className="origin-circle" style={style}>
+                <div className="origin-node" style={style}>
                     <span>{this.props.item.name}</span>
                 </div>
             )
         }
         return (
             <div>
-                <label className="map-circle-checkbox" style={style} >
+                <label className={cssClass} style={style} >
                     <input
                         key={this.props.item.id}
                         type="checkbox"

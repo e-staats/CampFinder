@@ -22286,15 +22286,16 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
           return _this;
         }
         Node2.prototype.render = function() {
-          var alpha = this.props.item.isChecked === true ? "FF" : "80";
+          var opacity = this.props.item.isChecked ? "100%" : "";
           var style = {
-            backgroundColor: this.props.item.color + alpha,
-            transform: "translate(" + this.props.item.xPos.toString() + "px," + this.props.item.yPos.toString() + "px)"
+            transform: "translate(" + this.props.item.xPos.toString() + "px," + this.props.item.yPos.toString() + "px)",
+            opacity
           };
+          var cssClass = "map-circle-checkbox " + this.props.item.cssClass;
           if (typeof this.props.handleChange === "undefined") {
-            return react_1["default"].createElement("div", { className: "origin-circle", style }, react_1["default"].createElement("span", null, this.props.item.name));
+            return react_1["default"].createElement("div", { className: "origin-node", style }, react_1["default"].createElement("span", null, this.props.item.name));
           }
-          return react_1["default"].createElement("div", null, react_1["default"].createElement("label", { className: "map-circle-checkbox", style }, react_1["default"].createElement("input", { key: this.props.item.id, type: "checkbox", name: this.props.item.name, value: this.props.item.name, checked: this.props.item.isChecked, onChange: this.handleChange }), react_1["default"].createElement("span", null, this.props.item.name)));
+          return react_1["default"].createElement("div", null, react_1["default"].createElement("label", { className: cssClass, style }, react_1["default"].createElement("input", { key: this.props.item.id, type: "checkbox", name: this.props.item.name, value: this.props.item.name, checked: this.props.item.isChecked, onChange: this.handleChange }), react_1["default"].createElement("span", null, this.props.item.name)));
         };
         return Node2;
       }(react_1["default"].Component);
@@ -22458,9 +22459,9 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
               return { originNode };
             });
           };
-          _this.addNode = function(id, nodeName, color, xPos, yPos) {
+          _this.addNode = function(id, nodeName, cssClass, xPos, yPos) {
             _this.setState(function(prevState) {
-              var nodeInfo = { id, name: nodeName, color, xPos, yPos };
+              var nodeInfo = { id, name: nodeName, cssClass, xPos, yPos };
               var nodes = prevState.nodes;
               nodes = __spreadArray(__spreadArray([], prevState.nodes, true), [nodeInfo], false);
               return { nodes };
@@ -22496,7 +22497,7 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
                 var node = {
                   id: park.id,
                   name: park.name,
-                  color: _this.getRegionColor(region),
+                  cssClass: _this.getRegionClass(region),
                   xPos: coordinates[0],
                   yPos: coordinates[1],
                   region,
@@ -22515,25 +22516,13 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
           _this.defineDimensions = function() {
             return [1e3, 1e3];
           };
-          _this.getRegionColor = function(regionName) {
-            var color = "FFFFFF";
-            switch (regionName) {
-              case "northwest":
-                color = "#fad87b";
-                break;
-              case "northeast":
-                color = "#b1d5bc";
-                break;
-              case "southwest":
-                color = "#bcd682";
-                break;
-              case "southeast":
-                color = "#ffca6e";
-                break;
-              default:
-                color = "#FFFFFF";
+          _this.getRegionClass = function(regionName) {
+            var suffix = "-node";
+            var cssClass = regionName + suffix;
+            if (cssClass === null) {
+              cssClass = "default" + suffix;
             }
-            return color;
+            return cssClass;
           };
           _this.handleChange = function(e, regionName) {
             var name = e.target.name;
@@ -22553,7 +22542,7 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
             originNode: {
               id: 0,
               name: "undefined",
-              color: "FFFFFF",
+              cssClass: "origin-node",
               xPos: 0,
               yPos: 0
             }
@@ -26281,16 +26270,15 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
         className: "form-block"
       }, /* @__PURE__ */ import_react9.default.createElement("div", {
         className: "form-header"
-      }, "Choose the dates you would like to camp:"), /* @__PURE__ */ import_react9.default.createElement(DateRangePicker_default, {
-        handleDayClick: this.handleDayClick,
-        handleResetClick: this.handleResetClick,
-        from: this.state.from,
-        to: this.state.to
+      }, "Choose the parks you would like to stay at:"), map, /* @__PURE__ */ import_react9.default.createElement(parkCheckboxes_default, {
+        handleCheckboxChange: this.handleCheckboxChange,
+        handleSelectAllButtonClick: this.handleSelectAllButtonClick,
+        parks: this.state.parks
       })), /* @__PURE__ */ import_react9.default.createElement("div", {
         className: "form-block"
       }, /* @__PURE__ */ import_react9.default.createElement("div", {
         className: "form-header"
-      }, "Choose the parks you would like to stay at:"), map, /* @__PURE__ */ import_react9.default.createElement("div", null, /* @__PURE__ */ import_react9.default.createElement("label", null, "Enter a Zip Code to get time and distance info: "), /* @__PURE__ */ import_react9.default.createElement("input", {
+      }, "Enter a Zip Code to get time and distance info: "), /* @__PURE__ */ import_react9.default.createElement("input", {
         type: "text",
         id: "zipCode",
         placeholder: "Zip Code",
@@ -26300,10 +26288,15 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
       }), /* @__PURE__ */ import_react9.default.createElement(import_Button.default, {
         text: "Submit ZIP",
         onClick: this.submitOnClick
-      })), /* @__PURE__ */ import_react9.default.createElement(parkCheckboxes_default, {
-        handleCheckboxChange: this.handleCheckboxChange,
-        handleSelectAllButtonClick: this.handleSelectAllButtonClick,
-        parks: this.state.parks
+      })), /* @__PURE__ */ import_react9.default.createElement("div", {
+        className: "form-block"
+      }, /* @__PURE__ */ import_react9.default.createElement("div", {
+        className: "form-header"
+      }, "Choose the dates you would like to camp:"), /* @__PURE__ */ import_react9.default.createElement("div", null, "For use with the scraper that looks for campsite availability"), /* @__PURE__ */ import_react9.default.createElement(DateRangePicker_default, {
+        handleDayClick: this.handleDayClick,
+        handleResetClick: this.handleResetClick,
+        from: this.state.from,
+        to: this.state.to
       })), /* @__PURE__ */ import_react9.default.createElement("div", null, scheduleSearchButton, /* @__PURE__ */ import_react9.default.createElement("button", {
         className: "instascrapeButton",
         onClick: this.handleSubmitAdhoc,

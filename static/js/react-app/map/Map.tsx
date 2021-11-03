@@ -35,7 +35,7 @@ export interface Park {
 export interface NodeInfo {
   id: number,
   name: string,
-  color: string,
+  cssClass: string,
   xPos: number,
   yPos: number,
   region?: string,
@@ -86,7 +86,7 @@ class Map extends React.Component<Props, State> {
       originNode: {
         id: 0,
         name: 'undefined',
-        color: 'FFFFFF',
+        cssClass: 'origin-node',
         xPos: 0,
         yPos: 0,
       }
@@ -152,9 +152,9 @@ class Map extends React.Component<Props, State> {
     })
   }
 
-  addNode = (id: number, nodeName: string, color: string, xPos: number, yPos: number) => {
+  addNode = (id: number, nodeName: string, cssClass: string, xPos: number, yPos: number) => {
     this.setState(prevState => {
-      let nodeInfo: NodeInfo = { id: id, name: nodeName, color: color, xPos: xPos, yPos: yPos }
+      let nodeInfo: NodeInfo = { id: id, name: nodeName, cssClass: cssClass, xPos: xPos, yPos: yPos }
       let nodes = prevState.nodes
       nodes = [...prevState.nodes, nodeInfo]
       return { nodes }
@@ -192,7 +192,7 @@ class Map extends React.Component<Props, State> {
         let node = {
           id: park.id,
           name: park.name,
-          color: this.getRegionColor(region),
+          cssClass: this.getRegionClass(region),
           xPos: coordinates[0],
           yPos: coordinates[1],
           region: region,
@@ -215,25 +215,13 @@ class Map extends React.Component<Props, State> {
     return [1000, 1000]
   }
 
-  getRegionColor = (regionName: string): string => {
-    let color = "FFFFFF"
-    switch (regionName) {
-      case ("northwest"):
-        color = "#fad87b"
-        break
-      case ("northeast"):
-        color = "#b1d5bc"
-        break
-      case ("southwest"):
-        color = "#bcd682"
-        break
-      case ("southeast"):
-        color = "#ffca6e"
-        break
-      default:
-        color = "#FFFFFF"
+  getRegionClass = (regionName: string): string => {
+    let suffix = "-node"
+    let cssClass = regionName + suffix
+    if (cssClass === null) {
+      cssClass = 'default' + suffix
     }
-    return color
+    return cssClass
   }
 
   handleChange = (e, regionName: string) => {

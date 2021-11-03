@@ -507,7 +507,7 @@ ul {
   background: url("../img/wisconsin-edits.svg");
 }
 
-.origin-circle {
+.origin-node {
   position: absolute;
   display: block;
   border-radius: 50%;
@@ -516,12 +516,38 @@ ul {
   padding: 10px;
 }
 
+.northeast-node {
+  background-color: #b1d5bc;
+  opacity: 70%;
+}
+
+.northwest-node {
+  background-color: #fad87b;
+  opacity: 70%;
+}
+
+.southeast-node {
+  background-color: #ffca6e;
+  opacity: 70%;
+}
+
+.southwest-node {
+  background-color: #bcd682;
+  opacity: 70%;
+}
+
 .map-circle-checkbox {
   position: absolute;
   display: block;
   border-radius: 3px;
   padding: 3px;
   border: 1px solid white;
+}
+
+.map-circle-checkbox:hover {
+  z-index: 15;
+  border: 1px solid white;
+  opacity: 100%;
 }
 
 .map-circle-checkbox span {

@@ -86,9 +86,9 @@ var Map = /** @class */ (function (_super) {
                 return { originNode: originNode };
             });
         };
-        _this.addNode = function (id, nodeName, color, xPos, yPos) {
+        _this.addNode = function (id, nodeName, cssClass, xPos, yPos) {
             _this.setState(function (prevState) {
-                var nodeInfo = { id: id, name: nodeName, color: color, xPos: xPos, yPos: yPos };
+                var nodeInfo = { id: id, name: nodeName, cssClass: cssClass, xPos: xPos, yPos: yPos };
                 var nodes = prevState.nodes;
                 nodes = __spreadArray(__spreadArray([], prevState.nodes, true), [nodeInfo], false);
                 return { nodes: nodes };
@@ -126,7 +126,7 @@ var Map = /** @class */ (function (_super) {
                     var node = {
                         id: park.id,
                         name: park.name,
-                        color: _this.getRegionColor(region),
+                        cssClass: _this.getRegionClass(region),
                         xPos: coordinates[0],
                         yPos: coordinates[1],
                         region: region,
@@ -145,25 +145,13 @@ var Map = /** @class */ (function (_super) {
         _this.defineDimensions = function () {
             return [1000, 1000];
         };
-        _this.getRegionColor = function (regionName) {
-            var color = "FFFFFF";
-            switch (regionName) {
-                case ("northwest"):
-                    color = "#fad87b";
-                    break;
-                case ("northeast"):
-                    color = "#b1d5bc";
-                    break;
-                case ("southwest"):
-                    color = "#bcd682";
-                    break;
-                case ("southeast"):
-                    color = "#ffca6e";
-                    break;
-                default:
-                    color = "#FFFFFF";
+        _this.getRegionClass = function (regionName) {
+            var suffix = "-node";
+            var cssClass = regionName + suffix;
+            if (cssClass === null) {
+                cssClass = 'default' + suffix;
             }
-            return color;
+            return cssClass;
         };
         _this.handleChange = function (e, regionName) {
             var name = e.target.name;
@@ -181,7 +169,7 @@ var Map = /** @class */ (function (_super) {
             originNode: {
                 id: 0,
                 name: 'undefined',
-                color: 'FFFFFF',
+                cssClass: 'origin-node',
                 xPos: 0,
                 yPos: 0
             }

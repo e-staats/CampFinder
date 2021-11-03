@@ -30,17 +30,18 @@ var Node = /** @class */ (function (_super) {
         return _this;
     }
     Node.prototype.render = function () {
-        var alpha = (this.props.item.isChecked === true) ? "FF" : "80";
+        var opacity = this.props.item.isChecked ? "100%" : "";
         var style = {
-            backgroundColor: this.props.item.color + alpha,
-            transform: "translate(" + this.props.item.xPos.toString() + "px," + this.props.item.yPos.toString() + "px)"
+            transform: "translate(" + this.props.item.xPos.toString() + "px," + this.props.item.yPos.toString() + "px)",
+            opacity: opacity
         };
+        var cssClass = "map-circle-checkbox " + this.props.item.cssClass;
         if (typeof (this.props.handleChange) === 'undefined') {
-            return (react_1["default"].createElement("div", { className: "origin-circle", style: style },
+            return (react_1["default"].createElement("div", { className: "origin-node", style: style },
                 react_1["default"].createElement("span", null, this.props.item.name)));
         }
         return (react_1["default"].createElement("div", null,
-            react_1["default"].createElement("label", { className: "map-circle-checkbox", style: style },
+            react_1["default"].createElement("label", { className: cssClass, style: style },
                 react_1["default"].createElement("input", { key: this.props.item.id, type: "checkbox", name: this.props.item.name, value: this.props.item.name, checked: this.props.item.isChecked, onChange: this.handleChange }),
                 react_1["default"].createElement("span", null, this.props.item.name))));
     };

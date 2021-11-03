@@ -450,22 +450,23 @@ class Form extends React.Component {
 
     return (<div>
       <div className="form-block">
-        <div className="form-header">Choose the dates you would like to camp:</div>
-        <DateRangePicker handleDayClick={this.handleDayClick} handleResetClick={this.handleResetClick} from={this.state.from} to={this.state.to} />
-      </div>
-      <div className="form-block">
         <div className="form-header">Choose the parks you would like to stay at:</div>
         {map}
-        <div>
-          <label>Enter a Zip Code to get time and distance info: </label>
-          <input type="text" id="zipCode" placeholder="Zip Code" className="zipCodeInput" onChange={this.handleTextInput} onKeyDown={this._handleKeyDown}></input>
-          <Button text="Submit ZIP"  onClick={this.submitOnClick} />
-        </div>
         <ParkSelector
           handleCheckboxChange={this.handleCheckboxChange}
           handleSelectAllButtonClick={this.handleSelectAllButtonClick}
           parks={this.state.parks}
         />
+      </div>
+      <div className="form-block">
+        <div className="form-header">Enter a Zip Code to get time and distance info: </div>
+        <input type="text" id="zipCode" placeholder="Zip Code" className="zipCodeInput" onChange={this.handleTextInput} onKeyDown={this._handleKeyDown}></input>
+        <Button text="Submit ZIP" onClick={this.submitOnClick} />
+      </div>
+      <div className="form-block">
+        <div className="form-header">Choose the dates you would like to camp:</div>
+        <div>For use with the scraper that looks for campsite availability</div>
+        <DateRangePicker handleDayClick={this.handleDayClick} handleResetClick={this.handleResetClick} from={this.state.from} to={this.state.to} />
       </div>
       <div>
         {scheduleSearchButton}

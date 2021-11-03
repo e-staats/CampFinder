@@ -95,7 +95,6 @@ def load_distances_from_origin():
         print(f"ZIP is not valid: {request.zip}")
         return {}
     zip_response = asyncio.run(map_services.get_zip_distance_data(request.zip))
-    ic(zip_response)
     return jsonify(zip_response)
 
 

@@ -97,7 +97,7 @@ async def origin_to_all_parks(zip):
         slice_start = i * max_requests
         slice_end = (i + 1) * max_requests
         if slice_end >= len(parks):
-            slice_end = len(parks) - 1
+            slice_end = len(parks)
         url = gmap_distance_matrix_API_url(zip, parks[slice_start:slice_end])
         async with ClientSession() as session:
             json = await asyncio.gather(api_call(url, session))
