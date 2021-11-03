@@ -135,8 +135,7 @@ async def get_origin_place_data(zip: str):
     try:
         candidate = data['candidates'][0]
     except:
-        print("Places API failed to return a candidate")
-        return {}
+        return {'error': "Could not find a location for that zip code"}
     place_data['id'] = 0
     place_data['isChecked'] = False
     place_data['name'] = zip
@@ -147,6 +146,8 @@ async def get_origin_place_data(zip: str):
 async def get_zip_distance_data(zip):
     return_dict = {}
     return_dict['origin'] = await get_origin_place_data(zip)
+    if 'error' in return_dict['origin'].keys():
+        return return_dict['origin']
     return_dict['parks'] = await origin_to_all_parks(zip)
     return return_dict
 

@@ -76,7 +76,7 @@ class Form extends React.Component {
     to: null,
     success: null,
     successMessage: null,
-    error: null,
+    error: { bannerLocation: null, message: null },
     adhocResults: [],
     adhocSuccess: null,
     adhocRegionCount: 0,
@@ -84,6 +84,7 @@ class Form extends React.Component {
     initialLoading: true,
     origin: {},
     loggedIn: false,
+    zipCode: null,
   }
 
   handleDayClick = (day) => {
@@ -165,22 +166,22 @@ class Form extends React.Component {
     return parks
   }
 
-  setErrorState = (errorMessage) => {
+  setErrorState = (errorMessage, bannerLocation) => {
     this.setState(prevState => {
       prevState.success = false
-      prevState.error = errorMessage
+      prevState.error = { bannerLocation: bannerLocation, message: errorMessage }
       return prevState
     })
   }
 
   validateDatesForSubmit = () => {
     if (this.state.from === null) {
-      this.setErrorState("Please enter a start date!")
+      this.setErrorState("Please enter a start date!", "bottom")
       return
     }
 
     if (this.state.to === null) {
-      this.setErrorState("Please enter an end date!")
+      this.setErrorState("Please enter an end date!", "bottom")
       return
     }
 
@@ -191,12 +192,12 @@ class Form extends React.Component {
     tomorrow.setHours(0, 0, 0, 0)
 
     if (this.state.from < today) {
-      this.setErrorState("Start date must be today or later!")
+      this.setErrorState("Start date must be today or later!", "bottom")
       return
     }
 
     if (this.state.to < tomorrow) {
-      this.setErrorState("End date must be tomorrow or later!")
+      this.setErrorState("End date must be tomorrow or later!", "bottom")
       return
     }
 
@@ -210,7 +211,7 @@ class Form extends React.Component {
     //validate and assemble data
     let preferredRegions = this.assemblePreferredRegions()
     if (preferredRegions === undefined) {
-      this.setErrorState("There is an issue with the Region selection. Please re-select and try again.")
+      this.setErrorState("There is an issue with the Region selection. Please re-select and try again.", "bottom")
       return
     }
     return preferredRegions
@@ -219,7 +220,7 @@ class Form extends React.Component {
   validateParksForSubmit = () => {
     let parks = this.assembleParks()
     if (parks === undefined) {
-      this.setErrorState("There is an issue with the Park list. Please re-select and try again.")
+      this.setErrorState("There is an issue with the Park list. Please re-select and try again.", "bottom")
       return
     }
     return parks
@@ -236,7 +237,7 @@ class Form extends React.Component {
       return
     }
     if (Object.keys(parks).length === 0) {
-      this.setErrorState("Please select some parks!")
+      this.setErrorState("Please select some parks!", "bottom")
       return
     }
 
@@ -317,15 +318,29 @@ class Form extends React.Component {
   }
 
   resetAdhocSearch() {
+    this.resetErrorState()
     this.setState(prevState => {
-      prevState.error = null
       prevState.adhocResults = []
       prevState.adhocSuccess = null
       prevState.adhocRegionCount = 0
       prevState.adhocRegionsReturned = 0
+      return prevState
+    })
+  }
+
+  resetErrorState() {
+    this.setState(prevState => {
+      prevState.error = { bannerLocation: null, message: null }
       prevState.success = null
       prevState.successMessage = null
       return prevState
+    })
+  }
+
+  resetOrigin() {
+    this.setState(prevState => {
+      origin = {}
+      return { origin }
     })
   }
 
@@ -341,13 +356,15 @@ class Form extends React.Component {
 
 
   submitOnClick = () => {
+    this.resetErrorState()
+    this.resetOrigin()
     const origin = this.state.zipCode
     if (origin === undefined) {
       return
     }
 
     if (this.validateZipCode(origin) === false) {
-      console.log("add the fail case here " + origin)
+      this.setErrorState(this.state.zipCode + " is not a valid zip code", "zip")
       return
     }
     let distanceData = this.getDistanceData(origin)
@@ -369,6 +386,10 @@ class Form extends React.Component {
     })
       .then(response => response.json())
       .then(data => {
+        if (data.error) {
+          this.setErrorState(data.error, "zip")
+          return
+        }
         this.processDistanceData(data)
       })
   }
@@ -420,15 +441,19 @@ class Form extends React.Component {
   }
 
   render() {
-    let banner = ""
+    let bottomBanner = ""
+    let zipErrBanner = ""
     let map = <div></div>
     let scheduleSearchButton = ""
     let buttonHelpText = ""
     if (this.state.success === true) {
-      banner = <div className="successBanner">{this.state.successMessage}</div>
+      bottomBanner = <div className="successBanner">{this.state.successMessage}</div>
     }
-    if (this.state.success === false) {
-      banner = <div className="errorBanner">{this.state.error}</div>
+    if (this.state.success === false && this.state.error.bannerLocation === 'zip') {
+      zipErrBanner = <div className="errorBanner">{this.state.error.message}</div>
+    }
+    if (this.state.success === false && this.state.error.bannerLocation === 'bottom') {
+      bottomBanner = <div className="errorBanner">{this.state.error.message}</div>
     }
     if (this.state.initialLoading === false) {
       map = <Map handleChange={this.handleCheckboxChange} parks={this.state.parks} origin={this.state.origin} />
@@ -462,6 +487,7 @@ class Form extends React.Component {
         <div className="form-header">Enter a Zip Code to get time and distance info: </div>
         <input type="text" id="zipCode" placeholder="Zip Code" className="zipCodeInput" onChange={this.handleTextInput} onKeyDown={this._handleKeyDown}></input>
         <Button text="Submit ZIP" onClick={this.submitOnClick} />
+        {zipErrBanner}
       </div>
       <div className="form-block">
         <div className="form-header">Choose the dates you would like to camp:</div>
@@ -473,7 +499,7 @@ class Form extends React.Component {
         <button className="instascrapeButton" onClick={this.handleSubmitAdhoc} title="Search now for these criteria and get results in real time">InstaScrape</button>
         {buttonHelpText}
       </div>
-      {banner}
+      {bottomBanner}
       < LoadingIndicator message="Scraping in progress...Results will load as
       they become available, but this can take a minute or two to complete.
       Please don't navigate away from this page." />

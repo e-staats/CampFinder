@@ -22345,13 +22345,13 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
         }
         MapBody2.prototype.render = function() {
           var _this = this;
-          var origin;
+          var origin2;
           if (this.props.origin.name !== "undefined") {
-            origin = react_1["default"].createElement(Node_1["default"], { item: this.props.origin });
+            origin2 = react_1["default"].createElement(Node_1["default"], { item: this.props.origin });
           } else {
-            origin = react_1["default"].createElement("div", null);
+            origin2 = react_1["default"].createElement("div", null);
           }
-          return react_1["default"].createElement("div", null, react_1["default"].createElement("div", { className: "container" }, origin, this.props.nodes.map(function(info, index) {
+          return react_1["default"].createElement("div", null, react_1["default"].createElement("div", { className: "container" }, origin2, this.props.nodes.map(function(info, index) {
             return react_1["default"].createElement(Node_1["default"], { item: info, handleChange: _this.handleChange });
           })));
         };
@@ -22449,13 +22449,13 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
               return { nodes };
             });
           };
-          _this.updateOrigin = function(origin) {
+          _this.updateOrigin = function(origin2) {
             var dimensions = _this.defineDimensions();
             var boundaries = _this.defineBoundaries();
             var pixelRates = _this.definePixelRate(dimensions, boundaries);
-            var coordinates = _this.calcParkPosition(origin, boundaries, pixelRates);
+            var coordinates = _this.calcParkPosition(origin2, boundaries, pixelRates);
             _this.setState(function(prevState) {
-              var originNode = __assign(__assign({}, prevState.originNode), { id: 0, name: origin.name, xPos: coordinates[0], yPos: coordinates[1] });
+              var originNode = __assign(__assign({}, prevState.originNode), { id: 0, name: origin2.name, xPos: coordinates[0], yPos: coordinates[1] });
               return { originNode };
             });
           };
@@ -25941,14 +25941,15 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
       to: null,
       success: null,
       successMessage: null,
-      error: null,
+      error: { bannerLocation: null, message: null },
       adhocResults: [],
       adhocSuccess: null,
       adhocRegionCount: 0,
       adhocRegionsReturned: 0,
       initialLoading: true,
       origin: {},
-      loggedIn: false
+      loggedIn: false,
+      zipCode: null
     };
     handleDayClick = (day) => {
       const range = import_react_day_picker2.DateUtils.addDayToRange(day, this.state);
@@ -26018,20 +26019,20 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
       }
       return parks;
     };
-    setErrorState = (errorMessage) => {
+    setErrorState = (errorMessage, bannerLocation) => {
       this.setState((prevState) => {
         prevState.success = false;
-        prevState.error = errorMessage;
+        prevState.error = { bannerLocation, message: errorMessage };
         return prevState;
       });
     };
     validateDatesForSubmit = () => {
       if (this.state.from === null) {
-        this.setErrorState("Please enter a start date!");
+        this.setErrorState("Please enter a start date!", "bottom");
         return;
       }
       if (this.state.to === null) {
-        this.setErrorState("Please enter an end date!");
+        this.setErrorState("Please enter an end date!", "bottom");
         return;
       }
       var today = new Date();
@@ -26040,11 +26041,11 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
       tomorrow.setDate(tomorrow.getDate() + 1);
       tomorrow.setHours(0, 0, 0, 0);
       if (this.state.from < today) {
-        this.setErrorState("Start date must be today or later!");
+        this.setErrorState("Start date must be today or later!", "bottom");
         return;
       }
       if (this.state.to < tomorrow) {
-        this.setErrorState("End date must be tomorrow or later!");
+        this.setErrorState("End date must be tomorrow or later!", "bottom");
         return;
       }
       return {
@@ -26055,7 +26056,7 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
     validateRegionsForSubmit = () => {
       let preferredRegions = this.assemblePreferredRegions();
       if (preferredRegions === void 0) {
-        this.setErrorState("There is an issue with the Region selection. Please re-select and try again.");
+        this.setErrorState("There is an issue with the Region selection. Please re-select and try again.", "bottom");
         return;
       }
       return preferredRegions;
@@ -26063,7 +26064,7 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
     validateParksForSubmit = () => {
       let parks = this.assembleParks();
       if (parks === void 0) {
-        this.setErrorState("There is an issue with the Park list. Please re-select and try again.");
+        this.setErrorState("There is an issue with the Park list. Please re-select and try again.", "bottom");
         return;
       }
       return parks;
@@ -26078,7 +26079,7 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
         return;
       }
       if (Object.keys(parks).length === 0) {
-        this.setErrorState("Please select some parks!");
+        this.setErrorState("Please select some parks!", "bottom");
         return;
       }
       let fromDate = dates.from.toISOString();
@@ -26148,15 +26149,27 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
       });
     };
     resetAdhocSearch() {
+      this.resetErrorState();
       this.setState((prevState) => {
-        prevState.error = null;
         prevState.adhocResults = [];
         prevState.adhocSuccess = null;
         prevState.adhocRegionCount = 0;
         prevState.adhocRegionsReturned = 0;
+        return prevState;
+      });
+    }
+    resetErrorState() {
+      this.setState((prevState) => {
+        prevState.error = { bannerLocation: null, message: null };
         prevState.success = null;
         prevState.successMessage = null;
         return prevState;
+      });
+    }
+    resetOrigin() {
+      this.setState((prevState) => {
+        origin = {};
+        return { origin };
       });
     }
     _handleKeyDown = (e) => {
@@ -26168,15 +26181,17 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
       this.setState({ zipCode: event.target.value });
     };
     submitOnClick = () => {
-      const origin = this.state.zipCode;
-      if (origin === void 0) {
+      this.resetErrorState();
+      this.resetOrigin();
+      const origin2 = this.state.zipCode;
+      if (origin2 === void 0) {
         return;
       }
-      if (this.validateZipCode(origin) === false) {
-        console.log("add the fail case here " + origin);
+      if (this.validateZipCode(origin2) === false) {
+        this.setErrorState(this.state.zipCode + " is not a valid zip code", "zip");
         return;
       }
-      let distanceData = this.getDistanceData(origin);
+      let distanceData = this.getDistanceData(origin2);
       this.processDistanceData(distanceData);
     };
     getDistanceData = (zip) => {
@@ -26190,6 +26205,10 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
           "zip": zip
         })
       }).then((response) => response.json()).then((data) => {
+        if (data.error) {
+          this.setErrorState(data.error, "zip");
+          return;
+        }
         this.processDistanceData(data);
       });
     };
@@ -26198,11 +26217,11 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
         return;
       }
       this.setState((prevState) => {
-        let origin = [];
+        let origin2 = [];
         let parks = {};
-        clone_default(origin, prevState["origin"]);
+        clone_default(origin2, prevState["origin"]);
         clone_default(parks, prevState["parks"]);
-        origin = serverData["origin"];
+        origin2 = serverData["origin"];
         for (let region in parks) {
           if (region === "allChecked") {
             continue;
@@ -26214,7 +26233,7 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
             }
           }
         }
-        return { origin, parks };
+        return { origin: origin2, parks };
       });
     };
     validateZipCode = (zipCode) => {
@@ -26233,19 +26252,25 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
       };
     }
     render() {
-      let banner = "";
+      let bottomBanner = "";
+      let zipErrBanner = "";
       let map = /* @__PURE__ */ import_react9.default.createElement("div", null);
       let scheduleSearchButton = "";
       let buttonHelpText = "";
       if (this.state.success === true) {
-        banner = /* @__PURE__ */ import_react9.default.createElement("div", {
+        bottomBanner = /* @__PURE__ */ import_react9.default.createElement("div", {
           className: "successBanner"
         }, this.state.successMessage);
       }
-      if (this.state.success === false) {
-        banner = /* @__PURE__ */ import_react9.default.createElement("div", {
+      if (this.state.success === false && this.state.error.bannerLocation === "zip") {
+        zipErrBanner = /* @__PURE__ */ import_react9.default.createElement("div", {
           className: "errorBanner"
-        }, this.state.error);
+        }, this.state.error.message);
+      }
+      if (this.state.success === false && this.state.error.bannerLocation === "bottom") {
+        bottomBanner = /* @__PURE__ */ import_react9.default.createElement("div", {
+          className: "errorBanner"
+        }, this.state.error.message);
       }
       if (this.state.initialLoading === false) {
         map = /* @__PURE__ */ import_react9.default.createElement(import_Map.default, {
@@ -26288,7 +26313,7 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
       }), /* @__PURE__ */ import_react9.default.createElement(import_Button.default, {
         text: "Submit ZIP",
         onClick: this.submitOnClick
-      })), /* @__PURE__ */ import_react9.default.createElement("div", {
+      }), zipErrBanner), /* @__PURE__ */ import_react9.default.createElement("div", {
         className: "form-block"
       }, /* @__PURE__ */ import_react9.default.createElement("div", {
         className: "form-header"
@@ -26301,7 +26326,7 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
         className: "instascrapeButton",
         onClick: this.handleSubmitAdhoc,
         title: "Search now for these criteria and get results in real time"
-      }, "InstaScrape"), buttonHelpText), banner, /* @__PURE__ */ import_react9.default.createElement(loadingIndicator_default, {
+      }, "InstaScrape"), buttonHelpText), bottomBanner, /* @__PURE__ */ import_react9.default.createElement(loadingIndicator_default, {
         message: "Scraping in progress...Results will load as\n      they become available, but this can take a minute or two to complete.\n      Please don't navigate away from this page."
       }), /* @__PURE__ */ import_react9.default.createElement(adhocResults_default, {
         status: this.state.adhocSuccess,

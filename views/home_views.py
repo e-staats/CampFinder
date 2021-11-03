@@ -92,8 +92,7 @@ def load_park_map_data():
 def load_distances_from_origin():
     request = request_dict.data_create("")
     if map_services.validate_zip_code(request.zip) == False:
-        print(f"ZIP is not valid: {request.zip}")
-        return {}
+        return {'error': 'Zip is not valid'}
     zip_response = asyncio.run(map_services.get_zip_distance_data(request.zip))
     return jsonify(zip_response)
 
