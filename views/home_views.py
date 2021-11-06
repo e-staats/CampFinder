@@ -58,10 +58,11 @@ def load_park_data():
 
     # get the region info:
     region_links = setup_info_dict(
-        datetime.datetime.today(),
-        datetime.datetime.today(),
+        datetime.date.today(),
+        datetime.date.today(),
         region_services.define_regions(),
     )
+
     for region_id in regions.keys():
         region_name = regions[region_id]
         app_region_name = region_name.split()[0].lower()
