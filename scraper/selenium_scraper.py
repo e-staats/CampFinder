@@ -10,6 +10,8 @@ import scraper.parse_results as parse_results  # pylint: disable = import-error
 import datetime
 import os
 import time
+import asyncio
+from concurrent.futures.thread import ThreadPoolExecutor
 
 # pylint: disable = no-member
 
@@ -50,7 +52,8 @@ class ParkScraper:
         return
 
     def parse_search(self, search_def):
-        self.parseURLs(search_def)
+        # self.parseURLs(search_def)
+        self.async_parseURLs(search_def)
         if self.adhoc == False:
             self.add_result_in_db(search_def)
             parse_results.process_result(
@@ -86,6 +89,47 @@ class ParkScraper:
             before = time.perf_counter()
             url = search_def["start_urls"][region]
             self.driver.get(url)
+            print("- scraping " + region, end="...")
+            success = self.click_through_options()
+            if success == False:
+                continue  # sometimes the clicks just fail, and it's easier to give up and move on.
+
+            circles = self.get_circles()
+
+            for circle in circles:
+                if circle.get_attribute("id") == None:
+                    return
+                park_name = str(circle.get_attribute("id"))
+                park_id = park_services.get_id_from_name(park_name)
+                if park_id == None:
+                    continue
+                value = self.temp_map_fill_value(str(circle.get_attribute("fill")))
+                if self.adhoc == True and value == 1:
+                    self.store_in_dict(park_id, park_name)
+                else:
+                    self.store_in_db(
+                        search_def["start_date"],
+                        search_def["start_date"],
+                        park_id,
+                        value,
+                    )
+            after = time.perf_counter()
+            print(f"scraped in {after - before:0.4f} seconds")
+        return
+
+    def scrape(self, url, loop):
+        loop.run_in_executor(self.executor, self.scraper, url)
+
+    def scraper(self, url):
+        self.driver.get(url)
+
+    def async_parseURLs(self, search_def):
+        self.executor = ThreadPoolExecutor(10)
+        loop = asyncio.get_event_loop()
+        for region in search_def["start_urls"].keys():
+            before = time.perf_counter()
+            url = search_def["start_urls"][region]
+            self.scrape(url, loop=loop)
             print("- scraping " + region, end="...")
             success = self.click_through_options()
             if success == False:

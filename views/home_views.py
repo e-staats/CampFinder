@@ -1,13 +1,13 @@
 # pylint thinks it can't find the infrastructure and viewmodels folders
 # even though the app itself runs fine:
-# pylint: disable = import-error
 
 import flask
 import os
 import sys
 import datetime
-import pprint
+from icecream import ic
 import time
+import asyncio
 
 folder = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
 sys.path.insert(0, folder)
@@ -17,6 +17,7 @@ import infrastructure.request_dict as request_dict
 import services.park_services as park_services
 import services.search_services as search_services
 import services.region_services as region_services
+import services.map_services as map_services
 from flask import jsonify
 from scraper.scraper_shell import setup_info_dict, scrape_searches_adhoc
 
@@ -51,26 +52,50 @@ def about():
 @response(template_file="home/index.html")
 def load_park_data():
     output = {}
+    output['regions'] = {}
+    vm = IndexViewModel()
     regions = region_services.create_internal_region_dict()
 
     # get the region info:
     region_links = setup_info_dict(
-        datetime.datetime.today(),
-        datetime.datetime.today(),
+        datetime.date.today(),
+        datetime.date.today(),
         region_services.define_regions(),
     )
+
     for region_id in regions.keys():
         region_name = regions[region_id]
         app_region_name = region_name.split()[0].lower()
-        output[app_region_name] = {}
-        output[app_region_name]["link"] = region_links["start_urls"][region_name]
-        output[app_region_name]["id"] = region_id
+        output['regions'][app_region_name] = {}
+        output['regions'][app_region_name]["link"] = region_links["start_urls"][region_name]
+        output['regions'][app_region_name]["id"] = region_id
 
         # get the park info:
         park_dict = park_services.get_parks_in_region(region_id)
-        output[app_region_name]["parks"] = park_dict
+        output['regions'][app_region_name]["parks"] = park_dict
+
+    output['loggedIn'] = (vm.user_id != None)
 
     return jsonify(output)
+
+
+# ################### LOAD MAP DATA FOR MAP #################################
+@blueprint.route("/_load_park_map_data", methods=["GET"])
+@response(template_file="home/index.html")
+def load_park_map_data():
+    park_dict = park_services.get_park_map_data()
+    return jsonify(park_dict)
+
+
+# ################### LOAD DISTANCE DATA #################################
+@blueprint.route("/_load_distances_from_origin", methods=["POST"])
+@response(template_file="home/index.html")
+def load_distances_from_origin():
+    request = request_dict.data_create("")
+    if map_services.validate_zip_code(request.zip) == False:
+        return {'error': 'Zip is not valid'}
+    zip_response = asyncio.run(map_services.get_zip_distance_data(request.zip))
+    return jsonify(zip_response)
 
 
 # ################### ADD SEARCH TO DB #################################
@@ -78,6 +103,15 @@ def load_park_data():
 @response(template_file="home/index.html")
 def submit_search():
     vm = IndexViewModel()
+
+    # feature is temporarily disabled:
+    if True == True:
+        return {}
+
+    # feature before:
+    if vm.user_id == None:
+        return {}
+
     request = request_dict.data_create("")
     owner_id = vm.user_id
     start_date = datetime.date.fromisoformat(request["start_date"].split("T")[0])
@@ -99,9 +133,6 @@ def submit_search():
 @blueprint.route("/_adhoc_search", methods=["POST"])
 @response(template_file="home/index.html")
 def adhoc_search():
-    vm = IndexViewModel()
-    if not vm.user:  # prevent people from spamming the endpoint
-        return ""
     return_dict = {"adhocResults": {}}
     request = request_dict.data_create("")
     start_date = datetime.date.fromisoformat(request["start_date"].split("T")[0])
@@ -109,7 +140,9 @@ def adhoc_search():
     region_id = int(request["region"])
     region_name = region_services.get_name_from_id(region_id)
     return_dict["adhocResults"] = {"name": region_name, "parks": []}
-    available_parks = scrape_searches_adhoc(start_date=start_date, end_date=end_date, region_id=region_id)
+    available_parks = scrape_searches_adhoc(
+        start_date=start_date, end_date=end_date, region_id=region_id
+    )
 
     # available_parks = {
     #     1: "Amnicon Falls",
@@ -122,7 +155,7 @@ def adhoc_search():
     wanted_parks = set(search_services.deserialize_park_list(request["parks"]))
     intersection = wanted_parks.intersection(available_parks.keys())
     for park_id in intersection:
-        return_dict["adhocResults"]['parks'].append(
+        return_dict["adhocResults"]["parks"].append(
             {
                 "name": available_parks[park_id],
                 "url": park_services.create_URL_from_id(park_id, start_date, end_date),

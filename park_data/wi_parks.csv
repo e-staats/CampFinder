@@ -1,64 +1,64 @@
-External ID,Park Name,Region ID
--2147483494,Amnicon Falls,1
--2147483429,Aztalan,4
--2147483544,Big Bay,1
--2147483542,Big Foot Beach,4
--2147483550,Black River,2
--2147483515,Blue Mound,2
--2147483436,Brule River,1
--2147483502,Brunet Island,1
--2147483492,Buckhorn,2
--2147483438,Cadiz Springs,2
--2147483427,Chippewa Flowage,1
--2147483425,Chippewa Moraine,1
--2147483529,Copper Falls,1
--2147483485,Council Grounds,3
--2147483637,Devil's Lake,2
--2147483423,Elroy-Sparta,2
--2147483521,Flambeau River,1
--2147483470,Glacial Drumlin,4
--2147483596,Governor Dodge,2
--2147483509,Governor Earl Peshtigo River,3
--2147483420,Governor Knowles,1
--2147483416,Governor Nelson,2
--2147483512,Governor Thompson,3
--2147483546,Harrington Beach,4
--2147483561,Hartman Creek,3
--2147483587,High Cliff,3
--2147483526,Interstate,1
--2147483414,Kettle Moraine - Lapham Peak Unit,4
--2147483628,Kettle Moraine - Northern Unit,4
--2147483408,Kettle Moraine - Pike Lake Unit,4
--2147483618,Kettle Moraine - Southern Unit,4
--2147483593,Kohler-Andrae,4
--2147483518,Lake Kegonsa,2
--2147483538,Lake Wissota,1
--2147483433,Lakeshore,4
--2147483431,Mackenzie Center,2
--2147483412,Menominee River,3
--2147483482,Merrick,2
--2147483478,Mill Bluff,2
--2147483576,Mirror Lake,2
--2147483499,Nelson Dewey,2
--2147483476,New Glarus Woods,2
--2147483496,Newport,3
--2147483468,Northern Highland - American Legion,3
--2147483531,Pattison,1
--2147483648,Peninsula,3
--2147483523,Perrot,2
--2147483569,Point Beach,3
--2147483565,Potawatomi,3
--2147483406,Rib Mountain,3
--2147483557,Richard Bong,4
--2147483504,Roche-A-Cri,2
--2147483533,Rock Island,3
--2147483474,Rocky Arbor,2
--2147483404,Straight Lake,1
--2147483402,Tower Hill,2
--2147483472,Turtle Flambeau,1
--2147483400,Whitefish Dunes,3
--2147483573,Wildcat Mountain,2
--2147483398,Willow Flowage,3
--2147483584,Willow River,1
--2147483579,Wyalusing,2
--2147483535,Yellowstone Lake,2
+External ID,Park Name,Region ID,Address,Lat,Lng,Place_ID
+-2147483494,Amnicon Falls,1,4279 County Rd U South Range WI 54874 United States,46.6081889,-91.8921781,ChIJH07djP_2rlIRV9_ybH3JhmA
+-2147483429,Aztalan,4,N6200 County Rd Q Jefferson WI 53549 United States,43.0687467,-88.8631605,ChIJGzlA72N5BogRz2CoV9kHwjA
+-2147483544,Big Bay,1,2402 Hagen Rd La Pointe WI 54850 United States,46.7881132,-90.6737266,ChIJO8InrrUBqVIRopyBLfzRHwU
+-2147483542,Big Foot Beach,4,1550 S Lake Shore Dr Lake Geneva WI 53147 United States,42.5663477,-88.4344777,ChIJc_hsUU-KBYgRFQKIBOEAdGM
+-2147483550,Black River,2,W10235 US-12 Black River Falls WI 54615 United States,44.2837706,-90.8288167,ChIJaQ1hAw_7_ocRIaxrNRFhCLg
+-2147483515,Blue Mound,2,4350 Mounds Park Rd Blue Mounds WI 53517 United States,43.0256389,-89.8442746,ChIJb5bK862aB4gR6zHDdNiDt48
+-2147483436,Brule River,1,6250 Ranger Rd Brule WI 54820 United States,46.5373987,-91.5927162,ChIJ05Z6truUrlIRGiIX81qUCMs
+-2147483502,Brunet Island,1,23125 255th St Cornell WI 54732 United States,45.1799484,-91.1613807,ChIJA9LS9Z5Zq1IRDicQdHrR4So
+-2147483492,Buckhorn,2,W8450 Buckhorn Park Ave Necedah WI 54646 United States,43.9457623,-90.0036019,ChIJDTNhWACoAIgRrv66WSJaY0Y
+-2147483438,Cadiz Springs,2,N2241 Cadiz Springs Rd Browntown WI 53522 United States,42.58354,-89.7655688,ChIJbz6BLoXhB4gRaBMb3jfwRr0
+-2147483427,Chippewa Flowage,1,N County Rd CC Hayward WI 54843 United States,45.9452841,-91.1978749,ChIJOcmzUkP0q1IR0kxAnxFNNEw
+-2147483425,Chippewa Moraine,1,13394 Co Hwy M New Auburn WI 54757 United States,45.2235158,-91.4140998,ChIJpUsBEcGjrFIRd6WLmqVV61w
+-2147483529,Copper Falls,1,36664 Copper Falls Rd Mellen WI 54546 United States,46.3795169,-90.6435225,ChIJ08M8wER4qVIRgo3J5u0b_QA
+-2147483485,Council Grounds,3,N1895 Council Grounds Dr Merrill WI 54452 United States,45.187002,-89.7345548,ChIJWeObl1NGVU0RzOxbxgl7BTs
+-2147483637,Devil's Lake,2,S5975 Park Rd Baraboo WI 53913 United States,43.4284471,-89.7313678,ChIJxQy76QlrB4gRw9d31oL138M
+-2147483423,Elroy-Sparta,2,Elroy Sparta State Trail Wisconsin 54656 USA,43.8954816,-90.7471167,ChIJ32L6id2E_ocRhatAm2KUlvo
+-2147483521,Flambeau River,1,Flambeau River State Forest Winter WI 54896 USA,45.6791306,-90.7801514,ChIJidYNQ_ulq1IRx3mmyAbfxWQ
+-2147483470,Glacial Drumlin,4,Glacial Drumlin Bike Trail Wisconsin USA,43.0514385,-88.9993537,ChIJwd_ZbNB6BogRqfak52Fg4Ik
+-2147483596,Governor Dodge,2,4175 WI-23 Dodgeville WI 53533 United States,43.0184969,-90.139673,ChIJy8RRKil7_YcRG3JxeH2OUTk
+-2147483509,Governor Earl Peshtigo River,3,N10008 Paust Ln Crivitz WI 54114 United States,45.2952181,-88.1983874,ChIJARvFW8TcUk0Rz74WsjJZiqg
+-2147483420,Governor Knowles,1,325 WI-70 Grantsburg WI 54840 United States,45.7723182,-92.7758686,ChIJ_fvcYZhxslIRUkPsmS6tkoE
+-2147483416,Governor Nelson,2,5140 Co Hwy M Waunakee WI 53597 United States,43.1375035,-89.4399226,ChIJaZ6xLP6qB4gRUsPvI1p5MGg
+-2147483512,Governor Thompson,3,N10008 Paust Ln Crivitz WI 54114 United States,45.3233753,-88.2220297,ChIJ2dnegjEZU00R6f1DJdKayuU
+-2147483546,Harrington Beach,4,531 Co Rd D Belgium WI 53004 United States,43.4928723,-87.803671,ChIJOwwhfRq_BIgRPeecEHFSYrQ
+-2147483561,Hartman Creek,3,N2480 Hartman Creek Rd Waupaca WI 54981 United States,44.3240712,-89.2142364,ChIJyU0axbUIAYgRLssYaUu28aE
+-2147483587,High Cliff,3,N7630 State Park Rd Sherwood WI 54169 United States,44.166962,-88.2910966,ChIJ8xdUXISkA4gR74Q6tGMK2lY
+-2147483526,Interstate,1,1275 WI-35 St Croix Falls WI 54024 United States,45.3958713,-92.6441813,ChIJw6rhJsiaslIRPiIV9bx4s20
+-2147483414,Kettle Moraine - Lapham Peak Unit,4,W329 N846 County Rd C Delafield WI 53018 United States,43.0367708,-88.3969216,ChIJyW7JqS23BYgRUsCeH06ZA74
+-2147483628,Kettle Moraine - Northern Unit,4,N1765 Co Rd G Campbellsport WI 53010 United States,43.606779,-88.18789,ChIJ7xyF1eBkBIgRo15LEwkMmAY
+-2147483408,Kettle Moraine - Pike Lake Unit,4,3544 Kettle Moraine Rd Hartford WI 53027 United States,43.3196569,-88.3190834,ChIJP3wpqahaBIgRcdsEdvQYK5w
+-2147483618,Kettle Moraine - Southern Unit,4,S91 W39091 WI-59 Eagle WI 53119 United States,42.8765139,-88.5251561,ChIJvxFLAGDoBYgRSmLNrKzXFh0
+-2147483593,Kohler-Andrae,4,1020 Beach Park Ln Sheboygan WI 53081 United States,43.6651362,-87.719154,ChIJ3Z3wHb6lBIgRm48nreaJIFM
+-2147483518,Lake Kegonsa,2,2405 Door Creek Rd Stoughton WI 53589 United States,42.9795623,-89.2343695,ChIJ31hprndFBogR-SqidesVJP0
+-2147483538,Lake Wissota,1,18127 Co Hwy O Chippewa Falls WI 54729 United States,44.9798126,-91.3108442,ChIJdZZpRo2p-IcRrwZMnGlej8w
+-2147483433,Lakeshore,4,500 N Harbor Dr Milwaukee WI 53202 United States,43.0336327,-87.8955177,ChIJp2dSFq0ZBYgRV3prJEY8crc
+-2147483431,Mackenzie Center,2,W7303 County Rd Cs And Q Poynette WI 53955 United States,43.3997228,-89.3646242,ChIJ1TDuhyriBogRZwPdySEF3JE
+-2147483412,Menominee River,3,N9012 Park Pl Dr Wausaukee WI 54177 United States,45.283271,-87.7035927,ChIJGQmdidCXUk0RHXwa1G5VHiI
+-2147483482,Merrick,2,S2965 WI-35 Fountain City WI 54629 United States,44.154856,-91.7508994,ChIJT0RYUgcM-YcR2DgB-ieQqkE
+-2147483478,Mill Bluff,2,15819 Funnel Rd Camp Douglas WI 54618 United States,43.9415369,-90.3193859,ChIJj1N2zURt_ocR4gQiwjB3yjI
+-2147483576,Mirror Lake,2,E10320 Fern Dell Rd Baraboo WI 53913 United States,43.5657947,-89.8182872,ChIJXx56KQVGB4gRPqEhEGBZPxk
+-2147483499,Nelson Dewey,2,12190 Co Hwy VV Cassville WI 53806 United States,42.7315099,-91.0170102,ChIJPSPqzVe6_IcR3DvWIyAsc8I
+-2147483476,New Glarus Woods,2,W5446 County Highway Nn New Glarus WI 53574 United States,42.7878267,-89.6342325,ChIJsV_RulfBB4gRZUD-hLubJeU
+-2147483496,Newport,3,475 County Rd NP Ellison Bay WI 54210 United States,45.2350035,-86.992367,ChIJ-2uo-YoiTU0RXlgi6z7fz7k
+-2147483468,Northern Highland - American Legion,3,4125 County Highway M Boulder Junction WI 54512 United States,45.7980901,-89.4301659,ChIJ3w9veMGvVU0RfGYm6aOrlVs
+-2147483531,Pattison,1,6294 WI-35 Superior WI 54880 United States,46.5372963,-92.118581,ChIJ7bMPOt1CrlIRYW-Ck4_oXR8
+-2147483648,Peninsula,3,9462 Shore Rd Fish Creek WI 54212 United States,45.1279703,-87.2366066,ChIJx0o0bs9HTU0RACXR2HZDZnI
+-2147483523,Perrot,2,26247 Sullivan Rd Trempealeau WI 54661 United States,44.0202121,-91.47157,ChIJaTbjRG9B-YcRkyuOWFcjqeI
+-2147483569,Point Beach,3,9400 County Rd O Two Rivers WI 54241 United States,44.1918366,-87.5192896,ChIJo3OcD9jMHIgRD_DoMFhrzjo
+-2147483565,Potawatomi,3,3740 Park Dr Sturgeon Bay WI 54235 United States,44.8518734,-87.4250733,ChIJ9fma0f1QHYgRiroeIVUz3K0
+-2147483406,Rib Mountain,3,4200 Park Rd Wausau WI 54401 United States,44.921581,-89.688221,ChIJD7UOjxwiAIgRzINzR7yFoLw
+-2147483557,Richard Bong,4,26313 Burlington Rd Kansasville WI 53139 United States,42.6368035,-88.1408502,ChIJscW-Ux55BYgRgzJ7L1jHH0c
+-2147483504,Roche-A-Cri,2,1767 State Hwy 13 Friendship WI 53934 United States,44.0000961,-89.8128831,ChIJuwa7p3O7AIgRUcl6oJkexqs
+-2147483533,Rock Island,3,1924 Indian Point Rd Washington WI 54246 United States,45.4133958,-86.8174044,ChIJUzzAcCX9TE0RPgnC6GG3lYI
+-2147483474,Rocky Arbor,2,Wisconsin Dells WI 53965 United States,43.6419444,-89.8058333,ChIJxX1Xx4ZPB4gR9wtIbFQp21o
+-2147483404,Straight Lake,1,Straight Lake State Park Luck WI 54853 USA,45.6054134,-92.4135126,ChIJofKGGEiCrVIRwyBCbKYyaK8
+-2147483402,Tower Hill,2,5808 County Rd C Spring Green WI 53588 United States,43.1469781,-90.0483324,ChIJQeisWw5__YcRdQwC0WtAOvk
+-2147483472,Turtle Flambeau,1,Park Falls WI 54552 United States,46.0467519,-90.0871491,ChIJY8LXaFcPqlIRpcVPxppjx3U
+-2147483400,Whitefish Dunes,3,3275 Clarks Lake Rd Sturgeon Bay WI 54235 United States,44.92795,-87.185189,ChIJvWf-hPRgHYgRqChUyJWNeQI
+-2147483573,Wildcat Mountain,2,E13660 WI-33 Ontario WI 54651 United States,43.6993422,-90.5637729,ChIJz8K_2p7T_YcRsC1sevNY5io
+-2147483398,Willow Flowage,3,5070- 5094 Willow Dam Rd Hazelhurst WI 54531 United States,45.7129667,-89.845378,ChIJjfLYlCqbVU0RzYrEo3hY3h0
+-2147483584,Willow River,1,1034 Co Hwy A Hudson WI 54016 United States,45.0165709,-92.6876804,ChIJ03g02LuzslIROsbMF1lufn8
+-2147483579,Wyalusing,2,State Park Ln Wyalusing WI 53801 USA,42.9806318,-91.1130794,ChIJU2iz2gyb_IcRCM17e7Xcx9w
+-2147483535,Yellowstone Lake,2,8495 N Lake Rd Blanchardville WI 53516 United States,42.7708301,-89.9856825,ChIJ-T6Xrzj2B4gRSFrWiSJ99Kc

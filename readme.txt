@@ -8,7 +8,7 @@ install node.js
 install yarn
 run 'yarn install' to install all the packages in packages.json
 do your dev
-run "npx webpack" at the command line
+run "npm run build" at the command line
 refresh the flask page
 
 cron job setup:

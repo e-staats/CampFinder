@@ -120,6 +120,10 @@ nav .logout:hover {
   margin-bottom: 0px;
 }
 
+.faded-text {
+  opacity: 0.5;
+}
+
 .main-content {
   background-color: #fff3dd;
   padding-left: 80px;
@@ -252,6 +256,10 @@ ul {
   margin-top: 10px;
 }
 
+.zipCodeInput {
+  margin-left: 0.5em;
+}
+
 .parkList {
   display: flex;
 }
@@ -263,6 +271,7 @@ ul {
   padding-left: 4px;
   font-size: 11pt;
   text-overflow: ellipsis;
+  margin-bottom: 0em;
 }
 
 .masterButtonArray {
@@ -299,8 +308,8 @@ ul {
   margin-right: 20px;
   height: 35px;
   margin-top: 10px;
-  background-color: #F15451;
   border: none;
+  background-color: #F15451;
 }
 
 .instascrapeButton {
@@ -310,8 +319,20 @@ ul {
   margin-right: 20px;
   height: 35px;
   margin-top: 10px;
-  background-color: #1D2A3D;
   border: none;
+  background-color: #1D2A3D;
+}
+
+.zipCodeButton {
+  border-radius: 5px;
+  color: white;
+  font-size: 12pt;
+  margin-right: 20px;
+  height: 35px;
+  margin-top: 10px;
+  border: none;
+  background-color: #1D2A3D;
+  margin-left: 1em;
 }
 
 .successBanner {
@@ -343,7 +364,20 @@ ul {
   padding-left: 4px;
   font-size: 11pt;
   text-overflow: ellipsis;
+  margin-bottom: 0em;
   font-weight: bold;
+}
+
+.checkbox-container {
+  margin-bottom: 0.5em;
+}
+
+.distance-info {
+  color: gray;
+  font-size: 10pt;
+  font-style: italic;
+  margin-left: 1.5em;
+  line-height: 15px;
 }
 
 .park-list-checkbox {
@@ -464,6 +498,98 @@ ul {
 .adhoc-row-header {
   font-weight: bolder;
   margin-top: 5px;
+}
+
+.container {
+  border: solid 1px black;
+  width: 1000px;
+  height: 1000px;
+  background: url("../img/wisconsin-edits.svg");
+}
+
+.origin-node {
+  position: absolute;
+  display: block;
+  border-radius: 50%;
+  background-color: white;
+  z-index: 10;
+  padding: 10px;
+}
+
+.northeast-node {
+  background-color: #b1d5bc;
+  opacity: 70%;
+}
+
+.northwest-node {
+  background-color: #fad87b;
+  opacity: 70%;
+}
+
+.southeast-node {
+  background-color: #ffca6e;
+  opacity: 70%;
+}
+
+.southwest-node {
+  background-color: #bcd682;
+  opacity: 70%;
+}
+
+.map-circle-checkbox {
+  position: absolute;
+  display: block;
+  border-radius: 3px;
+  padding: 3px;
+  border: 1px solid white;
+}
+
+.map-circle-checkbox:hover {
+  z-index: 15;
+  border: 1px solid white;
+  opacity: 100%;
+}
+
+.map-circle-checkbox span {
+  display: block;
+  text-align: left;
+  font-size: 9pt;
+  padding-left: 15px;
+}
+
+.map-circle-checkbox span::before {
+  display: block;
+  position: absolute;
+  top: 3px;
+  left: 0px;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  padding-top: 2px;
+  outline: 0;
+  cursor: pointer;
+  content: "";
+  background: white;
+  border: 1px solid gray;
+}
+
+.map-circle-checkbox span::after {
+  display: block;
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  padding-top: 2px;
+  outline: 0;
+  cursor: pointer;
+  text-align: center;
+}
+
+.map-circle-checkbox input[type=checkbox] {
+  opacity: 0;
+  z-index: -1;
+  position: absolute;
+  padding-top: 2px;
 }
 
 /*# sourceMappingURL=form.css.map */

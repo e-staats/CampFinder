@@ -29,7 +29,7 @@ class DateRangePicker extends React.Component {
             `Selected from ${from.toLocaleDateString()} to
                 ${to.toLocaleDateString()}`}{' '}
           {from && to && (
-            <a className="resetLink" tabindex={0} onClick={this.handleResetClick}>
+            <a className="resetLink" tabIndex={0} onClick={this.handleResetClick}>
               (Reset)
             </a>
           )}

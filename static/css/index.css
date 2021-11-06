@@ -120,6 +120,10 @@ nav .logout:hover {
   margin-bottom: 0px;
 }
 
+.faded-text {
+  opacity: 0.5;
+}
+
 .main-content {
   background-color: #fff3dd;
   padding-left: 80px;

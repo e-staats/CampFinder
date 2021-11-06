@@ -1,24 +1,23 @@
 {
+  "name": "campfinder",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/e-staats/CampFinder.git",
+  "author": "Eric Staats <eric.k.staats@gmail.com>",
+  "license": "MIT",
   "dependencies": {
-    "@babel/core": "^7.12.3",
-    "@babel/plugin-proposal-class-properties": "^7.12.1",
-    "@babel/preset-react": "^7.12.1",
-    "babel": "^6.23.0",
-    "babel-loader": "^8.1.0",
-    "babel-plugin-transform-class-properties": "^6.24.1",
-    "node-sass": "^5.0.0",
-    "react": "^17.0.1",
-    "react-day-picker": "^7.4.8",
-    "react-dom": "^17.0.1",
+    "@types/react": "^17.0.31",
+    "esbuild": "^0.13.8",
+    "react": "^17.0.2",
+    "react-day-picker": "^7.4.10",
+    "react-dom": "^17.0.2",
     "react-helmet": "^6.1.0",
-    "react-loader-spinner": "^3.1.14",
+    "react-loader-spinner": "^4.0.0",
     "react-promise-tracker": "^2.1.0",
-    "sass": "^1.32.7",
-    "webpack": "^5.3.2",
-    "webpack-cli": "^4.1.0"
+    "sass": "^1.43.3"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "esbuild ./static/js/react-app/index.jsx --bundle --outfile=./static/js/compiled_js/app.js",
     "scss": "sass --watch static/scss:static/css"
   }
 }
