@@ -1,5 +1,3 @@
-from icecream import ic
-from data.park import Park  # pylint: disable = import-error
 import services.park_services as park_services  # pylint: disable = import-error
 import data.db_session as db_session  # pylint: disable = import-error
 from urllib.parse import urlencode
@@ -8,7 +6,6 @@ import asyncio
 import aiohttp
 from aiohttp import ClientSession
 import json
-import pprint
 
 
 def validate_zip_code(zip):
@@ -126,6 +123,7 @@ def parse_distance_matrix(data, results, parks) -> dict:
         }
     return updates
 
+
 async def get_origin_place_data(zip: str):
     place_data = {}
     url = gmap_place_API_url(zip)
@@ -133,23 +131,25 @@ async def get_origin_place_data(zip: str):
         json = await asyncio.gather(api_call(url, session))
     data = json[0]
     try:
-        candidate = data['candidates'][0]
+        candidate = data["candidates"][0]
     except:
-        return {'error': "Could not find a location for that zip code"}
-    place_data['id'] = 0
-    place_data['isChecked'] = False
-    place_data['name'] = zip
-    place_data['lat'] = candidate["geometry"]["location"]["lat"]
-    place_data['lng'] = candidate["geometry"]["location"]["lng"]
+        return {"error": "Could not find a location for that zip code"}
+    place_data["id"] = 0
+    place_data["isChecked"] = False
+    place_data["name"] = zip
+    place_data["lat"] = candidate["geometry"]["location"]["lat"]
+    place_data["lng"] = candidate["geometry"]["location"]["lng"]
     return place_data
+
 
 async def get_zip_distance_data(zip):
     return_dict = {}
-    return_dict['origin'] = await get_origin_place_data(zip)
-    if 'error' in return_dict['origin'].keys():
-        return return_dict['origin']
-    return_dict['parks'] = await origin_to_all_parks(zip)
+    return_dict["origin"] = await get_origin_place_data(zip)
+    if "error" in return_dict["origin"].keys():
+        return return_dict["origin"]
+    return_dict["parks"] = await origin_to_all_parks(zip)
     return return_dict
+
 
 async def fetch_json(url: str, session: ClientSession, **kwargs) -> json:
     resp = await session.request(method="GET", url=url, **kwargs)

@@ -456,7 +456,7 @@ class Form extends React.Component {
       bottomBanner = <div className="errorBanner">{this.state.error.message}</div>
     }
     if (this.state.initialLoading === false) {
-      map = <Map handleChange={this.handleCheckboxChange} parks={this.state.parks} origin={this.state.origin} />
+      map = <div id="svg-map"><Map handleChange={this.handleCheckboxChange} parks={this.state.parks} origin={this.state.origin} /></div>
     }
     if (this.state.loggedIn === true) {
       scheduleSearchButton = <button className="submitButton" onClick={this.handleSubmit} title="Add these search criteria to the background search process">Schedule Search</button>

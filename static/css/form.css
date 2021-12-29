@@ -502,9 +502,6 @@ ul {
 
 .container {
   border: solid 1px black;
-  width: 1000px;
-  height: 1000px;
-  background: url("../img/wisconsin-edits.svg");
 }
 
 .origin-node {

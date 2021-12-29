@@ -22351,7 +22351,10 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
           } else {
             origin2 = react_1["default"].createElement("div", null);
           }
-          return react_1["default"].createElement("div", null, react_1["default"].createElement("div", { className: "container" }, origin2, this.props.nodes.map(function(info, index) {
+          var mapStyle = {
+            position: "absolute"
+          };
+          return react_1["default"].createElement("div", null, react_1["default"].createElement("div", { className: "container" }, react_1["default"].createElement("img", { style: mapStyle, src: "./static/img/wisconsin-edits.svg" }), origin2, this.props.nodes.map(function(info, index) {
             return react_1["default"].createElement(Node_1["default"], { item: info, handleChange: _this.handleChange });
           })));
         };
@@ -22514,7 +22517,8 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
             return [xPos * pixelRate.long, yPos * pixelRate.lat];
           };
           _this.defineDimensions = function() {
-            return [1e3, 1e3];
+            var width = document.getElementById("svg-map").clientWidth;
+            return [width, width];
           };
           _this.getRegionClass = function(regionName) {
             var suffix = "-node";
@@ -26273,11 +26277,13 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
         }, this.state.error.message);
       }
       if (this.state.initialLoading === false) {
-        map = /* @__PURE__ */ import_react9.default.createElement(import_Map.default, {
+        map = /* @__PURE__ */ import_react9.default.createElement("div", {
+          id: "svg-map"
+        }, /* @__PURE__ */ import_react9.default.createElement(import_Map.default, {
           handleChange: this.handleCheckboxChange,
           parks: this.state.parks,
           origin: this.state.origin
-        });
+        }));
       }
       if (this.state.loggedIn === true) {
         scheduleSearchButton = /* @__PURE__ */ import_react9.default.createElement("button", {

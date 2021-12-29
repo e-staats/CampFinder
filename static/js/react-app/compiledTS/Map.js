@@ -143,7 +143,8 @@ var Map = /** @class */ (function (_super) {
             return [xPos * pixelRate.long, yPos * pixelRate.lat];
         };
         _this.defineDimensions = function () {
-            return [1000, 1000];
+            var width = document.getElementById('svg-map').clientWidth;
+            return [width, width];
         };
         _this.getRegionClass = function (regionName) {
             var suffix = "-node";

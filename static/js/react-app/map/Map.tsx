@@ -212,7 +212,8 @@ class Map extends React.Component<Props, State> {
 
 
   defineDimensions = (): [number, number] => {
-    return [1000, 1000]
+    let width = document.getElementById('svg-map').clientWidth
+    return [width, width]
   }
 
   getRegionClass = (regionName: string): string => {
