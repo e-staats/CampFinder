@@ -109,6 +109,7 @@ class Map extends React.Component<Props, State> {
     }
   }
 
+
   updateNodeCheckedStatus = (parks: InputData, prevParks: InputData) => {
     //Because the data structures are pretty weird, this is a two parter: get
     //the list of parks to update, then go through and update the nodes
@@ -163,10 +164,10 @@ class Map extends React.Component<Props, State> {
 
   defineBoundaries = (): Boundaries => {
     return {
-      north: 47.1,
-      south: 42.3,
-      east: -86.4,
-      west: -93.2,
+      north: 47.0,
+      south: 42.15,
+      east: -86.0,
+      west: -93.0,
     }
   }
 

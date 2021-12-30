@@ -96,10 +96,10 @@ var Map = /** @class */ (function (_super) {
         };
         _this.defineBoundaries = function () {
             return {
-                north: 47.1,
-                south: 42.3,
-                east: -86.4,
-                west: -93.2
+                north: 47.0,
+                south: 42.15,
+                east: -86.0,
+                west: -93.0
             };
         };
         _this.definePixelRate = function (dimensions, boundaries) {

@@ -52,8 +52,8 @@ class ParkScraper:
         return
 
     def parse_search(self, search_def):
-        # self.parseURLs(search_def)
-        self.async_parseURLs(search_def)
+        self.parseURLs(search_def)
+        # self.async_parseURLs(search_def) #an interesting idea that does not work
         if self.adhoc == False:
             self.add_result_in_db(search_def)
             parse_results.process_result(
@@ -124,6 +124,9 @@ class ParkScraper:
         self.driver.get(url)
 
     def async_parseURLs(self, search_def):
+        """
+        an attempt to get this working that does not work right now. TODO: fix.
+        """
         self.executor = ThreadPoolExecutor(10)
         loop = asyncio.get_event_loop()
         for region in search_def["start_urls"].keys():

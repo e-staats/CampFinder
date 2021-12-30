@@ -23,18 +23,14 @@ class MapBody extends React.Component<Props> {
       origin = <div></div>
     }
 
-    let mapStyle: CSSProperties = {
-      position: 'absolute',
-    }
-
     return (
       <div>
         <div className="container">
-          <img style={mapStyle} src='./static/img/wisconsin-edits.svg'></img>
           {origin}
           {this.props.nodes.map((info: NodeInfo, index: number) => (
             <Node item={info} handleChange={this.handleChange} />
           ))}
+          <img src='./static/img/wisconsin-edits.svg'></img>
         </div>
       </div>
     );

@@ -22351,12 +22351,9 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
           } else {
             origin2 = react_1["default"].createElement("div", null);
           }
-          var mapStyle = {
-            position: "absolute"
-          };
-          return react_1["default"].createElement("div", null, react_1["default"].createElement("div", { className: "container" }, react_1["default"].createElement("img", { style: mapStyle, src: "./static/img/wisconsin-edits.svg" }), origin2, this.props.nodes.map(function(info, index) {
+          return react_1["default"].createElement("div", null, react_1["default"].createElement("div", { className: "container" }, origin2, this.props.nodes.map(function(info, index) {
             return react_1["default"].createElement(Node_1["default"], { item: info, handleChange: _this.handleChange });
-          })));
+          }), react_1["default"].createElement("img", { src: "./static/img/wisconsin-edits.svg" })));
         };
         return MapBody2;
       }(react_1["default"].Component);
@@ -22472,10 +22469,10 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
           };
           _this.defineBoundaries = function() {
             return {
-              north: 47.1,
-              south: 42.3,
-              east: -86.4,
-              west: -93.2
+              north: 47,
+              south: 42.15,
+              east: -86,
+              west: -93
             };
           };
           _this.definePixelRate = function(dimensions, boundaries) {
@@ -26276,7 +26273,8 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
           className: "errorBanner"
         }, this.state.error.message);
       }
-      if (this.state.initialLoading === false) {
+      if (this.state.initialLoading === false && document.getElementById("main-content").clientWidth > 450) {
+        console.log(document.getElementById("main-content").clientWidth);
         map = /* @__PURE__ */ import_react9.default.createElement("div", {
           id: "svg-map"
         }, /* @__PURE__ */ import_react9.default.createElement(import_Map.default, {

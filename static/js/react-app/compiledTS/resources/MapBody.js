@@ -38,14 +38,11 @@ var MapBody = /** @class */ (function (_super) {
         else {
             origin = react_1["default"].createElement("div", null);
         }
-        var mapStyle = {
-            position: 'absolute'
-        };
         return (react_1["default"].createElement("div", null,
             react_1["default"].createElement("div", { className: "container" },
-                react_1["default"].createElement("img", { style: mapStyle, src: './static/img/wisconsin-edits.svg' }),
                 origin,
-                this.props.nodes.map(function (info, index) { return (react_1["default"].createElement(Node_1["default"], { item: info, handleChange: _this.handleChange })); }))));
+                this.props.nodes.map(function (info, index) { return (react_1["default"].createElement(Node_1["default"], { item: info, handleChange: _this.handleChange })); }),
+                react_1["default"].createElement("img", { src: './static/img/wisconsin-edits.svg' }))));
     };
     return MapBody;
 }(react_1["default"].Component));
