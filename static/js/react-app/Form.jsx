@@ -456,7 +456,6 @@ class Form extends React.Component {
       bottomBanner = <div className="errorBanner">{this.state.error.message}</div>
     }
     if (this.state.initialLoading === false && document.getElementById('main-content').clientWidth > 450) {
-      console.log(document.getElementById('main-content').clientWidth)
       map = <div id="svg-map"><Map handleChange={this.handleCheckboxChange} parks={this.state.parks} origin={this.state.origin} /></div>
     }
     if (this.state.loggedIn === true) {

@@ -26274,7 +26274,6 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
         }, this.state.error.message);
       }
       if (this.state.initialLoading === false && document.getElementById("main-content").clientWidth > 450) {
-        console.log(document.getElementById("main-content").clientWidth);
         map = /* @__PURE__ */ import_react9.default.createElement("div", {
           id: "svg-map"
         }, /* @__PURE__ */ import_react9.default.createElement(import_Map.default, {

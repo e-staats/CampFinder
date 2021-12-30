@@ -104,7 +104,6 @@ var Map = /** @class */ (function (_super) {
             });
         };
         _this.handleTextInput = function (event) {
-            console.log(event);
             _this.setState({ zipCode: event.target.value });
         };
         _this.validateZipCode = function (zipCode) {
